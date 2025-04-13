@@ -6,8 +6,10 @@
 //
 
 public protocol RefdsReducer: Sendable {
+    associatedtype State: RefdsState
+    associatedtype Action: RefdsAction
     func reduce<State, Action>(
         state: State,
         action: Action
-    ) async -> State where State: RefdsState, Action: RefdsAction
+    ) async -> State
 }

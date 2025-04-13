@@ -9,12 +9,12 @@
 @Observable
 public class RefdsStore<State: RefdsState> {
     public var state: State
-    public var reducer: RefdsReducer
+    public var reducer: any RefdsReducer
     public var middlewares: RefdsMiddlewares
     
     public init(
         state: State,
-        reducer: RefdsReducer,
+        reducer: any RefdsReducer,
         middlewares: RefdsMiddlewares
     ) {
         self.state = state
