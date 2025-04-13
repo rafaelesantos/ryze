@@ -17,9 +17,11 @@ let package = Package(
     products: [
         .library(name: "RefdsFoundation", type: .static, targets: ["RefdsFoundation"]),
         .library(name: "RefdsDependency", type: .static, targets: ["RefdsFoundation", "RefdsDependency"]),
+        .library(name: "RefdsNetwork", type: .static, targets: ["RefdsFoundation", "RefdsNetwork"]),
     ],
     targets: [
         .target(name: "RefdsFoundation"),
         .target(name: "RefdsDependency", dependencies: ["RefdsFoundation"]),
+        .target(name: "RefdsNetwork", dependencies: ["RefdsFoundation"]),
     ]
 )
