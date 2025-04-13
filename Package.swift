@@ -15,13 +15,16 @@ let package = Package(
         .visionOS(.v2)
     ],
     products: [
+        .library(name: "Refds", targets: ["RefdsFoundation", "RefdsDependency", "RefdsNetwork", "RefdsArchitecture"]),
         .library(name: "RefdsFoundation", type: .static, targets: ["RefdsFoundation"]),
         .library(name: "RefdsDependency", type: .static, targets: ["RefdsFoundation", "RefdsDependency"]),
         .library(name: "RefdsNetwork", type: .static, targets: ["RefdsFoundation", "RefdsNetwork"]),
+        .library(name: "RefdsArchitecture", type: .static, targets: ["RefdsFoundation", "RefdsArchitecture"])
     ],
     targets: [
         .target(name: "RefdsFoundation"),
         .target(name: "RefdsDependency", dependencies: ["RefdsFoundation"]),
         .target(name: "RefdsNetwork", dependencies: ["RefdsFoundation"]),
+        .target(name: "RefdsArchitecture", dependencies: ["RefdsFoundation"])
     ]
 )
