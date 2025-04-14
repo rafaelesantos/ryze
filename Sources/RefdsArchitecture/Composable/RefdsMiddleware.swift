@@ -5,20 +5,23 @@
 //  Created by Rafael Escaleira on 12/04/25.
 //
 
+@_exported import RefdsFoundation
+
 public protocol RefdsMiddleware: Sendable {
-    func run<State>(
-        state: State,
+    func run(
+        state: RefdsState,
         action: RefdsAction
-    ) async -> AsyncStream<RefdsAction> where State: RefdsState
+    ) async -> AsyncThrowingStream<RefdsAction, Error>
 }
 
-public actor RefdsMiddlewares: Sendable {
+public class RefdsMiddlewares {
     private var middlewares: [RefdsMiddleware] = []
     
     public init() {}
     
-    public func use<Middleware: RefdsMiddleware>(_ middleware: @Sendable @escaping () async -> Middleware) async {
-        await middlewares.append(middleware())
+    public func use<Middleware: RefdsMiddleware>(_ middleware: @Sendable @escaping () -> Middleware) -> RefdsMiddlewares {
+        middlewares.append(middleware())
+        return self
     }
     
     func get() -> [RefdsMiddleware] {

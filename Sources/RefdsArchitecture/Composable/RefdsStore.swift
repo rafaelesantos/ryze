@@ -22,20 +22,20 @@ public class RefdsStore<Reducer: RefdsReducer> {
         self.middlewares = middlewares
     }
     
-    public func dispatch(action: RefdsAction) async {
+    public func dispatch(action: RefdsAction) async throws {
         state = await reducer.reduce(
             state: state,
             action: action
         )
         
-        for middleware in await middlewares.get() {
+        for middleware in middlewares.get() {
             let actions = await middleware.run(
                 state: state,
                 action: action
             )
             
-            for await action in actions {
-                await dispatch(action: action)
+            for try await action in actions {
+                try await dispatch(action: action)
             }
         }
     }
