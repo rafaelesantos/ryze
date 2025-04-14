@@ -5,7 +5,6 @@
 //  Created by Rafael Escaleira on 12/04/25.
 //
 
-@MainActor
 @Observable
 public class RefdsStore<Reducer: RefdsReducer> {
     public var state: Reducer.State
@@ -22,6 +21,7 @@ public class RefdsStore<Reducer: RefdsReducer> {
         self.middlewares = middlewares
     }
     
+    @MainActor
     public func dispatch(action: RefdsAction) async throws {
         state = await reducer.reduce(
             state: state,
