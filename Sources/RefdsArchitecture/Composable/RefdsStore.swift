@@ -7,14 +7,14 @@
 
 @MainActor
 @Observable
-public class RefdsStore<State: RefdsState> {
-    public var state: State
-    public var reducer: any RefdsReducer
+public class RefdsStore<Reducer: RefdsReducer> {
+    public var state: Reducer.State
+    public var reducer: Reducer
     public var middlewares: RefdsMiddlewares
     
     public init(
-        state: State,
-        reducer: any RefdsReducer,
+        state: Reducer.State,
+        reducer: Reducer,
         middlewares: RefdsMiddlewares
     ) {
         self.state = state

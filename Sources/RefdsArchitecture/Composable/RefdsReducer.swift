@@ -7,9 +7,8 @@
 
 public protocol RefdsReducer: Sendable {
     associatedtype State: RefdsState
-    associatedtype Action: RefdsAction
-    func reduce<State, Action>(
+    func reduce(
         state: State,
-        action: Action
+        action: RefdsAction
     ) async -> State
 }
