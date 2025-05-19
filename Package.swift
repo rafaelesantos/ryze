@@ -15,16 +15,18 @@ let package = Package(
         .visionOS(.v2)
     ],
     products: [
-        .library(name: "Refds", targets: ["RefdsFoundation", "RefdsDependency", "RefdsNetwork", "RefdsArchitecture"]),
+        .library(name: "Refds", targets: ["RefdsFoundation", "RefdsDependency", "RefdsNetwork", "RefdsArchitecture", "RefdsUI"]),
         .library(name: "RefdsFoundation", type: .static, targets: ["RefdsFoundation"]),
         .library(name: "RefdsDependency", type: .static, targets: ["RefdsFoundation", "RefdsDependency"]),
         .library(name: "RefdsNetwork", type: .static, targets: ["RefdsFoundation", "RefdsNetwork"]),
-        .library(name: "RefdsArchitecture", type: .static, targets: ["RefdsFoundation", "RefdsArchitecture"])
+        .library(name: "RefdsArchitecture", type: .static, targets: ["RefdsFoundation", "RefdsArchitecture"]),
+        .library(name: "RefdsUI", type: .static, targets: ["RefdsFoundation", "RefdsUI"])
     ],
     targets: [
         .target(name: "RefdsFoundation"),
         .target(name: "RefdsDependency", dependencies: ["RefdsFoundation"]),
         .target(name: "RefdsNetwork", dependencies: ["RefdsFoundation"]),
-        .target(name: "RefdsArchitecture", dependencies: ["RefdsFoundation"])
+        .target(name: "RefdsArchitecture", dependencies: ["RefdsFoundation"]),
+        .target(name: "RefdsUI", dependencies: ["RefdsFoundation"])
     ]
 )

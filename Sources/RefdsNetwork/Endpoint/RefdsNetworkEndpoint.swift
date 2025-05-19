@@ -69,16 +69,16 @@ public extension RefdsNetworkEndpoint {
     func log() {
         Task(priority: .low) {
             if let url = await url {
-                logger.info("\(url.absoluteString)")
+                logger.info("🌐 URL: \(url.absoluteString)")
             }
             
             if await !headers.get().isEmpty {
                 let headers = await headers.get()
-                logger.info("\(headers)")
+                logger.info("📋 Headers: \(headers)")
             }
             
             if let body = try? body?.json {
-                logger.info("\(body)")
+                logger.info("📝 Body: \(body)")
             }
         }
     }
