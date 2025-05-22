@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Refds",
+    name: "Ryze",
     defaultLocalization: "pt",
     platforms: [
         .iOS(.v18),
@@ -15,18 +15,18 @@ let package = Package(
         .visionOS(.v2)
     ],
     products: [
-        .library(name: "Refds", targets: ["RefdsFoundation", "RefdsDependency", "RefdsNetwork", "RefdsArchitecture", "RefdsUI"]),
-        .library(name: "RefdsFoundation", type: .static, targets: ["RefdsFoundation"]),
-        .library(name: "RefdsDependency", type: .static, targets: ["RefdsFoundation", "RefdsDependency"]),
-        .library(name: "RefdsNetwork", type: .static, targets: ["RefdsFoundation", "RefdsNetwork"]),
-        .library(name: "RefdsArchitecture", type: .static, targets: ["RefdsFoundation", "RefdsArchitecture"]),
-        .library(name: "RefdsUI", type: .static, targets: ["RefdsFoundation", "RefdsUI"])
+        .library(name: "Ryze", targets: ["RyzeFoundation", "RyzeDependency", "RyzeNetwork", "RyzeArchitecture", "RyzeUI"]),
+        .library(name: "RyzeFoundation", type: .static, targets: ["RyzeFoundation"]),
+        .library(name: "RyzeDependency", type: .static, targets: ["RyzeFoundation", "RyzeDependency"]),
+        .library(name: "RyzeNetwork", type: .static, targets: ["RyzeFoundation", "RyzeNetwork"]),
+        .library(name: "RyzeArchitecture", type: .static, targets: ["RyzeFoundation", "RyzeArchitecture"]),
+        .library(name: "RyzeUI", type: .static, targets: ["RyzeFoundation", "RyzeUI"])
     ],
     targets: [
-        .target(name: "RefdsFoundation"),
-        .target(name: "RefdsDependency", dependencies: ["RefdsFoundation"]),
-        .target(name: "RefdsNetwork", dependencies: ["RefdsFoundation"]),
-        .target(name: "RefdsArchitecture", dependencies: ["RefdsFoundation"]),
-        .target(name: "RefdsUI", dependencies: ["RefdsFoundation"])
+        .target(name: "RyzeFoundation"),
+        .target(name: "RyzeDependency", dependencies: ["RyzeFoundation"]),
+        .target(name: "RyzeNetwork", dependencies: ["RyzeFoundation"]),
+        .target(name: "RyzeArchitecture", dependencies: ["RyzeFoundation"]),
+        .target(name: "RyzeUI", dependencies: ["RyzeFoundation"])
     ]
 )
