@@ -1,5 +1,5 @@
 //
-//  RyzeEncodable.swift
+//  Encodable+Extensions.swift
 //  Ryze
 //
 //  Created by Rafael Escaleira on 24/03/25.
