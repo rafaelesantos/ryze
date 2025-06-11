@@ -42,7 +42,12 @@ struct RyzeGlowModifier: ViewModifier {
     
     private func angularGradient(angle: Double) -> some View {
         AngularGradient(
-            colors: theme.glassmorphic.colors,
+            colors: [
+                theme.color.primary,
+                theme.color.secondary,
+                theme.color.primary,
+                theme.color.secondary
+            ],
             center: .center,
             startAngle: .degrees(angle),
             endAngle: .degrees(angle + 360)

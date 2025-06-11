@@ -15,7 +15,7 @@ let package = Package(
         .visionOS(.v2)
     ],
     products: [
-        .library(name: "Ryze", targets: ["RyzeFoundation", "RyzeDependency", "RyzeNetwork", "RyzeArchitecture", "RyzeUI"]),
+        .library(name: "Ryze", type: .static, targets: ["RyzeFoundation", "RyzeDependency", "RyzeNetwork", "RyzeArchitecture", "RyzeUI"]),
         .library(name: "RyzeFoundation", type: .static, targets: ["RyzeFoundation"]),
         .library(name: "RyzeDependency", type: .static, targets: ["RyzeFoundation", "RyzeDependency"]),
         .library(name: "RyzeNetwork", type: .static, targets: ["RyzeFoundation", "RyzeNetwork"]),
@@ -27,6 +27,7 @@ let package = Package(
         .target(name: "RyzeDependency", dependencies: ["RyzeFoundation"]),
         .target(name: "RyzeNetwork", dependencies: ["RyzeFoundation"]),
         .target(name: "RyzeArchitecture", dependencies: ["RyzeFoundation"]),
-        .target(name: "RyzeUI", dependencies: ["RyzeFoundation"])
+        .target(name: "RyzeUI", dependencies: ["RyzeFoundation"]),
+        .executableTarget(name: "RyzePreview", dependencies: ["RyzeFoundation", "RyzeUI"])
     ]
 )

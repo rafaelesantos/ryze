@@ -14,10 +14,15 @@ enum RyzeDendencyString: String, RyzeResourceString {
     case unregisteredDependencyFailureReason
     case unregisteredDependencyRecoverySuggestion
     
-    func localized() -> String {
+    var localized: LocalizedStringKey {
+        LocalizedStringKey(rawValue)
+    }
+    
+    var value: String {
         String(
-            localized: .init(stringLiteral: self.rawValue),
-            bundle: .module
+            localized: .init(rawValue),
+            bundle: .module,
+            locale: RyzeLocale.current.rawValue
         )
     }
 }

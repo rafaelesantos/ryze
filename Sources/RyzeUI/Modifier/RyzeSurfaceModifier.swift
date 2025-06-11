@@ -18,18 +18,9 @@ struct RyzeSurfaceModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .background(.ultraThinMaterial)
-            .overlay { background }
+            .background(.thinMaterial)
             .clipShape(shape)
             .overlay { outilineOverlay }
-    }
-    
-    private var background: some View {
-        theme.color.background
-            .opacity(colorScheme == .dark ? 0.4 : .zero)
-            .clipShape(shape)
-            .blendMode(.overlay)
-            .allowsHitTesting(false)
     }
     
     private var outilineOverlay: some View {
@@ -37,12 +28,14 @@ struct RyzeSurfaceModifier: ViewModifier {
             .stroke(
                 .linearGradient(
                     colors: [
-                        .white.opacity(colorScheme == .dark ? 0.1 : 0.3),
-                        .black.opacity(0.1)
+                        .secondary.opacity(0.2),
+                        .secondary.opacity(0.1),
+                        .secondary.opacity(0.2),
                     ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                lineWidth: 2.5
             )
     }
     

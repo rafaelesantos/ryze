@@ -17,4 +17,16 @@ public struct RyzeShape: Shape {
     public func path(in rect: CGRect) -> Path {
         base(rect)
     }
+    
+    public static var capsule: RyzeShape {
+        .init(shape: .capsule)
+    }
+    
+    public static var circle: RyzeShape {
+        .init(shape: .circle)
+    }
+    
+    public static func rounded(radius: CGFloat) -> RyzeShape {
+        .init(shape: .rect(cornerRadius: radius))
+    }
 }

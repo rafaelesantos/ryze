@@ -46,19 +46,4 @@ public enum RyzePreviewMockQuote: CaseIterable, Equatable {
         case .debugPrint: return .debugPrintDescription
         }
     }
-    
-    var emoji: String {
-        switch self {
-        case .forceUnwrap: return "💥"
-        case .mergeConflict: return "⚔️"
-        case .rubberDuck: return "🦆"
-        case .legacyCode: return "🧟‍♂️"
-        case .infiniteLoop: return "♾️"
-        case .spaghettiCode: return "🍝"
-        case .coffeeDriven: return "☕️"
-        case .fridayDeploy: return "🔥"
-        case .stackOverflowCopy: return "📋"
-        case .debugPrint: return "🐞"
-        }
-    }
 }

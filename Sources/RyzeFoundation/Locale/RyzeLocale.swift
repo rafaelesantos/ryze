@@ -95,4 +95,9 @@ public enum RyzeLocale: CaseIterable {
         style.calendar = calendar
         return style
     }
+    
+    public static var current: RyzeLocale {
+        let languageCode = Locale.current.language.languageCode?.identifier
+        return RyzeLocale.allCases.first(where: { $0.languageCode == languageCode }) ?? .englishUS
+    }
 }

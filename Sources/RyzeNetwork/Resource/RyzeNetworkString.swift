@@ -51,10 +51,15 @@ enum RyzeNetworkString: String, RyzeResourceString {
     
     case cacheInvertvalKey
     
-    func localized() -> String {
+    var localized: LocalizedStringKey {
+        LocalizedStringKey(rawValue)
+    }
+    
+    var value: String {
         String(
-            localized: .init(stringLiteral: self.rawValue),
-            bundle: .module
+            localized: .init(rawValue),
+            bundle: .module,
+            locale: RyzeLocale.current.rawValue
         )
     }
 }

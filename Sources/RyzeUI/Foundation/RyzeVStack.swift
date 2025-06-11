@@ -12,16 +12,16 @@ public struct RyzeVStack<Content: View>: View {
     
     private let alignment: HorizontalAlignment
     private let spacing: RyzeSpacing?
-    private let content: () -> Content
+    private let content: Content
     
     public init(
         alignment: HorizontalAlignment = .center,
         spacing: RyzeSpacing? = nil,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: () -> Content
     ) {
         self.alignment = alignment
         self.spacing = spacing
-        self.content = content
+        self.content = content()
     }
     
     public var body: some View {
@@ -29,21 +29,21 @@ public struct RyzeVStack<Content: View>: View {
             alignment: alignment,
             spacing: spacing?.rawValue(for: theme.spacing)
         ) {
-            content()
+            content
         }
     }
 }
 
 #Preview {
     RyzeVStack(alignment: .center, spacing: .medium) {
-        RyzeText(.ryzePreviewEmoji)
+        RyzeSymbol()
             .ryzePadding()
             .ryzeSurface()
-        RyzeText(.ryzePreviewEmoji)
+        RyzeSymbol()
             .ryzePadding()
             .ryzeSurface()
             .ryzeGlow()
-        RyzeText(.ryzePreviewEmoji)
+        RyzeSymbol()
             .ryzePadding()
             .ryzeSurface()
     }

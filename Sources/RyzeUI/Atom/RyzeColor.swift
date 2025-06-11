@@ -11,6 +11,7 @@ public protocol RyzeColorProtocol {
     var primary: Color { get }
     var secondary: Color { get }
     var background: Color { get }
+    var backgroundSecondary: Color { get }
     var shadow: Color { get }
     var surface: Color { get }
     var text: Color { get }
@@ -29,6 +30,7 @@ public enum RyzeColor: CaseIterable, Equatable {
     case primary
     case secondary
     case background
+    case backgroundSecondary
     case shadow
     case surface
     case text
@@ -49,6 +51,7 @@ public enum RyzeColor: CaseIterable, Equatable {
         case .primary: return theme.primary
         case .secondary: return theme.secondary
         case .background: return theme.background
+        case .backgroundSecondary: return theme.backgroundSecondary
         case .shadow: return theme.shadow
         case .surface: return theme.surface
         case .text: return theme.text

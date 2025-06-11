@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     static func localized(for key: RyzeNetworkString) -> Self {
-        key.localized()
+        key.value
     }
     
     static func localized(
@@ -17,7 +17,7 @@ extension String {
         with arguments: CVarArg...
     ) -> Self {
         String(
-            format: key.localized(),
+            format: key.value,
             arguments: arguments
         )
     }

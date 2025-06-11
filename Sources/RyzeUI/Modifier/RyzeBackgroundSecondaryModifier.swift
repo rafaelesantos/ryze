@@ -1,5 +1,5 @@
 //
-//  RyzeBackgroundModifier.swift
+//  RyzeBackgroundSecondaryModifier.swift
 //  Ryze
 //
 //  Created by Rafael Escaleira on 26/04/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct RyzeBackgroundModifier: ViewModifier {
+struct RyzeBackgroundSecondaryModifier: ViewModifier {
     @Environment(\.ryzeTheme) private var theme
     
     func body(content: Content) -> some View {
         content
-            .background(theme.color.background)
+            .background(theme.color.backgroundSecondary)
     }
 }
 
@@ -21,5 +21,5 @@ struct RyzeBackgroundModifier: ViewModifier {
         
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ryzeBackground()
+    .ryzeBackgroundSecondary()
 }

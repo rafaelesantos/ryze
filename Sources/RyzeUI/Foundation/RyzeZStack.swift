@@ -1,42 +1,36 @@
 //
-//  RyzeHStack.swift
+//  RyzeZStack.swift
 //  Ryze
 //
-//  Created by Rafael Escaleira on 26/04/25.
+//  Created by Rafael Escaleira on 08/06/25.
 //
-
 
 @_exported import SwiftUI
 
-public struct RyzeHStack<Content: View>: View {
+public struct RyzeZStack<Content: View>: View {
     @Environment(\.ryzeTheme) private var theme
     
-    private let alignment: VerticalAlignment
-    private let spacing: RyzeSpacing?
+    private let alignment: Alignment
     private let content: Content
     
     public init(
-        alignment: VerticalAlignment = .center,
-        spacing: RyzeSpacing? = .medium,
+        alignment: Alignment = .center,
+        spacing: RyzeSpacing? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.alignment = alignment
-        self.spacing = spacing
         self.content = content()
     }
     
     public var body: some View {
-        HStack(
-            alignment: alignment,
-            spacing: spacing?.rawValue(for: theme.spacing)
-        ) {
+        ZStack(alignment: alignment) {
             content
         }
     }
 }
 
 #Preview {
-    RyzeHStack(alignment: .center, spacing: .medium) {
+    RyzeZStack(alignment: .center, spacing: .medium) {
         RyzeSymbol()
             .ryzePadding()
             .ryzeSurface()

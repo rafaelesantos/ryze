@@ -20,9 +20,23 @@ struct RyzeDefaultFont: RyzeFontProtocol {
         )
     }
     
-    var headline: Font {
+    var title2: Font {
         font(
             family: family(name: .moderatMedium),
+            relativeTo: .title2
+        )
+    }
+    
+    var title3: Font {
+        font(
+            family: family(name: .moderatMedium),
+            relativeTo: .title3
+        )
+    }
+    
+    var headline: Font {
+        font(
+            family: family(name: .moderatBold),
             relativeTo: .headline
         )
     }
@@ -81,12 +95,15 @@ struct RyzeDefaultFont: RyzeFontProtocol {
         switch textStyle {
         case .largeTitle: return 34
         case .title: return 28
+        case .title2: return 22
+        case .title3: return 20
         case .headline: return 17
         case .subheadline: return 15
         case .body: return 17
         case .callout: return 16
         case .footnote: return 13
         case .caption: return 12
+        case .caption2: return 11
         default: return 17
         }
     }

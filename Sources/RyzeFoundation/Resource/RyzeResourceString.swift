@@ -6,5 +6,6 @@
 //
 
 public protocol RyzeResourceString {
-    func localized() -> String
+    var localized: LocalizedStringKey { get }
+    var value: String { get }
 }

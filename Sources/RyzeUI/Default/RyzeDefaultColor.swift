@@ -9,6 +9,7 @@ struct RyzeDefaultColor: RyzeColorProtocol {
     var primary: Color
     var secondary: Color
     var background: Color
+    var backgroundSecondary: Color
     var shadow: Color
     var surface: Color
     var text: Color
@@ -26,6 +27,7 @@ struct RyzeDefaultColor: RyzeColorProtocol {
         primary: Color = Color(.primary),
         secondary: Color = Color(.secondary),
         background: Color = Color(.background),
+        backgroundSecondary: Color = Color(.backgroundSecondary),
         shadow: Color = Color(.shadow),
         surface: Color = Color(.surface),
         text: Color = Color(.text),
@@ -42,6 +44,7 @@ struct RyzeDefaultColor: RyzeColorProtocol {
         self.primary = primary
         self.secondary = secondary
         self.background = background
+        self.backgroundSecondary = backgroundSecondary
         self.shadow = shadow
         self.surface = surface
         self.text = text

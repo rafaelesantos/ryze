@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "pt",
   "strings" : {
+    "" : {
+
+    },
     "coffeeDrivenDescription" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -24,13 +27,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coffee-First Development"
+            "value" : "☕ Coffee-First Development"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Café-First Development"
+            "value" : "☕ Café-First Development"
           }
         }
       }
@@ -58,13 +61,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zen Debugging"
+            "value" : "🧘 Zen Debugging"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Debugger Zen"
+            "value" : "🧘 Debugger Zen"
           }
         }
       }
@@ -92,13 +95,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brute Force"
+            "value" : "💥 Brute Force"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Força Bruta"
+            "value" : "💥 Força Bruta"
           }
         }
       }
@@ -126,13 +129,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deploy & Pray"
+            "value" : "🙏 Deploy & Pray"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sextou com Deploy"
+            "value" : "🙏 Sextou com Deploy"
           }
         }
       }
@@ -160,13 +163,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loop of Doom"
+            "value" : "🔁 Loop of Doom"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loop Infinito de Sofrimento"
+            "value" : "🔁 Loop Infinito de Sofrimento"
           }
         }
       }
@@ -194,13 +197,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ancestral Code"
+            "value" : "📜 Ancestral Code"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Código Ancestral"
+            "value" : "📜 Código Ancestral"
           }
         }
       }
@@ -228,13 +231,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Branch Wars"
+            "value" : "⚔️ Branch Wars"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guerra de Branches"
+            "value" : "⚔️ Guerra de Branches"
           }
         }
       }
@@ -262,13 +265,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rubber Duck Therapy"
+            "value" : "🦆 Rubber Duck Therapy"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terapeuta de Borracha"
+            "value" : "🦆 Terapeuta de Borracha"
           }
         }
       }
@@ -296,13 +299,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spaghetti Mess"
+            "value" : "🍝 Spaghetti Mess"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Massa Maldita"
+            "value" : "🍝 Massa Maldita"
           }
         }
       }
@@ -330,13 +333,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ctrl+C, In Code We Trust"
+            "value" : "📋 Ctrl+C, In Code We Trust"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ctrl+C, Ctrl+Fé"
+            "value" : "📋 Ctrl+C, Ctrl+Fé"
           }
         }
       }
