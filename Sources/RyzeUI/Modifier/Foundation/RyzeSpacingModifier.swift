@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RyzeSpacingModifier: ViewModifier {
+struct RyzeSpacingModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) private var theme
     private let edges: Edge.Set
     private let spacing: RyzeSpacing
@@ -26,4 +26,13 @@ struct RyzeSpacingModifier: ViewModifier {
             spacing.rawValue(for: theme.spacing)
         )
     }
+    
+    static var mock: some View {
+        RyzeHStack.mock
+            .ryzePadding()
+    }
+}
+
+#Preview {
+    RyzeSpacingModifier.mock
 }

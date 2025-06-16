@@ -5,7 +5,7 @@
 //  Created by Rafael Escaleira on 05/06/25.
 //
 
-struct RyzeFontModifier: ViewModifier {
+struct RyzeFontModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) var theme
     let font: RyzeFont
     
@@ -17,4 +17,14 @@ struct RyzeFontModifier: ViewModifier {
         content
             .font(font.rawValue(for: theme.font))
     }
+    
+    static var mock: some View {
+        Text(verbatim: .ryzePreviewDescription)
+            .ryze(font: .largeTitle)
+            .ryzePadding()
+    }
+}
+
+#Preview {
+    RyzeFontModifier.mock
 }

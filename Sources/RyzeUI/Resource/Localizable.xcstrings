@@ -242,6 +242,23 @@
         }
       }
     },
+    "placeholderEmail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe seu e-mail"
+          }
+        }
+      }
+    },
     "rubberDuckDescription" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -340,6 +357,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "📋 Ctrl+C, Ctrl+Fé"
+          }
+        }
+      }
+    },
+    "validateEmailFailureReason" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The provided email does not match the required format."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O e-mail fornecido não está no formato válido."
+          }
+        }
+      }
+    },
+    "validateEmailRecoverySuggestion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ensure the email is correctly formatted (e.g., name@example.com)."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Certifique-se de que o e-mail está formatado corretamente (ex: nome@exemplo.com)."
           }
         }
       }

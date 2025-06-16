@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct RyzeText: View {
+public struct RyzeText: RyzeView {
     @Environment(\.ryzeLoading) private var isLoading
     @Environment(\.ryzeNamespace) private var namespace
     
@@ -16,21 +16,21 @@ public struct RyzeText: View {
     private let color: RyzeColor
     
     public init(
-        _ text: String?,
+        _ localized: RyzeResourceString?,
         font: RyzeFont = .body,
         color: RyzeColor = .text
     ) {
-        self.text = text
+        self.text = localized?.value
         self.font = font
         self.color = color
     }
     
     public init(
-        _ localized: LocalizedStringResource,
+        _ text: String?,
         font: RyzeFont = .body,
         color: RyzeColor = .text
     ) {
-        self.text = String(localized: localized)
+        self.text = text
         self.font = font
         self.color = color
     }
@@ -46,44 +46,16 @@ public struct RyzeText: View {
             Text(text ?? .ryzePreviewDescription)
         }
     }
+    
+    public static var mock: some View {
+        RyzeText(
+            RyzeUIString.ryzePreviewDescription,
+            font: .title2,
+            color: .textSecondary
+        )
+    }
 }
 
 #Preview {
-    @Previewable @State var title: String = .ryzePreviewTitle
-    @Previewable @State var description: String?
-    @Previewable @State var isLoading: Bool = false
-    
-    RyzeHStack(spacing: .large) {
-        RyzeSymbol(
-            name: "person.crop.circle",
-            color: .text,
-            size: .extraSmall2,
-            mode: .hierarchical,
-            variants: .circle
-        )
-        .ryze(clip: .circle)
-        
-        RyzeVStack(alignment: .leading, spacing: .small) {
-            RyzeText(title)
-            RyzeText(description, font: .footnote, color: .textSecondary)
-                .ryze(loading: isLoading)
-        }
-        .ryze(alignment: .leading)
-        Spacer()
-    }
-    .ryzeSkeleton()
-    .ryze(alignment: .center)
-    .ryzePadding(.extraLarge)
-    .task {
-        Task {
-            try await Task.sleep(for: .seconds(2))
-            description = .ryzePreviewDescription
-            isLoading.toggle()
-            
-            try await Task.sleep(for: .seconds(4))
-            description = .ryzePreviewDescription
-            isLoading.toggle()
-        }
-    }
-    .ryze(loading: isLoading)
+    RyzeText.mock
 }

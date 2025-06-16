@@ -7,38 +7,32 @@
 
 @_exported import SwiftUI
 
-public struct RyzeList<Content: View>: View {
+public struct RyzeList: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
-    private let content: Content
+    private let content: any View
     
-    public init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> some View) {
         self.content = content()
     }
     
     public var body: some View {
-        List { content }
+        List {
+            AnyView(content)
+        }
+    }
+    
+    public static var mock: some View {
+        RyzeList {
+            RyzeText.mock
+            RyzeSection.mock
+            RyzeText.mock
+            RyzeHStack.mock
+            RyzeSection.mock
+        }
     }
 }
 
 #Preview {
-    RyzeList {
-        RyzeText(.ryzePreviewTitle)
-        
-        RyzeSection {
-            Button {} label: {
-                RyzeText(.ryzePreviewTitle)
-            }
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-        }
-        
-        RyzeSection {
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-        }
-    }
+    RyzeList.mock
 }

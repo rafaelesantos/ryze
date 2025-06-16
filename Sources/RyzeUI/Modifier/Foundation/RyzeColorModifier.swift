@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RyzeColorModifier: ViewModifier {
+struct RyzeColorModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) var theme
     let color: RyzeColor
     
@@ -19,4 +19,14 @@ struct RyzeColorModifier: ViewModifier {
         content
             .foregroundStyle(color.rawValue(for: theme.color))
     }
+    
+    static var mock: some View {
+        Text(verbatim: .ryzePreviewDescription)
+            .ryze(color: .secondary)
+            .ryzePadding()
+    }
+}
+
+#Preview {
+    RyzeColorModifier.mock
 }

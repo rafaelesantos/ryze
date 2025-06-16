@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 @_exported import RyzeFoundation
 
-public struct RyzeSymbol: View {
+public struct RyzeSymbol: RyzeView {
     private let name: String
     private let color: RyzeColor
     private let size: RyzeSize
@@ -38,14 +38,17 @@ public struct RyzeSymbol: View {
             .symbolRenderingMode(mode)
             .symbolVariant(variants)
     }
+    
+    public static var mock: some View {
+        RyzeSymbol(
+            name: "wifi",
+            color: .secondary,
+            variants: .fill,
+        )
+        .ryzeSymbol(effect: .variableColor.cumulative.dimInactiveLayers.reversing)
+    }
 }
 
 #Preview {
-    RyzeSymbol(
-        name: "wifi",
-        color: .secondary,
-        size: .ultraSmall,
-        variants: .fill,
-    )
-    .ryzeSymbol(effect: .variableColor.cumulative.dimInactiveLayers.reversing)
+    RyzeSymbol.mock
 }

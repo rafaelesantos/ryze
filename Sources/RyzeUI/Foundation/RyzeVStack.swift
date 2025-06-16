@@ -7,17 +7,17 @@
 
 @_exported import SwiftUI
 
-public struct RyzeVStack<Content: View>: View {
+public struct RyzeVStack: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
     private let alignment: HorizontalAlignment
     private let spacing: RyzeSpacing?
-    private let content: Content
+    private let content: any View
     
     public init(
         alignment: HorizontalAlignment = .center,
         spacing: RyzeSpacing? = nil,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> some View
     ) {
         self.alignment = alignment
         self.spacing = spacing
@@ -29,22 +29,19 @@ public struct RyzeVStack<Content: View>: View {
             alignment: alignment,
             spacing: spacing?.rawValue(for: theme.spacing)
         ) {
-            content
+            AnyView(content)
         }
+    }
+    
+    public static var mock: some View {
+        RyzeVStack(alignment: .leading) {
+            RyzeText.mock
+            RyzeText.mock
+        }
+        .ryze(width: .max)
     }
 }
 
 #Preview {
-    RyzeVStack(alignment: .center, spacing: .medium) {
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-            .ryzeGlow()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-    }
+    RyzeVStack.mock
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RyzeSizeModifier: ViewModifier {
+struct RyzeSizeModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) var theme
     
     let width: RyzeSize?
@@ -58,4 +58,15 @@ struct RyzeSizeModifier: ViewModifier {
                 )
             }
     }
+    
+    static var mock: some View {
+        Image(systemName: "square.and.arrow.up")
+            .resizable()
+            .scaledToFit()
+            .ryze(width: .medium, height: .medium, alignment: .center)
+    }
+}
+
+#Preview {
+    RyzeSizeModifier.mock
 }

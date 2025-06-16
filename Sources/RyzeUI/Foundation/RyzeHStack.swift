@@ -5,20 +5,19 @@
 //  Created by Rafael Escaleira on 26/04/25.
 //
 
-
 @_exported import SwiftUI
 
-public struct RyzeHStack<Content: View>: View {
+public struct RyzeHStack: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
     private let alignment: VerticalAlignment
     private let spacing: RyzeSpacing?
-    private let content: Content
+    private let content: any View
     
     public init(
         alignment: VerticalAlignment = .center,
         spacing: RyzeSpacing? = .medium,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> some View
     ) {
         self.alignment = alignment
         self.spacing = spacing
@@ -30,22 +29,23 @@ public struct RyzeHStack<Content: View>: View {
             alignment: alignment,
             spacing: spacing?.rawValue(for: theme.spacing)
         ) {
-            content
+            AnyView(content)
+        }
+    }
+    
+    public static var mock: some View {
+        RyzeHStack(
+            alignment: .center,
+            spacing: .medium
+        ) {
+            RyzeSymbol.mock
+                .ryzePadding()
+                .ryzeSurface()
+            RyzeVStack.mock
         }
     }
 }
 
 #Preview {
-    RyzeHStack(alignment: .center, spacing: .medium) {
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-            .ryzeGlow()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-    }
+    RyzeHStack.mock
 }

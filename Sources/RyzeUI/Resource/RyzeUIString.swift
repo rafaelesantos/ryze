@@ -30,6 +30,11 @@ enum RyzeUIString: String, RyzeResourceString, CaseIterable {
     case debugPrintTitle
     case debugPrintDescription
     
+    case validateEmailFailureReason
+    case validateEmailRecoverySuggestion
+    
+    case placeholderEmail
+    
     var localized: LocalizedStringKey {
         LocalizedStringKey(rawValue)
     }

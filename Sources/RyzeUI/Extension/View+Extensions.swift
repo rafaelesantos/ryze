@@ -76,12 +76,12 @@ public extension View {
         self.modifier(RyzeBackgroundSecondaryModifier())
     }
     
-    func ryzeSurface(radius: RyzeRadius = .capsule) -> some View {
-        self.modifier(RyzeSurfaceModifier(radius: radius))
+    func ryzeSurface() -> some View {
+        self.modifier(RyzeSurfaceModifier())
     }
     
-    func ryzeGlow(blur: RyzeSpacing = .medium) -> some View {
-        self.modifier(RyzeGlowModifier(blur: blur))
+    func ryzeGlow(for color: Color? = nil) -> some View {
+        self.modifier(RyzeGlowModifier(color: color))
     }
     
     func ryzeSymbol<T: IndefiniteSymbolEffect & SymbolEffect>(
@@ -154,6 +154,10 @@ public extension View {
     
     func ryze(clip shape: RyzeShape) -> some View {
         self.clipShape(shape)
+    }
+    
+    func ryzeGlass() -> some View {
+        self.glassEffect(.regular.interactive())
     }
     
     func ryzePreview(

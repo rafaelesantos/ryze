@@ -7,19 +7,22 @@
 
 import SwiftUI
 
-struct RyzeBackgroundModifier: ViewModifier {
+struct RyzeBackgroundModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) private var theme
     
     func body(content: Content) -> some View {
         content
             .background(theme.color.background)
     }
+    
+    static var mock: some View {
+        RyzeHStack.mock
+            .ryze(width: .max, height: .max)
+            .ryzePadding()
+            .ryzeBackground()
+    }
 }
 
 #Preview {
-    RyzeVStack {
-        
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ryzeBackground()
+    RyzeBackgroundModifier.mock
 }

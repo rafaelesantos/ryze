@@ -8,15 +8,15 @@
 @_exported import SwiftUI
 @_exported import RyzeFoundation
 
-public struct RyzePreview<Content: View>: View {
+public struct RyzePreview<Content: RyzeView>: View {
     let colorSchemes: [ColorScheme] = [.light, .dark]
     let locales: [RyzeLocale] = [.portugueseBR, .englishUS]
     let orientations: [InterfaceOrientation] = [.portrait, .landscapeRight]
     let layouts: [PreviewLayout] = [.sizeThatFits, .device]
-    let content: Content
+    let content: Content.Type
     
-    public init(@ViewBuilder content: () -> Content) {
-        self.content = content()
+    public init(content: Content.Type) {
+        self.content = content
     }
     
     public var body: some View {
@@ -29,7 +29,7 @@ public struct RyzePreview<Content: View>: View {
                         let layout = layouts[$0]
                         ForEach(colorSchemes.indices, id: \.self) {
                             let colorScheme = colorSchemes[$0]
-                            content
+                            content.mock
                                 .ryzePreview(
                                     layout: layout,
                                     orientation: orientation,

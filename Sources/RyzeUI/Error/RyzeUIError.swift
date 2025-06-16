@@ -8,20 +8,16 @@
 @_exported import RyzeFoundation
 
 public enum RyzeUIError: RyzeError {
-    
     case systemSymbolNotFound
+    case emailValidationFailed
+    
     
     public var description: String {
         switch self {
         case .systemSymbolNotFound:
             return "❌ SF Symbol not found in the system."
-        }
-    }
-    
-    public var errorDescription: String? {
-        switch self {
-        case .systemSymbolNotFound:
-            return "❗️The requested SF Symbol could not be located."
+        case .emailValidationFailed:
+            return "Email validation failed."
         }
     }
     
@@ -29,6 +25,8 @@ public enum RyzeUIError: RyzeError {
         switch self {
         case .systemSymbolNotFound:
             return "🔍 The system does not contain the specified SF Symbol."
+        case .emailValidationFailed:
+            return RyzeUIString.validateEmailFailureReason.value
         }
     }
     
@@ -36,6 +34,8 @@ public enum RyzeUIError: RyzeError {
         switch self {
         case .systemSymbolNotFound:
             return "💡 Check if the SF Symbol name is correct and available on this iOS version."
+        case .emailValidationFailed:
+            return RyzeUIString.validateEmailRecoverySuggestion.value
         }
     }
     

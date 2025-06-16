@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RyzeSkeletonModifier: ViewModifier {
+struct RyzeSkeletonModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) private var theme
     @Environment(\.ryzeLoading) private var isLoading
     
@@ -26,4 +26,15 @@ struct RyzeSkeletonModifier: ViewModifier {
         }
         .animation(theme.animation, value: isLoading)
     }
+    
+    static var mock: some View {
+        RyzeHStack.mock
+            .ryzeSkeleton()
+            .ryzePadding()
+            .ryze(loading: true)
+    }
+}
+
+#Preview {
+    RyzeSkeletonModifier.mock
 }

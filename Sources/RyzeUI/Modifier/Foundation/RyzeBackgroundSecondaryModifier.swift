@@ -7,19 +7,22 @@
 
 import SwiftUI
 
-struct RyzeBackgroundSecondaryModifier: ViewModifier {
+struct RyzeBackgroundSecondaryModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) private var theme
     
     func body(content: Content) -> some View {
         content
             .background(theme.color.backgroundSecondary)
     }
+    
+    static var mock: some View {
+        RyzeHStack.mock
+            .ryze(width: .max, height: .max)
+            .ryzePadding()
+            .ryzeBackgroundSecondary()
+    }
 }
 
 #Preview {
-    RyzeVStack {
-        
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ryzeBackgroundSecondary()
+    RyzeBackgroundSecondaryModifier.mock
 }

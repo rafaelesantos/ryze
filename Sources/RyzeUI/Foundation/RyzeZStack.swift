@@ -7,16 +7,16 @@
 
 @_exported import SwiftUI
 
-public struct RyzeZStack<Content: View>: View {
+public struct RyzeZStack: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
     private let alignment: Alignment
-    private let content: Content
+    private let content: any View
     
     public init(
         alignment: Alignment = .center,
         spacing: RyzeSpacing? = nil,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> some View
     ) {
         self.alignment = alignment
         self.content = content()
@@ -24,22 +24,29 @@ public struct RyzeZStack<Content: View>: View {
     
     public var body: some View {
         ZStack(alignment: alignment) {
-            content
+            AnyView(content)
         }
+    }
+    
+    public static var mock: some View {
+        RyzeZStack {
+            RyzeSymbol(
+                name: "circle.fill",
+                color: .secondary,
+                size: .medium,
+                mode: .hierarchical
+            )
+            
+            RyzeSymbol(
+                name: "apple.logo",
+                color: .primary,
+                size: .small
+            )
+        }
+        .ryzeGlass()
     }
 }
 
 #Preview {
-    RyzeZStack(alignment: .center, spacing: .medium) {
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-            .ryzeGlow()
-        RyzeSymbol()
-            .ryzePadding()
-            .ryzeSurface()
-    }
+    RyzeZStack.mock
 }

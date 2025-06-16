@@ -9,7 +9,7 @@ import SwiftUI
 import CoreMotion
 
 #if os(iOS)
-struct RyzeParallaxModifier: ViewModifier {
+struct RyzeParallaxModifier: RyzeViewModifier {
     @Environment(\.ryzeTheme) var theme
     @State var motion: CMDeviceMotion? = nil
     
@@ -64,29 +64,7 @@ struct RyzeParallaxModifier: ViewModifier {
                     axis: (x: .zero, y: 1, z: .zero)
                 )
             
-            RyzeShape(shape: .circle)
-                .fill(.white.opacity(0.6))
-                .frame(
-                    width: width != nil ? widthValue ?? .zero * 0.233 : nil,
-                    height: height != nil ? heightValue ?? .zero * 0.233 : nil
-                )
-                .blur(radius: min(widthValue ?? .zero, heightValue ?? .zero) * 0.133)
-                .offset(
-                    x: motion != nil ? motion?.gravity.x ?? .zero * 400 : .zero,
-                    y: circleYOffset
-                )
-                .mask {
-                    RyzeShape(shape: .rect(cornerRadius: theme.radius.large))
-                        .ryze(width: width, height: height)
-                        .rotation3DEffect(
-                            .degrees(rotation.x),
-                            axis: (x: 1, y: .zero, z: .zero)
-                        )
-                        .rotation3DEffect(
-                            .degrees(rotation.y),
-                            axis: (x: .zero, y: 1, z: .zero)
-                        )
-                }
+           shineView
         }
         .onAppear(perform: onAppear)
     }
@@ -100,16 +78,48 @@ struct RyzeParallaxModifier: ViewModifier {
             }
         }
     }
+    
+    private var shineView: some View {
+        RyzeShape(shape: .circle)
+            .fill(.white.opacity(0.6))
+            .frame(
+                width: width != nil ? widthValue ?? .zero * 0.233 : nil,
+                height: height != nil ? heightValue ?? .zero * 0.233 : nil
+            )
+            .blur(radius: min(widthValue ?? .zero, heightValue ?? .zero) * 0.133)
+            .offset(
+                x: motion != nil ? motion?.gravity.x ?? .zero * 400 : .zero,
+                y: circleYOffset
+            )
+            .mask { shineMaskView }
+    }
+    
+    private var shineMaskView: some View {
+        RyzeShape(shape: .rect(cornerRadius: theme.radius.large))
+            .ryze(width: width, height: height)
+            .rotation3DEffect(
+                .degrees(rotation.x),
+                axis: (x: 1, y: .zero, z: .zero)
+            )
+            .rotation3DEffect(
+                .degrees(rotation.y),
+                axis: (x: .zero, y: 1, z: .zero)
+            )
+    }
+    
+    static var mock: some View {
+        RyzeSymbol(
+            name: "rainbow",
+            size: .medium2,
+            mode: .multicolor
+        )
+        .ryzePadding(.extraLarge)
+        .ryzeSurface()
+        .ryzeParallax(height: .medium2)
+    }
 }
 
 #Preview {
-    RyzeSymbol(
-        name: "rainbow",
-        size: .medium2,
-        mode: .multicolor
-    )
-    .ryzePadding(.extraLarge)
-    .ryzeSurface()
-    .modifier(RyzeParallaxModifier(width: .medium2, height: .medium2))
+    RyzeParallaxModifier.mock
 }
 #endif

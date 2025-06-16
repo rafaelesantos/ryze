@@ -6,37 +6,62 @@
 //
 
 @_exported import SwiftUI
+@_exported import RyzeFoundation
 
-public struct RyzeSection<Header: View, Content: View, Footer: View>: View {
-    let header: Header
-    let content: Content
-    let footer: Footer
+public struct RyzeSection: RyzeView {
+    let header: any View
+    let content: any View
+    let footer: any View
     
     public init(
-        @ViewBuilder header: () -> Header,
-        @ViewBuilder content: () -> Content,
-        @ViewBuilder footer: () -> Footer
+        @ViewBuilder header: () -> some View,
+        @ViewBuilder content: () -> some View,
+        @ViewBuilder footer: () -> some View
     ) {
         self.header = header()
         self.content = content()
         self.footer = footer()
     }
     
-    public var body: some View {
-        Section {
-            content
-        } header: {
-            header.headerProminence(.increased)
-        } footer: {
-            footer
-        }
-    }
-}
-
-public extension RyzeSection where Header == EmptyView, Content : View, Footer == EmptyView {
-    init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> some View) {
         self.content = content()
         self.header = EmptyView()
         self.footer = EmptyView()
     }
+    
+    public init(
+        header: RyzeResourceString? = nil,
+        footer: RyzeResourceString? = nil,
+        @ViewBuilder content: () -> some View
+    ) {
+        self.content = content()
+        self.header = header == nil ? EmptyView() : RyzeText(header, font: .footnote, color: .textSecondary)
+        self.footer = footer == nil ? EmptyView() : RyzeText(footer, font: .footnote, color: .textSecondary)
+    }
+    
+    public var body: some View {
+        Section {
+            AnyView(content)
+        } header: {
+            AnyView(header)
+                .headerProminence(.increased)
+        } footer: {
+            AnyView(footer)
+        }
+    }
+    
+    public static var mock: some View {
+        RyzeSection(
+            header: RyzeUIString.ryzePreviewTitle,
+            footer: RyzeUIString.ryzePreviewDescription
+        ) {
+            RyzeText.mock
+            RyzeHStack.mock
+            RyzeVStack.mock
+        }
+    }
+}
+
+#Preview {
+    RyzeSection.mock
 }

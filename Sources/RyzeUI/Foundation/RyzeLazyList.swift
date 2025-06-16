@@ -7,54 +7,33 @@
 
 @_exported import SwiftUI
 
-public struct RyzeLazyList<Content: View>: View {
-    private let content: Content
+public struct RyzeLazyList: RyzeView {
+    @Environment(\.ryzeTheme) var theme
+    private let content: any View
     
-    public init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> some View) {
         self.content = content()
     }
     
     public var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading) {
-                _VariadicView.Tree(RyzeLazyListLayout()) {
-                    content
-                }
+            LazyVStack(alignment: .leading, spacing: theme.spacing.medium) {
+                AnyView(content)
             }
             .ryzePadding()
         }
     }
     
-    struct RyzeLazyListLayout: _VariadicView_MultiViewRoot {
-        @ViewBuilder
-        func body(children: _VariadicView.Children) -> some View {
-            ForEach(children) { child in
-                child
-                    .ryzePadding(.vertical, spacing: .small)
-                    .ryzePadding(.horizontal, spacing: .medium)
-            }
+    public static var mock: some View {
+        RyzeLazyList {
+            RyzeText.mock
+            RyzeHStack.mock
+            RyzeText.mock
+            RyzeVStack.mock
         }
     }
 }
 
 #Preview {
-    RyzeLazyList {
-        RyzeText(.ryzePreviewTitle)
-        
-        RyzeSection {
-            Button {} label: {
-                RyzeText(.ryzePreviewTitle)
-            }
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-        }
-        
-        RyzeSection {
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-            RyzeText(.ryzePreviewTitle)
-        }
-    }
+    RyzeLazyList.mock
 }
