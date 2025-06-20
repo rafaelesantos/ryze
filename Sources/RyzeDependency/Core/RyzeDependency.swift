@@ -7,4 +7,5 @@
 
 public protocol RyzeDependency {
     static func registerDependency()
+    static func resolve() -> Self
 }
