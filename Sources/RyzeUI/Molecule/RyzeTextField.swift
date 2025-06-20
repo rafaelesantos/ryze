@@ -117,6 +117,7 @@ public struct RyzeTextField: RyzeView {
             font: needFocus ? .footnote : .body,
             color: .disabled
         )
+        .lineLimit(1)
         .ryzePadding()
         .offset(y: needFocus ? -40 : .zero)
     }

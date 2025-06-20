@@ -5,29 +5,32 @@
 //  Created by Rafael Escaleira on 24/03/25.
 //
 
-public actor RyzeDependencyContainer {
-    private static var dependencies: [String: Any] = [:]
+public actor RyzeDependencyContainer: Sendable {
+    public static let shared = RyzeDependencyContainer()
     
-    @discardableResult public static func register<T>(
+    private var dependencies: [ObjectIdentifier: Any] = [:]
+    
+    @discardableResult public func register<T>(
         for type: T.Type,
         dependency: @Sendable @escaping () -> T
     ) -> RyzeDependencyContainer.Type {
-        let id = String(describing: type)
+        let id = ObjectIdentifier(type)
         dependencies[id] = dependency()
         return RyzeDependencyContainer.self
     }
     
-    public static func resolve<T>(for type: T.Type) -> T {
-        let id = String(describing: type)
+    public func resolve<T>(for type: T.Type) -> T {
+        let id = ObjectIdentifier(type)
         guard let dependency = dependencies[id] as? T else {
-            RyzeDependencyError.unregisteredDependencyDescription(id).log()
+            RyzeDependencyError.unregisteredDependencyDescription(id.debugDescription).log()
             fatalError()
         }
         return dependency
     }
     
-    public static func checkDependencyRegistered<T>(for type: T.Type) -> Bool {
-        let dependency = dependencies["\(type)"] as? T
+    public func checkDependencyRegistered<T>(for type: T.Type) -> Bool {
+        let id = ObjectIdentifier(type)
+        let dependency = dependencies[id] as? T
         return dependency != nil
     }
 }
