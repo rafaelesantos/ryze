@@ -56,8 +56,10 @@ public struct RyzeTextField: RyzeView {
         )
         .focused($isFocused)
         .autocorrectionDisabled()
+        #if os(iOS)
         .keyboardType(configuration.contentType.rawValue)
         .textInputAutocapitalization(configuration.autocapitalizationType.rawValue)
+        #endif
         .submitLabel(configuration.submitLabel)
         .ryze(alignment: .leading)
         .ryzePadding(.horizontal, spacing: .extraLarge)
