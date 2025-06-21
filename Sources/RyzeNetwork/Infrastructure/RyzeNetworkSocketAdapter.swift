@@ -5,11 +5,12 @@
 //  Created by Rafael Escaleira on 15/05/25.
 //
 
-@_exported import Foundation
-@_exported import RyzeFoundation
-@_exported import Network
+import Network
+import Foundation
+import RyzeFoundation
+import RyzeDependency
 
-public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
+actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private var connection: NWConnection?
     
     nonisolated private var logger: Logger {
@@ -19,9 +20,9 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         )
     }
     
-    public init() {}
+    init() {}
     
-    public func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error> {
+    func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error> {
         guard let endpoint = await request.endpoint else {
             logger.error("❌ Invalid URL for request: \(String(describing: request))")
             throw RyzeNetworkError.invalidURL
@@ -115,7 +116,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    public func send(message: String) async throws {
+    func send(message: String) async throws {
         guard let content = message.breakLine.data(using: .utf8) else {
             logger.error("❌ Failed to encode message: \(message)")
             throw RyzeNetworkError.badRequest
@@ -139,5 +140,11 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     
     private func disconnect() {
         connection?.cancel()
+    }
+    
+    static func registerDependency() async throws {
+        try await RyzeDependencyContainer.shared.register(for: RyzeNetworkSocketClient.self) {
+            RyzeNetworkSocketAdapter()
+        }
     }
 }

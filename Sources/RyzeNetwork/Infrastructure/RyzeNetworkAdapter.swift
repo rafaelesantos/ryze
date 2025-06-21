@@ -5,10 +5,12 @@
 //  Created by Rafael Escaleira on 02/04/25.
 //
 
-@_exported import Foundation
-@_exported import RyzeFoundation
+import Foundation
+import RyzeFoundation
+import RyzeDependency
 
-public actor RyzeNetworkAdapter: RyzeNetworkClient {
+actor RyzeNetworkAdapter: RyzeNetworkClient {
+    typealias Resolved = RyzeNetworkAdapter
     private let session: URLSession
     
     nonisolated private var logger: Logger {
@@ -18,11 +20,11 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         )
     }
     
-    public init(session: URLSession = .shared) {
+    init(session: URLSession = .shared) {
         self.session = session
     }
     
-    public func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
+    func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
         on request: Request,
         with dateStyle: DateFormatter.Style?,
         for type: Response.Type
@@ -85,5 +87,11 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         let urlRequest = try await endpoint.request
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
         logger.info("🗄️ Cached response stored for \(urlRequest.url?.absoluteString ?? "unknown URL") with interval \(cacheInterval)")
+    }
+    
+    static func registerDependency() async throws {
+        try await RyzeDependencyContainer.shared.register(for: RyzeNetworkClient.self) {
+            RyzeNetworkAdapter()
+        }
     }
 }

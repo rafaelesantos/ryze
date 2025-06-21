@@ -6,6 +6,6 @@
 //
 
 public protocol RyzeDependency {
-    static func registerDependency()
-    static func resolve() -> Self
+    static func registerDependency() async throws
+    static func resolve() async throws -> Self
 }

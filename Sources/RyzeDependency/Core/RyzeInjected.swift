@@ -7,14 +7,15 @@
 
 @_exported import Foundation
 
-@MainActor
 @propertyWrapper
-public struct RyzeInjected<T: Sendable> {
+public struct RyzeInjected<T: RyzeDependency> {
     private var dependency: T
     
-    public var wrappedValue: T { dependency }
+    public var wrappedValue: T {
+        dependency
+    }
     
-    public init() async {
-        dependency = await RyzeDependencyContainer.shared.resolve(for: T.self)
+    public init() async throws {
+        dependency = try await T.resolve()
     }
 }

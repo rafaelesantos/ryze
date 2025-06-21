@@ -7,11 +7,18 @@
 
 @_exported import Foundation
 @_exported import RyzeFoundation
+@_exported import RyzeDependency
 
-public protocol RyzeNetworkClient: Sendable {
+public protocol RyzeNetworkClient: Sendable, RyzeDependency {
     func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
         on request: Request,
         with dateStyle: DateFormatter.Style?,
         for type: Response.Type
     ) async throws -> Response
+}
+
+public extension RyzeNetworkClient {
+    static func resolve() async throws -> Self {
+        try await RyzeDependencyContainer.shared.resolve(for: Self.self)
+    }
 }

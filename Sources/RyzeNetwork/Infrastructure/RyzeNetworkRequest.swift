@@ -7,8 +7,9 @@
 
 @_exported import Foundation
 @_exported import RyzeFoundation
+@_exported import RyzeDependency
 
-public protocol RyzeNetworkRequest: Sendable {
+public protocol RyzeNetworkRequest: Sendable, RyzeDependency {
     var client: RyzeNetworkClient { get async }
     var endpoint: RyzeNetworkEndpoint? { get async }
     
