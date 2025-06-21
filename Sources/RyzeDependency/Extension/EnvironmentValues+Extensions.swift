@@ -8,5 +8,5 @@
 @_exported import SwiftUI
 
 public extension EnvironmentValues {
-    @Entry var container: RyzeDependencyContainer = .shared
+    @Entry var container = RyzeDependency.self
 }

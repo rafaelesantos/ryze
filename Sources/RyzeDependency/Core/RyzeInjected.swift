@@ -8,14 +8,14 @@
 @_exported import Foundation
 
 @propertyWrapper
-public struct RyzeInjected<T: RyzeDependency> {
-    private var dependency: T
+public struct RyzeInjected<T> {
+    var dependency: T
     
     public var wrappedValue: T {
         dependency
     }
     
-    public init() async throws {
-        dependency = try await T.resolve()
+    public init() {
+        dependency = RyzeDependency.resolve(for: T.self)
     }
 }

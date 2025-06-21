@@ -16,9 +16,3 @@ public protocol RyzeNetworkClient: Sendable, RyzeDependency {
         for type: Response.Type
     ) async throws -> Response
 }
-
-public extension RyzeNetworkClient {
-    static func resolve() async throws -> Self {
-        try await RyzeDependencyContainer.shared.resolve(for: Self.self)
-    }
-}
