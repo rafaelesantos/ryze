@@ -116,20 +116,20 @@ actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    func send(message: String) async throws {
-        guard let content = message.breakLine.data(using: .utf8) else {
-            logger.error("❌ Failed to encode message: \(message)")
+    func send(command: RyzeNetworkSocketCommand) async throws {
+        guard let content = command.message.breakLine.data(using: .utf8) else {
+            logger.error("❌ Failed to encode message: \(command.message)")
             throw RyzeNetworkError.badRequest
         }
         
-        logger.info("✉️ Sending message: \(message)")
+        logger.info("✉️ Sending message: \(command.message)")
         
         try await withCheckedThrowingContinuation { continuation in
             connection?.send(
                 content: content,
                 completion: .contentProcessed { error in
                     guard let error else {
-                        self.logger.info("✅ Message sent successfully: \(message)")
+                        self.logger.info("✅ Message sent successfully: \(command.message)")
                         return continuation.resume()
                     }
                     self.logger.error("⚠️ Error while sending message: \(error.localizedDescription)")
