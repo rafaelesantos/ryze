@@ -7,7 +7,6 @@
 
 import Foundation
 import RyzeFoundation
-import RyzeDependency
 
 actor RyzeNetworkAdapter: RyzeNetworkClient {
     typealias Resolved = RyzeNetworkAdapter
@@ -89,7 +88,7 @@ actor RyzeNetworkAdapter: RyzeNetworkClient {
         logger.info("🗄️ Cached response stored for \(urlRequest.url?.absoluteString ?? "unknown URL") with interval \(cacheInterval)")
     }
     
-    static func registerDependency() throws {
+    static func registerDependency() async throws {
         try RyzeDependency.register(for: RyzeNetworkClient.self) {
             RyzeNetworkAdapter()
         }

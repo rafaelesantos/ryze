@@ -18,14 +18,14 @@ let package = Package(
         .library(name: "Ryze", type: .static, targets: ["RyzeFoundation", "RyzeDependency", "RyzeNetwork", "RyzeArchitecture", "RyzeUI"]),
         .library(name: "RyzeFoundation", type: .static, targets: ["RyzeFoundation"]),
         .library(name: "RyzeDependency", type: .static, targets: ["RyzeFoundation", "RyzeDependency"]),
-        .library(name: "RyzeNetwork", type: .static, targets: ["RyzeFoundation", "RyzeNetwork"]),
+        .library(name: "RyzeNetwork", type: .static, targets: ["RyzeFoundation", "RyzeNetwork", "RyzeDependency"]),
         .library(name: "RyzeArchitecture", type: .static, targets: ["RyzeFoundation", "RyzeArchitecture"]),
         .library(name: "RyzeUI", type: .static, targets: ["RyzeFoundation", "RyzeUI"])
     ],
     targets: [
         .target(name: "RyzeFoundation"),
         .target(name: "RyzeDependency", dependencies: ["RyzeFoundation"]),
-        .target(name: "RyzeNetwork", dependencies: ["RyzeFoundation"]),
+        .target(name: "RyzeNetwork", dependencies: ["RyzeFoundation", "RyzeDependency"]),
         .target(name: "RyzeArchitecture", dependencies: ["RyzeFoundation"]),
         .target(name: "RyzeUI", dependencies: ["RyzeFoundation"]),
         .executableTarget(name: "RyzePreview", dependencies: ["RyzeFoundation", "RyzeUI"])
