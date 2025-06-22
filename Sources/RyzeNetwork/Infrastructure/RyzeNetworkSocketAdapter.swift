@@ -143,7 +143,7 @@ actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     }
     
     static func registerDependency() async throws {
-        try await RyzeDependencyContainer.shared.register(for: RyzeNetworkSocketClient.self) {
+        try RyzeDependency.register(for: RyzeNetworkSocketClient.self) {
             RyzeNetworkSocketAdapter()
         }
     }

@@ -9,7 +9,7 @@
 @_exported import RyzeFoundation
 @_exported import RyzeDependency
 
-public protocol RyzeNetworkSocketClient: Sendable, RyzeDependency {
+public protocol RyzeNetworkSocketClient: Sendable, RyzeDependencyProtocol {
     func send(message: String) async throws
     func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error>
 }
