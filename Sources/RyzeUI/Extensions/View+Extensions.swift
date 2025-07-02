@@ -13,6 +13,10 @@ public extension View {
         self.background(style)
     }
     
+    func ryze(tint color: RyzeColor) -> some View {
+        self.tint(color)
+    }
+    
     func ryze(theme: RyzeThemeProtocol) -> some View {
         self.environment(\.ryzeTheme, theme)
     }

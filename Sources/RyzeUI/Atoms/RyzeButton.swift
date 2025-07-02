@@ -8,19 +8,22 @@
 @_exported import SwiftUI
 
 public struct RyzeButton: RyzeView {
+    let role: ButtonRole?
     let action: () -> Void
     let label: any View
     
     public init(
+        role: ButtonRole? = .none,
         action: @escaping () -> Void,
         label: () -> some View
     ) {
+        self.role = role
         self.action = action
         self.label = label()
     }
     
     public var body: some View {
-        Button {
+        Button(role: role) {
             action()
         } label: {
             AnyView(label)

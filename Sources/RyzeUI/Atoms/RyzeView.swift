@@ -8,5 +8,9 @@
 @_exported import SwiftUI
 
 public protocol RyzeView: View, RyzeUIMock {
-    
+    var accessibility: RyzeAccessibility? { get }
+}
+
+public extension RyzeView {
+    var accessibility: RyzeAccessibility? { nil }
 }

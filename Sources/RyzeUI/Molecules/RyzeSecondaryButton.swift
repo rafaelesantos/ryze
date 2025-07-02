@@ -1,13 +1,13 @@
 //
-//  RyzePrimaryButton.swift
+//  RyzeSecondaryButton.swift
 //  Ryze
 //
-//  Created by Rafael Escaleira on 29/06/25.
+//  Created by Rafael Escaleira on 02/07/25.
 //
 
 @_exported import SwiftUI
 
-public struct RyzePrimaryButton: RyzeView {
+public struct RyzeSecondaryButton: RyzeView {
     @Environment(\.ryzeTheme) var theme
     
     let localized: RyzeResourceString?
@@ -41,7 +41,7 @@ public struct RyzePrimaryButton: RyzeView {
             RyzeText(localized)
         }
         .ryze(tint: tint)
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(.bordered)
         .controlSize(.large)
         .buttonBorderShape(.capsule)
         .ryze(item: accessibility) { view, accessibility in
@@ -53,12 +53,12 @@ public struct RyzePrimaryButton: RyzeView {
     }
     
     public static var mock: some View {
-        RyzePrimaryButton(RyzeUIString.coffeeDrivenTitle, role: .cancel) {
+        RyzeSecondaryButton(RyzeUIString.ryzePreviewTitle, role: .cancel) {
             
         }
     }
 }
 
 #Preview {
-    RyzePrimaryButton.mock.padding()
+    RyzeSecondaryButton.mock.padding()
 }

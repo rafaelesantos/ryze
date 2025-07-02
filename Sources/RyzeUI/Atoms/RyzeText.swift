@@ -13,12 +13,12 @@ public struct RyzeText: RyzeView {
     
     private let text: String?
     private let font: RyzeFont
-    private let color: RyzeColor
+    private let color: RyzeColor?
     
     public init(
         _ localized: RyzeResourceString?,
         font: RyzeFont = .body,
-        color: RyzeColor = .text
+        color: RyzeColor? = nil
     ) {
         self.text = localized?.value
         self.font = font
@@ -28,7 +28,7 @@ public struct RyzeText: RyzeView {
     public init(
         _ text: String?,
         font: RyzeFont = .body,
-        color: RyzeColor = .text
+        color: RyzeColor? = nil
     ) {
         self.text = text
         self.font = font
@@ -43,7 +43,9 @@ public struct RyzeText: RyzeView {
         } else if let text {
             Text(text)
                 .ryze(font: font)
-                .foregroundStyle(color)
+                .ryze(item: color) { text, color in
+                    text.foregroundStyle(color)
+                }
                 .matchedGeometryEffect(id: text, in: namespace)
         }
     }
