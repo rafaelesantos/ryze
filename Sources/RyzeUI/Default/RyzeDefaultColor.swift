@@ -22,6 +22,8 @@ struct RyzeDefaultColor: RyzeColorProtocol {
     var disabled: Color
     var hover: Color
     var pressed: Color
+    var white: Color
+    var black: Color
     
     init(
         primary: Color = Color(.primary),
@@ -39,7 +41,9 @@ struct RyzeDefaultColor: RyzeColorProtocol {
         info: Color = Color(.info),
         disabled: Color = Color(.disabled),
         hover: Color = Color(.hover),
-        pressed: Color = Color(.pressed)
+        pressed: Color = Color(.pressed),
+        white: Color = .white,
+        black: Color = .black
     ) {
         self.primary = primary
         self.secondary = secondary
@@ -57,5 +61,7 @@ struct RyzeDefaultColor: RyzeColorProtocol {
         self.disabled = disabled
         self.hover = hover
         self.pressed = pressed
+        self.white = white
+        self.black = black
     }
 }

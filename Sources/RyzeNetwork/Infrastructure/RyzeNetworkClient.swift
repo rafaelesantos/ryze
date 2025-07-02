@@ -7,9 +7,8 @@
 
 @_exported import Foundation
 @_exported import RyzeFoundation
-@_exported import RyzeDependency
 
-public protocol RyzeNetworkClient: Sendable, RyzeDependencyProtocol {
+public protocol RyzeNetworkClient: Sendable {
     func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
         on request: Request,
         with dateStyle: DateFormatter.Style?,

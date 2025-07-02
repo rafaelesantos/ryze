@@ -87,10 +87,4 @@ actor RyzeNetworkAdapter: RyzeNetworkClient {
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
         logger.info("🗄️ Cached response stored for \(urlRequest.url?.absoluteString ?? "unknown URL") with interval \(cacheInterval)")
     }
-    
-    static func registerDependency() async throws {
-        try RyzeDependency.register(for: RyzeNetworkClient.self) {
-            RyzeNetworkAdapter()
-        }
-    }
 }

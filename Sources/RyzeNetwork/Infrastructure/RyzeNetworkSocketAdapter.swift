@@ -8,7 +8,6 @@
 import Network
 import Foundation
 import RyzeFoundation
-import RyzeDependency
 
 actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private var connection: NWConnection?
@@ -140,11 +139,5 @@ actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     
     private func disconnect() {
         connection?.cancel()
-    }
-    
-    static func registerDependency() async throws {
-        try RyzeDependency.register(for: RyzeNetworkSocketClient.self) {
-            RyzeNetworkSocketAdapter()
-        }
     }
 }

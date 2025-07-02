@@ -14,7 +14,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
     var spacing: RyzeSpacingProtocol
     var radius: RyzeRadiusProtocol
     var size: RyzeSizeProtocol
-    var glassmorphic: RyzeGlassmorphicProtocol
     var locale: RyzeLocale
     var animation: Animation?
     var transition: AnyTransition
@@ -27,7 +26,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
         spacing: RyzeSpacingProtocol = RyzeDefaultSpacing(),
         radius: RyzeRadiusProtocol = RyzeDefaultRadius(),
         size: RyzeSizeProtocol = RyzeDefaultSize(),
-        glassmorphic: RyzeGlassmorphicProtocol = RyzeDefaultGlassmorphic(),
         locale: RyzeLocale = .current,
         animation: Animation? = .interactiveSpring(duration: 0.8),
         transition: AnyTransition = .scale,
@@ -39,7 +37,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
         self.spacing = spacing
         self.radius = radius
         self.size = size
-        self.glassmorphic = glassmorphic
         self.locale = locale
         self.animation = animation
         self.transition = transition
