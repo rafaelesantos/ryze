@@ -10,6 +10,10 @@ public extension String {
         self + "\n"
     }
     
+    var space: String {
+        self + " "
+    }
+    
     var double: Double? {
         Double(self)
     }
