@@ -181,4 +181,16 @@ public extension View {
                 )
             )
     }
+    
+    @ViewBuilder
+    func ryze(accessibility: RyzeAccessibility?) -> some View {
+        if let accessibility = accessibility {
+            self
+                .accessibilityLabel(accessibility.label.value)
+                .accessibilityHint(accessibility.hint.value)
+                .accessibilityIdentifier(accessibility.identifier.value)
+        } else {
+            self
+        }
+    }
 }

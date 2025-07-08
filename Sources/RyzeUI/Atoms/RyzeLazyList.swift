@@ -9,7 +9,7 @@
 
 public struct RyzeLazyList: RyzeView {
     @Environment(\.ryzeTheme) var theme
-    private let content: any View
+    let content: any View
     
     public init(@ViewBuilder content: () -> some View) {
         self.content = content()

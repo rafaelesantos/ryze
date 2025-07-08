@@ -55,9 +55,9 @@ public struct RyzeSection: RyzeView {
             header: RyzeUIString.ryzePreviewTitle,
             footer: RyzeUIString.ryzePreviewDescription
         ) {
-            RyzeText.mock
+            RyzeBodyText.mock
             RyzeHStack.mock
-            RyzeVStack.mock
+            RyzeFootnoteText.mock
         }
     }
 }

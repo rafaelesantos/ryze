@@ -31,34 +31,32 @@ public struct RyzeSecondaryButton: RyzeView {
     var tint: RyzeColor {
         switch role {
         case .destructive: return .error
-        case .cancel: return .secondary
         default: return .primary
         }
     }
     
     public var body: some View {
-        RyzeButton(action: action) {
+        RyzeButton(
+            accessibility,
+            role: role,
+            action: action
+        ) {
             RyzeText(localized)
         }
         .ryze(tint: tint)
         .buttonStyle(.bordered)
         .controlSize(.large)
         .buttonBorderShape(.capsule)
-        .ryze(item: accessibility) { view, accessibility in
-            view
-                .accessibilityLabel(accessibility.label.value)
-                .accessibilityHint(accessibility.hint.value)
-                .accessibilityIdentifier(accessibility.identifier.value)
-        }
+        .glassEffect(.regular.interactive())
     }
     
     public static var mock: some View {
-        RyzeSecondaryButton(RyzeUIString.ryzePreviewTitle, role: .cancel) {
+        RyzeSecondaryButton(RyzeUIString.ryzePreviewTitle) {
             
         }
     }
 }
 
 #Preview {
-    RyzeSecondaryButton.mock.padding()
+    RyzeSecondaryButton.mock.ryzePadding()
 }

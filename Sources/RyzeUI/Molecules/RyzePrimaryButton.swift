@@ -31,25 +31,22 @@ public struct RyzePrimaryButton: RyzeView {
     var tint: RyzeColor {
         switch role {
         case .destructive: return .error
-        case .cancel: return .secondary
         default: return .primary
         }
     }
     
     public var body: some View {
-        RyzeButton(action: action) {
+        RyzeButton(
+            accessibility,
+            role: role,
+            action: action
+        ) {
             RyzeText(localized)
         }
         .ryze(tint: tint)
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(.glassProminent)
         .controlSize(.large)
         .buttonBorderShape(.capsule)
-        .ryze(item: accessibility) { view, accessibility in
-            view
-                .accessibilityLabel(accessibility.label.value)
-                .accessibilityHint(accessibility.hint.value)
-                .accessibilityIdentifier(accessibility.identifier.value)
-        }
     }
     
     public static var mock: some View {
@@ -60,5 +57,5 @@ public struct RyzePrimaryButton: RyzeView {
 }
 
 #Preview {
-    RyzePrimaryButton.mock.padding()
+    RyzePrimaryButton.mock.ryzePadding()
 }

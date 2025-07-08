@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeShape: Shape {
-    private var base: @Sendable (CGRect) -> Path
+    var base: @Sendable (CGRect) -> Path
     
     public init<S: Shape>(shape: S) {
         base = shape.path(in:)

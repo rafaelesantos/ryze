@@ -8,7 +8,7 @@
 import Foundation
 import RyzeFoundation
 
-actor RyzeNetworkAdapter: RyzeNetworkClient {
+public actor RyzeNetworkAdapter: RyzeNetworkClient {
     typealias Resolved = RyzeNetworkAdapter
     private let session: URLSession
     
@@ -19,11 +19,11 @@ actor RyzeNetworkAdapter: RyzeNetworkClient {
         )
     }
     
-    init(session: URLSession = .shared) {
+    public init(session: URLSession = .shared) {
         self.session = session
     }
     
-    func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
+    public func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
         on request: Request,
         with dateStyle: DateFormatter.Style?,
         for type: Response.Type

@@ -12,11 +12,15 @@ public struct RyzeButton: RyzeView {
     let action: () -> Void
     let label: any View
     
+    public var accessibility: RyzeAccessibility?
+    
     public init(
+        _ accessibility: RyzeAccessibility? = nil,
         role: ButtonRole? = .none,
         action: @escaping () -> Void,
         label: () -> some View
     ) {
+        self.accessibility = accessibility
         self.role = role
         self.action = action
         self.label = label()
@@ -28,6 +32,7 @@ public struct RyzeButton: RyzeView {
         } label: {
             AnyView(label)
         }
+        .ryze(accessibility: accessibility)
     }
     
     public static var mock: some View {

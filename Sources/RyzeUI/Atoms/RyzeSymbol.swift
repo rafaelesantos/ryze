@@ -11,11 +11,11 @@
 public struct RyzeSymbol: RyzeView {
     @Environment(\.ryzeLoading) var isLoading
     
-    private let name: String
-    private let color: RyzeColor
-    private let size: RyzeSize
-    private let mode: SymbolRenderingMode
-    private let variants: SymbolVariants
+    let name: String
+    let color: RyzeColor
+    let size: RyzeSize
+    let mode: SymbolRenderingMode
+    let variants: SymbolVariants
     
     public init(
         name: String = "infinity",

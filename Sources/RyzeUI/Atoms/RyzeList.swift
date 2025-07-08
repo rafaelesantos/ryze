@@ -10,7 +10,7 @@
 public struct RyzeList: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
-    private let content: any View
+    let content: any View
     
     public init(@ViewBuilder content: () -> some View) {
         self.content = content()
@@ -24,11 +24,11 @@ public struct RyzeList: RyzeView {
     
     public static var mock: some View {
         RyzeList {
-            RyzeText.mock
+            RyzeBodyText.mock
+            RyzePrimaryButton.mock
             RyzeSection.mock
-            RyzeText.mock
-            RyzeHStack.mock
-            RyzeSection.mock
+            RyzeFootnoteText.mock
+            RyzeSecondaryButton.mock
         }
     }
 }

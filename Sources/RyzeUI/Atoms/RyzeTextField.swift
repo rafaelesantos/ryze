@@ -14,13 +14,16 @@ public struct RyzeTextField: RyzeView {
     @Binding var text: String
     @State var error: RyzeError?
     
-    private let configuration: RyzeTextFieldConfiguration
+    let configuration: RyzeTextFieldConfiguration
+    public var accessibility: RyzeAccessibility?
     
     public init(
         text: Binding<String>,
+        _ accessibility: RyzeAccessibility? = nil,
         configuration: RyzeTextFieldConfiguration
     ) {
         self._text = text
+        self.accessibility = accessibility
         self.configuration = configuration
     }
     
@@ -46,6 +49,7 @@ public struct RyzeTextField: RyzeView {
             .animation(theme.animation, value: error?.localizedDescription)
             .onChange(of: text) { validate() }
         }
+        .ryze(accessibility: accessibility)
     }
     
     var contentTextField: some View {

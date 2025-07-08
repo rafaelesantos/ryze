@@ -10,14 +10,18 @@
 public struct RyzeZStack: RyzeView {
     @Environment(\.ryzeTheme) private var theme
     
-    private let alignment: Alignment
-    private let content: any View
+    let alignment: Alignment
+    let content: any View
+    
+    public var accessibility: RyzeAccessibility?
     
     public init(
+        _ accessibility: RyzeAccessibility? = nil,
         alignment: Alignment = .center,
         spacing: RyzeSpacing? = nil,
         @ViewBuilder content: () -> some View
     ) {
+        self.accessibility = accessibility
         self.alignment = alignment
         self.content = content()
     }
@@ -26,6 +30,7 @@ public struct RyzeZStack: RyzeView {
         ZStack(alignment: alignment) {
             AnyView(content)
         }
+        .ryze(accessibility: accessibility)
     }
     
     public static var mock: some View {

@@ -11,26 +11,32 @@ public struct RyzeText: RyzeView {
     @Environment(\.ryzeLoading) private var isLoading
     @Environment(\.ryzeNamespace) private var namespace
     
-    private let text: String?
-    private let font: RyzeFont
-    private let color: RyzeColor?
+    let text: String?
+    let font: RyzeFont
+    let color: RyzeColor?
+    
+    public var accessibility: RyzeAccessibility?
     
     public init(
         _ localized: RyzeResourceString?,
+        _ accessibility: RyzeAccessibility? = nil,
         font: RyzeFont = .body,
         color: RyzeColor? = nil
     ) {
         self.text = localized?.value
+        self.accessibility = accessibility
         self.font = font
         self.color = color
     }
     
     public init(
         _ text: String?,
+        _ accessibility: RyzeAccessibility? = nil,
         font: RyzeFont = .body,
         color: RyzeColor? = nil
     ) {
         self.text = text
+        self.accessibility = accessibility
         self.font = font
         self.color = color
     }
@@ -47,6 +53,7 @@ public struct RyzeText: RyzeView {
                     text.foregroundStyle(color)
                 }
                 .matchedGeometryEffect(id: text, in: namespace)
+                .ryze(accessibility: accessibility)
         }
     }
     

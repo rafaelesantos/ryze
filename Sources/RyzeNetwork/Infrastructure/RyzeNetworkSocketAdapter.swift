@@ -9,7 +9,7 @@ import Network
 import Foundation
 import RyzeFoundation
 
-actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
+public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private var connection: NWConnection?
     
     nonisolated private var logger: Logger {
@@ -19,9 +19,9 @@ actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         )
     }
     
-    init() {}
+    public init() {}
     
-    func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error> {
+    public func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error> {
         guard let endpoint = await request.endpoint else {
             logger.error("❌ Invalid URL for request: \(String(describing: request))")
             throw RyzeNetworkError.invalidURL
@@ -115,7 +115,7 @@ actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    func send(command: RyzeNetworkSocketCommand) async throws {
+    public func send(command: RyzeNetworkSocketCommand) async throws {
         guard let content = command.message.breakLine.data(using: .utf8) else {
             logger.error("❌ Failed to encode message: \(command.message)")
             throw RyzeNetworkError.badRequest
