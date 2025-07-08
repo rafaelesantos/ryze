@@ -10,8 +10,16 @@ public extension String {
         self + "\n"
     }
     
+    static var breakLine: String {
+        "\n"
+    }
+    
     var space: String {
         self + " "
+    }
+    
+    static var space: String {
+        " "
     }
     
     var double: Double? {
