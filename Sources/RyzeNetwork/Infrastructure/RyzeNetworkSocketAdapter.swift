@@ -21,7 +21,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     
     public init() {}
     
-    public func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error> {
+    public func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncStream<String> {
         guard let endpoint = await request.endpoint else {
             logger.error("❌ Invalid URL for request: \(String(describing: request))")
             throw RyzeNetworkError.invalidURL
@@ -36,9 +36,9 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             using: endpoint.parameters
         )
         
-        return AsyncThrowingStream { continuation in
+        return AsyncStream { continuation in
             Task(priority: .high) {
-                let stream = try await connect()
+                let stream = await connect()
                 for await status in stream {
                     switch status {
                     case .open:
@@ -61,7 +61,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    private func connect() async throws -> AsyncStream<RyzeNetworkSocketStatus> {
+    private func connect() async -> AsyncStream<RyzeNetworkSocketStatus> {
         AsyncStream { continuation in
             connection?.stateUpdateHandler = { state in
                 switch state {
@@ -89,16 +89,14 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    private func receive(on continuation: AsyncThrowingStream<String, Error>.Continuation) async {
+    private func receive(on continuation: AsyncStream<String>.Continuation) async {
         connection?.receive(
             minimumIncompleteLength: 1,
             maximumLength: 65536
         ) { [weak self] content, contentContext, isComplete, error in
-            guard let self else { return }
             
             if let error = error {
-                self.logger.error("⚠️ Error while receiving data: \(error)")
-                return continuation.finish(throwing: error)
+                self?.logger.error("⚠️ Error while receiving data: \(error)")
             }
             
             if let data = content, let value = String(data: data, encoding: .utf8) {
@@ -106,11 +104,11 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             }
             
             if isComplete {
-                self.logger.info("🔚 Data reception complete")
-                return continuation.finish()
+                self?.logger.info("🔚 Data reception complete")
+                continuation.finish()
             }
             
-            Task(priority: .high) { await self.receive(on: continuation) }
+            Task(priority: .high) { await self?.receive(on: continuation) }
         }
     }
     

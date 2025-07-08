@@ -10,5 +10,5 @@
 
 public protocol RyzeNetworkSocketClient: Sendable {
     func send(command: RyzeNetworkSocketCommand) async throws
-    func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncThrowingStream<String, Error>
+    func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncStream<String>
 }
