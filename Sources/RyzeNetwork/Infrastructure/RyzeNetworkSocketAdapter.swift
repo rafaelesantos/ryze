@@ -102,7 +102,6 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             }
             
             if let data = content, let value = String(data: data, encoding: .utf8) {
-                self.logger.info("📩 Message received: \(value)")
                 continuation.yield(value)
             }
             
