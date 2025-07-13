@@ -9,8 +9,10 @@
 @_exported import RyzeFoundation
 
 public protocol RyzeNetworkRequest: Sendable {
+    associatedtype Endpoint: RyzeNetworkEndpoint
+    
     var client: RyzeNetworkClient { get async }
-    var endpoint: RyzeNetworkEndpoint? { get async }
+    var endpoint: Endpoint? { get async }
     
     func decode<T: RyzeEntity>(
         data: Data,
