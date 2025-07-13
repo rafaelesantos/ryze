@@ -33,6 +33,14 @@ extension RyzeEntity {
             logger.error("\(error.localizedDescription)")
         }
     }
+    
+    public var description: String {
+        do {
+            return try json
+        } catch {
+            return error.localizedDescription
+        }
+    }
 }
 
 extension Array: RyzeEntity where Element: RyzeEntity {}
