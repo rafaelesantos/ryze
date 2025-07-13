@@ -32,7 +32,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             logger.error("❌ Invalid URL for request: \(String(describing: request))")
             throw RyzeNetworkError.invalidURL
         }
-        let urlRequest = try await endpoint.request
+        let urlRequest = try endpoint.request
         logger.info("🚀 Starting request to \(urlRequest.url?.absoluteString ?? "unknown URL")")
         
         do {
@@ -55,7 +55,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         with dateStyle: DateFormatter.Style?,
         for type: Response.Type
     ) async throws -> Response {
-        let urlRequest = try await endpoint.request
+        let urlRequest = try endpoint.request
         
         guard let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
               let cacheInterval = cacheResponse.value(forKey: .cacheIntervalKey) as? Date,
@@ -75,7 +75,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         with result: (Data, URLResponse)
     ) async throws {
         guard let cacheInterval = endpoint.cacheInterval else {
-            let url = await endpoint.url?.absoluteString
+            let url = endpoint.url?.absoluteString
             logger.info("⏱️ No cache interval provided for \(url ?? "unknown URL"), skipping cache storage.")
             return
         }
@@ -83,7 +83,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         let cacheResponse = CachedURLResponse(response: result.1, data: result.0)
         cacheResponse.setValue(cacheInterval, forKey: .cacheIntervalKey)
 
-        let urlRequest = try await endpoint.request
+        let urlRequest = try endpoint.request
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
         logger.info("🗄️ Cached response stored for \(urlRequest.url?.absoluteString ?? "unknown URL") with interval \(cacheInterval)")
     }

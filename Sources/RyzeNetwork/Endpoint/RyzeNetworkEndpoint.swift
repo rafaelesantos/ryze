@@ -13,8 +13,8 @@ public protocol RyzeNetworkEndpoint: RyzeLogger, Sendable {
     var host: String { get }
     var path: String { get }
     var method: RyzeNetworkMethod { get }
-    var queryItems: RyzeNetworkQuery { get }
-    var headers: RyzeNetworkHeader { get }
+    var queryItems: [URLQueryItem] { get }
+    var headers: [String: String] { get }
     var body: Encodable? { get }
     var cacheInterval: Date? { get }
 }
@@ -22,31 +22,27 @@ public protocol RyzeNetworkEndpoint: RyzeLogger, Sendable {
 public extension RyzeNetworkEndpoint {
     var scheme: RyzeNetworkScheme { .https }
     var method: RyzeNetworkMethod { .get }
-    var queryItems: RyzeNetworkQuery { .empty() }
-    var headers: RyzeNetworkHeader { .empty() }
+    var queryItems: [URLQueryItem] { [] }
+    var headers: [String: String] { [:] }
     var body: Encodable? { nil }
     
     var url: URL? {
-        get async {
-            await urlComponents.url
-        }
+        urlComponents.url
     }
     
     private var urlComponents: URLComponents {
-        get async {
-            var  urlComponents = URLComponents()
-            urlComponents.scheme = scheme.rawValue
-            urlComponents.host = host
-            urlComponents.path = path
-            urlComponents.queryItems = await queryItems.get()
-            return urlComponents
-        }
+        var  urlComponents = URLComponents()
+        urlComponents.scheme = scheme.rawValue
+        urlComponents.host = host
+        urlComponents.path = path
+        urlComponents.queryItems = queryItems
+        return urlComponents
     }
     
     var request: URLRequest {
-        get async throws {
+        get throws {
             log()
-            guard let url = await url else {
+            guard let url = url else {
                 let error = RyzeNetworkError.invalidURL
                 error.log()
                 throw error
@@ -59,7 +55,7 @@ public extension RyzeNetworkEndpoint {
                 cachePolicy: cachePolicy
             )
             urlRequest.httpMethod = method.rawValue
-            urlRequest.allHTTPHeaderFields = await headers.get()
+            urlRequest.allHTTPHeaderFields = headers
             guard let body = try body?.data() else { return urlRequest }
             urlRequest.httpBody = body
             return urlRequest
@@ -74,19 +70,17 @@ public extension RyzeNetworkEndpoint {
     }
     
     func log() {
-        Task(priority: .low) {
-            if let url = await url {
-                logger.info("🌐 URL: \(url.absoluteString)")
-            }
-            
-            if await !headers.get().isEmpty {
-                let headers = await headers.get()
-                logger.info("📋 Headers: \(headers)")
-            }
-            
-            if let body = try? body?.json {
-                logger.info("📝 Body: \(body)")
-            }
+        if let url {
+            logger.info("🌐 URL: \(url.absoluteString)")
+        }
+        
+        if  !headers.isEmpty {
+            let headers = headers
+            logger.info("📋 Headers: \(headers)")
+        }
+        
+        if let body = try? body?.json {
+            logger.info("📝 Body: \(body)")
         }
     }
 }
