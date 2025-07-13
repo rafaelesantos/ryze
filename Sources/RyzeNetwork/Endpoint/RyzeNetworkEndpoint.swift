@@ -66,6 +66,13 @@ public extension RyzeNetworkEndpoint {
         }
     }
     
+    var logger: Logger {
+        Logger(
+            subsystem: Bundle.module.bundleIdentifier ?? String(describing: self),
+            category: String(describing: self)
+        )
+    }
+    
     func log() {
         Task(priority: .low) {
             if let url = await url {
