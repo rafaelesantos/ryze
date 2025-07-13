@@ -16,7 +16,7 @@ public protocol RyzeNetworkEndpoint: RyzeLogger, Sendable {
     var queryItems: [URLQueryItem] { get }
     var headers: [String: String] { get }
     var body: Encodable? { get }
-    var cacheInterval: Date? { get }
+    var cacheInterval: TimeInterval? { get }
 }
 
 public extension RyzeNetworkEndpoint {
@@ -25,6 +25,7 @@ public extension RyzeNetworkEndpoint {
     var queryItems: [URLQueryItem] { [] }
     var headers: [String: String] { [:] }
     var body: Encodable? { nil }
+    var cacheInterval: TimeInterval? { nil }
     
     var url: URL? {
         urlComponents.url
