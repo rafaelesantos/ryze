@@ -5,7 +5,7 @@
 //  Created by Rafael Escaleira on 29/03/25.
 //
 
-public actor RyzeNetworkHeader {
+public actor RyzeNetworkHeader: Sendable {
     private var headers: [String: String] = [:]
     
     public static func makeHeader() -> RyzeNetworkHeader {
