@@ -9,13 +9,21 @@
 
 public struct RyzeFootnoteText: RyzeView {
     let text: String?
+    let weight: Font.Weight?
+    let design: Font.Design?
     public var accessibility: RyzeAccessibility?
+    
     
     public init(
         _ localized: RyzeResourceString?,
         _ accessibility: RyzeAccessibility? = nil,
+        weight: Font.Weight? = nil,
+        design: Font.Design? = nil
     ) {
         self.text = localized?.value
+        self.accessibility = accessibility
+        self.weight = weight
+        self.design = design
     }
     
     public var body: some View {
@@ -23,6 +31,8 @@ public struct RyzeFootnoteText: RyzeView {
             text,
             accessibility,
             font: .footnote,
+            weight: weight,
+            design: design,
             color: .textSecondary
         )
     }
