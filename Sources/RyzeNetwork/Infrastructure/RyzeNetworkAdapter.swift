@@ -15,7 +15,6 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         self.session = session
     }
     
-    
     public func request<Request>(
         on request: Request,
         with formatter: DateFormatter?
@@ -46,8 +45,9 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
     ) async throws -> Request.Response {
         let urlRequest = try await request.endpoint.request
         let logger = RyzeNetworkLogger()
-
-        guard let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
+        
+        guard await request.endpoint.cacheInterval != nil,
+              let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
               let cacheInterval = cacheResponse.value(forKey: .cacheIntervalKey) as? Date,
               cacheInterval > .now
         else {
