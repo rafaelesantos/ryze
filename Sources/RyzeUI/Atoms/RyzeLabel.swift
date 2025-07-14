@@ -10,52 +10,43 @@
 public struct RyzeLabel: RyzeView {
     @Environment(\.ryzeLoading) private var isLoading
     
-    let localized: RyzeResourceString?
+    let text: String?
     let symbol: String
-    let font: Font
-    let color: RyzeColor?
-    let mode: SymbolRenderingMode
-    let variants: SymbolVariants
     
     public var accessibility: RyzeAccessibility?
+    
+    public init(
+        _ text: String?,
+        _ accessibility: RyzeAccessibility? = nil,
+        symbol: String,
+    ) {
+        self.text = text
+        self.accessibility = accessibility
+        self.symbol = symbol
+    }
     
     public init(
         _ localized: RyzeResourceString?,
         _ accessibility: RyzeAccessibility? = nil,
         symbol: String,
-        font: Font = .body,
-        color: RyzeColor? = nil,
-        mode: SymbolRenderingMode = .hierarchical,
-        variants: SymbolVariants = .none
     ) {
-        self.localized = localized
+        self.text = localized?.value
         self.accessibility = accessibility
         self.symbol = symbol
-        self.font = font
-        self.color = color
-        self.mode = mode
-        self.variants = variants
     }
     
     public var body: some View {
         if isLoading {
             Label(
-                localized?.value ?? .ryzePreviewDescription,
+                text ?? .ryzePreviewDescription,
                 systemImage: symbol
             )
             .ryzeSkeleton()
-        } else if let localized {
+        } else if let text {
             Label(
-                localized.value,
+                text,
                 systemImage: symbol
             )
-            .symbolRenderingMode(mode)
-            .symbolVariant(variants)
-            .ryze(accessibility: accessibility)
-            .ryze(font: font)
-            .ryze(item: color) { text, color in
-                text.foregroundStyle(color)
-            }
         }
     }
     

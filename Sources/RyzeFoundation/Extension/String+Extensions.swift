@@ -45,6 +45,7 @@ public extension String {
         case compact = "yyyyMMdd"
         case monthDayYearText = "MMM dd, yyyy"
         case dayMonthYearText = "dd MMM yyyy"
+        case dayMonthText = "dd MMMM"
         case iso8601WithMilliseconds = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         case time24h = "HH:mm"
         case time12h = "hh:mm a"
