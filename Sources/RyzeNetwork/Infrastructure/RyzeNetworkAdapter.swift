@@ -32,7 +32,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             logger.warning(.cacheMiss(urlRequest.url?.absoluteString, error.localizedDescription))
             let (data, response) = try await session.data(for: urlRequest)
             
-            try await storeCache(on: endpoint, with: (data, response))
+            try await storeCache(on: endpoint, data: data, response: response)
             logger.info(.responseCached(urlRequest.url?.absoluteString))
             
             return try await request.decode(data: data, with: formatter)
@@ -47,8 +47,9 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         let logger = RyzeNetworkLogger()
         
         guard await request.endpoint.cacheInterval != nil,
+              let url = urlRequest.url?.absoluteString,
               let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
-              let cacheInterval = cacheResponse.userInfo?[CachedURLResponse.cacheIntervalKey] as? Date,
+              let cacheInterval = cacheResponse.userInfo?[url] as? Date,
               cacheInterval > .now
         else {
             logger.info(.noCache(urlRequest.url?.absoluteString))
@@ -62,19 +63,23 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
     
     private func storeCache(
         on endpoint: RyzeNetworkEndpoint,
-        with result: (Data, URLResponse)
+        data: Data,
+        response: URLResponse
     ) async throws {
         let logger = RyzeNetworkLogger()
-        guard let cacheInterval = endpoint.cacheInterval else {
+        guard let cacheInterval = endpoint.cacheInterval,
+              let url = endpoint.url?.absoluteString
+        else {
             let url = endpoint.url?.absoluteString
             logger.info(.noCacheInterval(url))
             return
         }
 
+        let userInfo: [String: TimeInterval] = [url: cacheInterval]
         let cacheResponse = CachedURLResponse(
-            response: result.1,
-            data: result.0,
-            userInfo: [CachedURLResponse.cacheIntervalKey: cacheInterval],
+            response: response,
+            data: data,
+            userInfo: userInfo,
             storagePolicy: .allowed
         )
 
@@ -82,8 +87,4 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
         logger.info(.cacheStored(urlRequest.url?.absoluteString, cacheInterval))
     }
-}
-
-private extension CachedURLResponse {
-    static let cacheIntervalKey = "refds.network.cache.key"
 }
