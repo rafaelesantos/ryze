@@ -13,7 +13,7 @@ public struct RyzeLabel: RyzeView {
     
     let localized: RyzeResourceString?
     let symbol: String
-    let font: RyzeFont
+    let font: Font
     let color: RyzeColor?
     let mode: SymbolRenderingMode
     let variants: SymbolVariants
@@ -24,7 +24,7 @@ public struct RyzeLabel: RyzeView {
         _ localized: RyzeResourceString?,
         _ accessibility: RyzeAccessibility? = nil,
         symbol: String,
-        font: RyzeFont = .body,
+        font: Font = .body,
         color: RyzeColor? = nil,
         mode: SymbolRenderingMode = .hierarchical,
         variants: SymbolVariants = .none

@@ -9,7 +9,6 @@
 @_exported import RyzeFoundation
 
 public protocol RyzeThemeProtocol {
-    var font: RyzeFontProtocol { get }
     var color: RyzeColorProtocol { get }
     var spacing: RyzeSpacingProtocol { get }
     var radius: RyzeRadiusProtocol { get }

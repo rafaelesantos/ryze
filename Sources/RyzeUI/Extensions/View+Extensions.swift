@@ -41,8 +41,14 @@ public extension View {
         self.multilineTextAlignment(alignment)
     }
     
-    func ryze(font: RyzeFont) -> some View {
-        self.modifier(RyzeFontModifier(font: font))
+    func ryze(
+        font: Font = .body,
+        weight: Font.Weight? = nil,
+        design: Font.Design? = nil
+    ) -> some View {
+        self.font(font)
+            .fontWeight(weight)
+            .fontDesign(design)
     }
     
     func ryze(

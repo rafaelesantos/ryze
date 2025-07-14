@@ -12,7 +12,7 @@ public struct RyzeText: RyzeView {
     @Environment(\.ryzeNamespace) private var namespace
     
     let text: String?
-    let font: RyzeFont
+    let font: Font
     let color: RyzeColor?
     
     public var accessibility: RyzeAccessibility?
@@ -20,7 +20,7 @@ public struct RyzeText: RyzeView {
     public init(
         _ localized: RyzeResourceString?,
         _ accessibility: RyzeAccessibility? = nil,
-        font: RyzeFont = .body,
+        font: Font = .body,
         color: RyzeColor? = nil
     ) {
         self.text = localized?.value
@@ -32,7 +32,7 @@ public struct RyzeText: RyzeView {
     public init(
         _ text: String?,
         _ accessibility: RyzeAccessibility? = nil,
-        font: RyzeFont = .body,
+        font: Font = .body,
         color: RyzeColor? = nil
     ) {
         self.text = text

@@ -9,7 +9,6 @@ import SwiftUI
 import RyzeFoundation
 
 struct RyzeDefaultTheme: RyzeThemeProtocol {
-    var font: RyzeFontProtocol
     var color: RyzeColorProtocol
     var spacing: RyzeSpacingProtocol
     var radius: RyzeRadiusProtocol
@@ -21,7 +20,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
     var colorScheme: ColorScheme?
     
     init(
-        font: RyzeFontProtocol = RyzeDefaultFont(),
         color: RyzeColorProtocol = RyzeDefaultColor(),
         spacing: RyzeSpacingProtocol = RyzeDefaultSpacing(),
         radius: RyzeRadiusProtocol = RyzeDefaultRadius(),
@@ -32,7 +30,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
         feedback: SensoryFeedback = .impact,
         colorScheme: ColorScheme? = nil
     ) {
-        self.font = font
         self.color = color
         self.spacing = spacing
         self.radius = radius
