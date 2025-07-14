@@ -13,7 +13,7 @@ public protocol RyzeNetworkEndpoint: RyzeLogger, Sendable {
     var host: String { get }
     var path: String { get }
     var method: RyzeNetworkMethod { get }
-    var queryItems: [URLQueryItem] { get }
+    var queryItems: [URLQueryItem]? { get }
     var headers: [String: String] { get }
     var body: Encodable? { get }
     var cacheInterval: TimeInterval? { get }
@@ -22,7 +22,7 @@ public protocol RyzeNetworkEndpoint: RyzeLogger, Sendable {
 public extension RyzeNetworkEndpoint {
     var scheme: RyzeNetworkScheme { .https }
     var method: RyzeNetworkMethod { .get }
-    var queryItems: [URLQueryItem] { [] }
+    var queryItems: [URLQueryItem]? { nil }
     var headers: [String: String] { [:] }
     var body: Encodable? { nil }
     var cacheInterval: TimeInterval? { nil }
