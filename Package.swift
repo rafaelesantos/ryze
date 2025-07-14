@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "Ryze",
-            type: .dynamic,
+            type: .static,
             targets: [
                 "RyzeFoundation",
                 "RyzeNetwork",
