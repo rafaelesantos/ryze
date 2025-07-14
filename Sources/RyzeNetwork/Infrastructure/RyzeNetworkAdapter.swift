@@ -48,7 +48,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         
         guard await request.endpoint.cacheInterval != nil,
               let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
-              let cacheInterval = cacheResponse.value(forKey: .cacheIntervalKey) as? Date,
+              let cacheInterval = cacheResponse.userInfo?[CachedURLResponse.cacheIntervalKey] as? Date,
               cacheInterval > .now
         else {
             logger.info(.noCache(urlRequest.url?.absoluteString))
@@ -71,11 +71,19 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             return
         }
 
-        let cacheResponse = CachedURLResponse(response: result.1, data: result.0)
-        cacheResponse.setValue(cacheInterval, forKey: .cacheIntervalKey)
+        let cacheResponse = CachedURLResponse(
+            response: result.1,
+            data: result.0,
+            userInfo: [CachedURLResponse.cacheIntervalKey: cacheInterval],
+            storagePolicy: .allowed
+        )
 
         let urlRequest = try endpoint.request
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
         logger.info(.cacheStored(urlRequest.url?.absoluteString, cacheInterval))
     }
+}
+
+private extension CachedURLResponse {
+    static let cacheIntervalKey = "refds.network.cache.key"
 }
