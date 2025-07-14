@@ -1,5 +1,5 @@
 //
-//  String.swift
+//  String+Extensions.swift
 //  Ryze
 //
 //  Created by Rafael Escaleira on 02/04/25.
