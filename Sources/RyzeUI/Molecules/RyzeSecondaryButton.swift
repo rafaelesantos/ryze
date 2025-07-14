@@ -63,9 +63,13 @@ public struct RyzeSecondaryButton: RyzeView {
     }
     
     public static var mock: some View {
-        RyzeSecondaryButton(RyzeUIString.ryzePreviewTitle) {
+        RyzeSecondaryButton(
+            .ryzePreviewTitle,
+            role: .cancel
+        ) {
             
         }
+        .ryze(font: .body)
     }
 }
 

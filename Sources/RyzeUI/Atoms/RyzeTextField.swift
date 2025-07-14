@@ -118,14 +118,12 @@ public struct RyzeTextField: RyzeView {
     
     @ViewBuilder
     var placeholderView: some View {
-        RyzeText(
-            configuration.placeholder,
-            font: needFocus ? .footnote : .body,
-            color: .disabled
-        )
-        .lineLimit(1)
-        .ryzePadding()
-        .offset(y: needFocus ? -40 : .zero)
+        RyzeText(configuration.placeholder)
+            .ryze(font: needFocus ? .footnote : .body)
+            .ryze(color: .disabled)
+            .lineLimit(1)
+            .ryzePadding()
+            .offset(y: needFocus ? -40 : .zero)
     }
     
     @ViewBuilder
@@ -151,12 +149,10 @@ public struct RyzeTextField: RyzeView {
                     mode: .hierarchical
                 )
                 
-                RyzeText(
-                    failureReason,
-                    font: needFocus ? .footnote : .body,
-                    color: .disabled
-                )
-                .ryze(alignment: .leading)
+                RyzeText(failureReason)
+                    .ryze(font: needFocus ? .footnote : .body)
+                    .ryze(color: .disabled)
+                    .ryze(alignment: .leading)
             }
         }
     }
@@ -172,12 +168,10 @@ public struct RyzeTextField: RyzeView {
                     mode: .hierarchical
                 )
                 
-                RyzeText(
-                    recoverySuggestion,
-                    font: needFocus ? .footnote : .body,
-                    color: .disabled
-                )
-                .ryze(alignment: .leading)
+                RyzeText(recoverySuggestion)
+                    .ryze(font: needFocus ? .footnote : .body)
+                    .ryze(color: .disabled)
+                    .ryze(alignment: .leading)
             }
         }
     }

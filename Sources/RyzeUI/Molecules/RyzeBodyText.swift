@@ -9,32 +9,24 @@
 
 public struct RyzeBodyText: RyzeView {
     let text: String?
-    let weight: Font.Weight?
-    let design: Font.Design?
     public var accessibility: RyzeAccessibility?
     
     
     public init(
         _ localized: RyzeResourceString?,
-        _ accessibility: RyzeAccessibility? = nil,
-        weight: Font.Weight? = nil,
-        design: Font.Design? = nil
+        _ accessibility: RyzeAccessibility? = nil
     ) {
         self.text = localized?.value
         self.accessibility = accessibility
-        self.weight = weight
-        self.design = design
     }
     
     public var body: some View {
         RyzeText(
             text,
-            accessibility,
-            font: .body,
-            weight: weight,
-            design: design,
-            color: .text
+            accessibility
         )
+        .ryze(font: .body)
+        .ryze(color: .text)
     }
     
     public static var mock: some View {

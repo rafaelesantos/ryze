@@ -17,6 +17,10 @@ public extension View {
         self.tint(color)
     }
     
+    func ryze(color: RyzeColor) -> some View {
+        self.foregroundStyle(color)
+    }
+    
     func ryze(theme: RyzeThemeProtocol) -> some View {
         self.environment(\.ryzeTheme, theme)
     }

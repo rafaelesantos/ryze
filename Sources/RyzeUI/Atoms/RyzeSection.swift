@@ -35,8 +35,15 @@ public struct RyzeSection: RyzeView {
         @ViewBuilder content: () -> some View
     ) {
         self.content = content()
-        self.header = header == nil ? EmptyView() : RyzeText(header, font: .footnote, color: .textSecondary)
-        self.footer = footer == nil ? EmptyView() : RyzeText(footer, font: .footnote, color: .textSecondary)
+        self.header = header == nil ? EmptyView() :
+        RyzeText(header)
+            .ryze(font: .footnote)
+            .ryze(color: .textSecondary)
+        
+        self.footer = footer == nil ? EmptyView() :
+        RyzeText(footer)
+            .ryze(font: .footnote)
+            .ryze(color: .textSecondary)
     }
     
     public var body: some View {

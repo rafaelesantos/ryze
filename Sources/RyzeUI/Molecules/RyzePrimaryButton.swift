@@ -62,9 +62,12 @@ public struct RyzePrimaryButton: RyzeView {
     }
     
     public static var mock: some View {
-        RyzePrimaryButton(RyzeUIString.coffeeDrivenTitle, role: .cancel) {
-            
+        RyzePrimaryButton(
+            .ryzePreviewTitle,
+            role: .cancel
+        ) {
         }
+        .ryze(font: .body)
     }
 }
 
