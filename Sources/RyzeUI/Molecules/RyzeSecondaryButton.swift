@@ -10,11 +10,23 @@
 public struct RyzeSecondaryButton: RyzeView {
     @Environment(\.ryzeTheme) var theme
     
-    let localized: RyzeResourceString?
+    let text: String?
     let role: ButtonRole?
     let action: () -> Void
     
     public var accessibility: RyzeAccessibility?
+    
+    public init(
+        _ text: String?,
+        _ accessibility: RyzeAccessibility? = nil,
+        role: ButtonRole? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.text = text
+        self.accessibility = accessibility
+        self.role = role
+        self.action = action
+    }
     
     public init(
         _ localized: RyzeResourceString?,
@@ -22,7 +34,7 @@ public struct RyzeSecondaryButton: RyzeView {
         role: ButtonRole? = nil,
         action: @escaping () -> Void
     ) {
-        self.localized = localized
+        self.text = localized?.value
         self.accessibility = accessibility
         self.role = role
         self.action = action
@@ -41,7 +53,7 @@ public struct RyzeSecondaryButton: RyzeView {
             role: role,
             action: action
         ) {
-            RyzeText(localized)
+            RyzeText(text)
         }
         .ryze(tint: tint)
         .buttonStyle(.bordered)
