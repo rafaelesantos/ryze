@@ -9,7 +9,6 @@
 
 public struct RyzeLabel: RyzeView {
     @Environment(\.ryzeLoading) private var isLoading
-    @Environment(\.ryzeNamespace) private var namespace
     
     let localized: RyzeResourceString?
     let symbol: String
@@ -50,7 +49,6 @@ public struct RyzeLabel: RyzeView {
                 localized.value,
                 systemImage: symbol
             )
-            .matchedGeometryEffect(id: localized.value, in: namespace)
             .symbolRenderingMode(mode)
             .symbolVariant(variants)
             .ryze(accessibility: accessibility)

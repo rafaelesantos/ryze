@@ -9,7 +9,6 @@
 @_exported import RyzeFoundation
 
 public extension EnvironmentValues {
-    @Entry var ryzeNamespace: Namespace.ID = Namespace().wrappedValue
     @Entry var ryzeBundle: RyzeBundle = RyzeBundle()
     @Entry var ryzeLoading: Bool = false
     @Entry var ryzeDisabled: Bool = false

@@ -9,7 +9,6 @@ import SwiftUI
 
 public struct RyzeText: RyzeView {
     @Environment(\.ryzeLoading) private var isLoading
-    @Environment(\.ryzeNamespace) private var namespace
     
     let text: String?
     
