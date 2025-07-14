@@ -19,22 +19,16 @@ public protocol RyzeError:
 }
 
 public extension RyzeError {
-    var logger: Logger {
-        Logger(
-            subsystem: Bundle.main.bundleIdentifier ?? String(describing: Self.self),
-            category: String(describing: Self.self)
-        )
-    }
-    
     func log() {
-        logger.error("\(localizedDescription)")
+        let logger = RyzeFoundationLogger()
+        logger.error(.error(self))
         
         if let failureReason {
-            logger.warning("\(failureReason)")
+            logger.warning(.message(failureReason))
         }
         
         if let recoverySuggestion {
-            logger.info("\(recoverySuggestion)")
+            logger.info(.message(recoverySuggestion))
         }
     }
 }

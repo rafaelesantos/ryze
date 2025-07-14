@@ -1,0 +1,499 @@
+{
+  "version": "1.1",
+  "sourceLanguage": "en",
+  "strings": {
+    "log.url": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🌐 URL: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🌐 URL: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.headers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "📋 Headers: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "📋 Cabeçalhos: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "📝 Body: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "📝 Corpo: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.host": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🖥️ Host: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🖥️ Host: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.port": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🚪 Port: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🚪 Porta: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.parameters": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "📦 Parameters: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "📦 Parâmetros: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.requestStart": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🚀 Starting request to %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🚀 Iniciando requisição para %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.cacheHit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "📦 Cache hit for %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "📦 Cache encontrado para %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.cacheMiss": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🗄️ Cache miss or error for %@: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🗄️ Cache não encontrado ou erro para %@: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.responseCached": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "✅ Response received and cached for %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "✅ Resposta recebida e armazenada em cache para %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.noCache": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🗑️ No valid cache found for %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🗑️ Nenhum cache válido encontrado para %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.cacheWithExpiration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "📦 Cache hit for %@ with expiration at %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "📦 Cache encontrado para %@ com expiração em %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.noCacheInterval": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "⏱️ No cache interval provided for %@, skipping cache storage.",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "⏱️ Nenhum intervalo de cache fornecido para %@, pulando armazenamento.",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.cacheStored": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🗄️ Cached response stored for %@ with interval %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🗄️ Resposta armazenada em cache para %@ com intervalo %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.invalidURL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "❌ Invalid URL for request: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "❌ URL inválida para requisição: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connecting": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🔗 Connecting to %@:%@ using parameters: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🔗 Conectando a %@:%@ com parâmetros: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionEstablished": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "✅ Connection established to %@:%@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "✅ Conexão estabelecida com %@:%@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionClosed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🔌 Connection closed to %@:%@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🔌 Conexão encerrada com %@:%@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.disconnected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🔌 Disconnected from %@:%@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🔌 Desconectado de %@:%@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionReady": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "✅ Connection ready",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "✅ Conexão pronta",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionCancelled": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🚫 Connection cancelled",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🚫 Conexão cancelada",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionFailed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "⚠️ Connection failed with error: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "⚠️ Falha na conexão com erro: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.connectionStateChanged": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🔄 Connection state changed: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🔄 Estado da conexão alterado: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.receiveError": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "⚠️ Error while receiving data: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "⚠️ Erro ao receber dados: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.receptionComplete": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "🔚 Data reception complete",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "🔚 Recepção de dados concluída",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.failedToEncode": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "❌ Failed to encode message: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "❌ Falha ao codificar mensagem: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.sendingMessage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "✉️ Sending message: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "✉️ Enviando mensagem: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.messageSent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "✅ Message sent successfully: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "✅ Mensagem enviada com sucesso: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "log.sendError": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "value": "⚠️ Error while sending message: %@",
+            "state": "translated"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "value": "⚠️ Erro ao enviar mensagem: %@",
+            "state": "translated"
+          }
+        }
+      },
+      "extractionState": "manual"
+    }
+  }
+}

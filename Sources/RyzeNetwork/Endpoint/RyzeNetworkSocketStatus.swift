@@ -7,7 +7,7 @@
 
 @_exported import Foundation
 
-public enum RyzeNetworkSocketStatus {
+public enum RyzeNetworkSocketStatus: Sendable {
     case open
     case close
 }

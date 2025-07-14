@@ -18,19 +18,13 @@ public protocol RyzeEntity:
 }
 
 extension RyzeEntity {
-    public var logger: Logger {
-        Logger(
-            subsystem: Bundle.main.bundleIdentifier ?? String(describing: Self.self),
-            category: String(describing: Self.self)
-        )
-    }
-    
     public func log() {
+        let logger = RyzeFoundationLogger()
         do {
             let content = try json
-            logger.info("\(content)")
+            logger.info(.message(content))
         } catch {
-            logger.error("\(error.localizedDescription)")
+            logger.error(.error(error))
         }
     }
     
@@ -50,19 +44,13 @@ extension Array: @retroactive Identifiable where Element: RyzeEntity {
 }
 
 extension Array: RyzeLogger where Element: RyzeEntity {
-    public var logger: Logger {
-        Logger(
-            subsystem: Bundle.main.bundleIdentifier ?? String(describing: Element.self),
-            category: String(describing: Element.self)
-        )
-    }
-    
     public func log() {
+        let logger = RyzeFoundationLogger()
         do {
             let content = try json
-            logger.info("\(content)")
+            logger.info(.message(content))
         } catch {
-            logger.error("\(error.localizedDescription)")
+            logger.error(.error(error))
         }
     }
 }

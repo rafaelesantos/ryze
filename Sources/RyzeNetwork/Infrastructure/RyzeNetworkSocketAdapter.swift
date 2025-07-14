@@ -12,23 +12,17 @@ import RyzeFoundation
 public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private var connection: NWConnection?
     
-    nonisolated private var logger: Logger {
-        Logger(
-            subsystem: Bundle.module.bundleIdentifier ?? String(describing: self),
-            category: String(describing: self)
-        )
-    }
-    
     public init() {}
     
     public func connect<Request: RyzeNetworkSocketRequest>(with request: Request) async throws -> AsyncStream<String> {
+        let logger = RyzeNetworkLogger()
         guard let endpoint = await request.endpoint else {
-            logger.error("❌ Invalid URL for request: \(String(describing: request))")
+            logger.error(.invalidURL(String(describing: request)))
             throw RyzeNetworkError.invalidURL
         }
         
         let port = try endpoint.port.rawValue
-        logger.info("🔗 Connecting to \(endpoint.host.debugDescription):\(port) using parameters: \(endpoint.parameters.debugDescription)")
+        logger.info(.connecting(endpoint.host.debugDescription, "\(port)", endpoint.parameters.debugDescription))
         
         connection = try NWConnection(
             host: endpoint.host,
@@ -42,10 +36,10 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                 for await status in stream {
                     switch status {
                     case .open:
-                        logger.info("✅ Connection established to \(endpoint.host.debugDescription):\(port)")
+                        logger.info(.connectionEstablished(endpoint.host.debugDescription, "\(port)"))
                         await receive(on: continuation)
                     case .close:
-                        logger.info("🔌 Connection closed to \(endpoint.host.debugDescription):\(port)")
+                        logger.info(.connectionClosed(endpoint.host.debugDescription, "\(port)"))
                         continuation.finish()
                     }
                 }
@@ -54,7 +48,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                     guard let self else { return }
                     Task {
                         await self.disconnect()
-                        self.logger.info("🔌 Disconnected from \(endpoint.host.debugDescription):\(port)")
+                        logger.info(.disconnected(endpoint.host.debugDescription, "\(port)"))
                     }
                 }
             }
@@ -64,18 +58,19 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private func connect() async -> AsyncStream<RyzeNetworkSocketStatus> {
         AsyncStream { continuation in
             connection?.stateUpdateHandler = { state in
+                let logger = RyzeNetworkLogger()
                 switch state {
                 case .ready:
-                    self.logger.info("✅ Connection ready")
+                    logger.info(.connectionReady)
                     continuation.yield(.open)
                 case .cancelled:
-                    self.logger.warning("🚫 Connection cancelled")
+                    logger.warning(.connectionCancelled)
                     continuation.yield(.close)
                 case .failed(let error):
-                    self.logger.error("⚠️ Connection failed with error: \(error)")
+                    logger.error(.connectionFailed(error.localizedDescription))
                     continuation.yield(.close)
                 default:
-                    self.logger.debug("🔄 Connection state changed: \(String(describing: state))")
+                    logger.info(.connectionStateChanged(String(describing: state)))
                     break
                 }
             }
@@ -94,9 +89,9 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             minimumIncompleteLength: 1,
             maximumLength: 65536
         ) { [weak self] content, contentContext, isComplete, error in
-            
+            let logger = RyzeNetworkLogger()
             if let error = error {
-                self?.logger.error("⚠️ Error while receiving data: \(error)")
+                logger.error(.receiveError(error.localizedDescription))
             }
             
             if let data = content, let value = String(data: data, encoding: .utf8) {
@@ -104,7 +99,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             }
             
             if isComplete {
-                self?.logger.info("🔚 Data reception complete")
+                logger.info(.receptionComplete)
                 continuation.finish()
             }
             
@@ -113,22 +108,23 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     }
     
     public func send(command: RyzeNetworkSocketCommand) async throws {
+        let logger = RyzeNetworkLogger()
         guard let content = command.message.breakLine.data(using: .utf8) else {
-            logger.error("❌ Failed to encode message: \(command.message)")
+            logger.error(.failedToEncode(command.message))
             throw RyzeNetworkError.badRequest
         }
         
-        logger.info("✉️ Sending message: \(command.message)")
+        logger.info(.sendingMessage(command.message))
         
         try await withCheckedThrowingContinuation { continuation in
             connection?.send(
                 content: content,
                 completion: .contentProcessed { error in
                     guard let error else {
-                        self.logger.info("✅ Message sent successfully: \(command.message)")
+                        logger.info(.messageSent(command.message))
                         return continuation.resume()
                     }
-                    self.logger.error("⚠️ Error while sending message: \(error.localizedDescription)")
+                    logger.error(.sendError(error.localizedDescription))
                 }
             )
         }

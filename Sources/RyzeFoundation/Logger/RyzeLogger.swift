@@ -8,7 +8,14 @@
 @_exported import os
 
 public protocol RyzeLogger {
+    func log()
+}
+
+public protocol RyzeSystemLogger {
+    associatedtype Message: RyzeResourceLogMessage
     var logger: Logger { get }
     
-    func log()
+    func info(_ message: Message)
+    func warning(_ message: Message)
+    func error(_ message: Message)
 }

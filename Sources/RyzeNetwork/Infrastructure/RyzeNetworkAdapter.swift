@@ -9,15 +9,7 @@ import Foundation
 import RyzeFoundation
 
 public actor RyzeNetworkAdapter: RyzeNetworkClient {
-    typealias Resolved = RyzeNetworkAdapter
     private let session: URLSession
-    
-    nonisolated private var logger: Logger {
-        Logger(
-            subsystem: Bundle.module.bundleIdentifier ?? String(describing: self),
-            category: String(describing: self)
-        )
-    }
     
     public init(session: URLSession = .shared) {
         self.session = session
@@ -30,18 +22,19 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
     ) async throws -> Request.Response where Request : RyzeNetworkRequest {
         let endpoint = await request.endpoint
         let urlRequest = try endpoint.request
-        logger.info("🚀 Starting request to \(urlRequest.url?.absoluteString ?? "unknown URL")")
-        
+        let logger = RyzeNetworkLogger()
+        logger.info(.requestStart(urlRequest.url?.absoluteString))
+
         do {
             let response = try await retrieveCache(on: request, with: formatter)
-            logger.info("📦 Cache hit for \(urlRequest.url?.absoluteString ?? "unknown URL")")
+            logger.info(.cacheHit(urlRequest.url?.absoluteString))
             return response
         } catch {
-            logger.warning("🗄️ Cache miss or error for \(urlRequest.url?.absoluteString ?? "unknown URL"): \(error.localizedDescription)")
+            logger.warning(.cacheMiss(urlRequest.url?.absoluteString, error.localizedDescription))
             let (data, response) = try await session.data(for: urlRequest)
             
             try await storeCache(on: endpoint, with: (data, response))
-            logger.info("✅ Response received and cached for \(urlRequest.url?.absoluteString ?? "unknown URL")")
+            logger.info(.responseCached(urlRequest.url?.absoluteString))
             
             return try await request.decode(data: data, with: formatter)
         }
@@ -52,16 +45,17 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         with formatter: DateFormatter?
     ) async throws -> Request.Response {
         let urlRequest = try await request.endpoint.request
-        
+        let logger = RyzeNetworkLogger()
+
         guard let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
               let cacheInterval = cacheResponse.value(forKey: .cacheIntervalKey) as? Date,
               cacheInterval > .now
         else {
-            logger.info("🗑️ No valid cache found for \(urlRequest.url?.absoluteString ?? "unknown URL")")
+            logger.info(.noCache(urlRequest.url?.absoluteString))
             throw RyzeNetworkError.noCache
         }
-        
-        logger.info("📦 Cache hit for \(urlRequest.url?.absoluteString ?? "unknown URL") with expiration at \(cacheInterval)")
+
+        logger.info(.cacheWithExpiration(urlRequest.url?.absoluteString, cacheInterval))
         
         return try cacheResponse.data.entity(for: Request.Response.self, with: formatter)
     }
@@ -70,9 +64,10 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         on endpoint: RyzeNetworkEndpoint,
         with result: (Data, URLResponse)
     ) async throws {
+        let logger = RyzeNetworkLogger()
         guard let cacheInterval = endpoint.cacheInterval else {
             let url = endpoint.url?.absoluteString
-            logger.info("⏱️ No cache interval provided for \(url ?? "unknown URL"), skipping cache storage.")
+            logger.info(.noCacheInterval(url))
             return
         }
 
@@ -81,6 +76,6 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
 
         let urlRequest = try endpoint.request
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
-        logger.info("🗄️ Cached response stored for \(urlRequest.url?.absoluteString ?? "unknown URL") with interval \(cacheInterval)")
+        logger.info(.cacheStored(urlRequest.url?.absoluteString, cacheInterval))
     }
 }

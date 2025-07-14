@@ -17,12 +17,13 @@ public protocol RyzeNetworkSocketEndpoint: RyzeLogger, Sendable {
 
 public extension RyzeNetworkSocketEndpoint {
     func log() {
-        logger.info("🖥️ Host: \(host.debugDescription)")
-        
+        let logger = RyzeNetworkLogger()
+        logger.info(.host(host.debugDescription))
+
         if let port = try? port {
-            logger.info("🚪 Port: \(port.rawValue)")
+            logger.info(.port(port.rawValue))
         }
-        
-        logger.info("📦 Parameters: \(parameters.debugDescription)")
+
+        logger.info(.parameters(parameters.debugDescription))
     }
 }

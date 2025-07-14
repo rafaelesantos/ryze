@@ -14,5 +14,4 @@ public extension EnvironmentValues {
     @Entry var ryzeLoading: Bool = false
     @Entry var ryzeDisabled: Bool = false
     @Entry var ryzeTheme: RyzeThemeProtocol = RyzeDefaultTheme()
-    @Entry var ryzeLogger: Logger = Logger()
 }

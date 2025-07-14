@@ -63,25 +63,18 @@ public extension RyzeNetworkEndpoint {
         }
     }
     
-    var logger: Logger {
-        Logger(
-            subsystem: Bundle.module.bundleIdentifier ?? String(describing: self),
-            category: String(describing: self)
-        )
-    }
-    
     func log() {
+        let logger = RyzeNetworkLogger()
         if let url {
-            logger.info("🌐 URL: \(url.absoluteString)")
+            logger.info(.url(url))
         }
-        
-        if  !headers.isEmpty {
-            let headers = headers
-            logger.info("📋 Headers: \(headers)")
+
+        if !headers.isEmpty {
+            logger.info(.headers(headers))
         }
-        
+
         if let body = try? body?.json {
-            logger.info("📝 Body: \(body)")
+            logger.info(.body(body))
         }
     }
 }
