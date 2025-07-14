@@ -17,15 +17,11 @@ public extension Data {
     
     func entity<T: Decodable>(
         for type: T.Type,
-        with dateStyle: DateFormatter.Style? = nil
+        with formatter: DateFormatter? = nil
     ) throws -> T {
         let jsonDecoder = JSONDecoder()
-        guard let dateStyle else { return try jsonDecoder.decode(T.self, from: self) }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = dateStyle
-        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
+        guard let formatter else { return try jsonDecoder.decode(T.self, from: self) }
+        jsonDecoder.dateDecodingStrategy = .formatted(formatter)
         return try jsonDecoder.decode(T.self, from: self)
     }
 }

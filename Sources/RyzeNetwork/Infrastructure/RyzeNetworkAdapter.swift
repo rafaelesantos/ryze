@@ -23,20 +23,17 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         self.session = session
     }
     
-    public func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
+    
+    public func request<Request>(
         on request: Request,
-        with dateStyle: DateFormatter.Style?,
-        for type: Response.Type
-    ) async throws -> Response {
-        guard let endpoint = await request.endpoint else {
-            logger.error("❌ Invalid URL for request: \(String(describing: request))")
-            throw RyzeNetworkError.invalidURL
-        }
+        with formatter: DateFormatter?
+    ) async throws -> Request.Response where Request : RyzeNetworkRequest {
+        let endpoint = await request.endpoint
         let urlRequest = try endpoint.request
         logger.info("🚀 Starting request to \(urlRequest.url?.absoluteString ?? "unknown URL")")
         
         do {
-            let response = try await retrieveCache(on: endpoint, with: dateStyle, for: type)
+            let response = try await retrieveCache(on: request, with: formatter)
             logger.info("📦 Cache hit for \(urlRequest.url?.absoluteString ?? "unknown URL")")
             return response
         } catch {
@@ -46,16 +43,15 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             try await storeCache(on: endpoint, with: (data, response))
             logger.info("✅ Response received and cached for \(urlRequest.url?.absoluteString ?? "unknown URL")")
             
-            return try await request.decode(data: data, with: dateStyle, for: type)
+            return try await request.decode(data: data, with: formatter)
         }
     }
     
-    private func retrieveCache<Response: RyzeEntity>(
-        on endpoint: RyzeNetworkEndpoint,
-        with dateStyle: DateFormatter.Style?,
-        for type: Response.Type
-    ) async throws -> Response {
-        let urlRequest = try endpoint.request
+    private func retrieveCache<Request: RyzeNetworkRequest>(
+        on request: Request,
+        with formatter: DateFormatter?
+    ) async throws -> Request.Response {
+        let urlRequest = try await request.endpoint.request
         
         guard let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
               let cacheInterval = cacheResponse.value(forKey: .cacheIntervalKey) as? Date,
@@ -67,7 +63,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         
         logger.info("📦 Cache hit for \(urlRequest.url?.absoluteString ?? "unknown URL") with expiration at \(cacheInterval)")
         
-        return try cacheResponse.data.entity(for: type, with: dateStyle)
+        return try cacheResponse.data.entity(for: Request.Response.self, with: formatter)
     }
     
     private func storeCache(

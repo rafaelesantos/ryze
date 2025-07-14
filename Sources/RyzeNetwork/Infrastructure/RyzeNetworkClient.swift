@@ -9,9 +9,8 @@
 @_exported import RyzeFoundation
 
 public protocol RyzeNetworkClient: Sendable {
-    func request<Request: RyzeNetworkRequest, Response: RyzeEntity>(
+    func request<Request: RyzeNetworkRequest>(
         on request: Request,
-        with dateStyle: DateFormatter.Style?,
-        for type: Response.Type
-    ) async throws -> Response
+        with formatter: DateFormatter?
+    ) async throws -> Request.Response
 }
