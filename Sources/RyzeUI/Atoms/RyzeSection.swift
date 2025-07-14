@@ -51,7 +51,6 @@ public struct RyzeSection: RyzeView {
             AnyView(content)
         } header: {
             AnyView(header)
-                .headerProminence(.increased)
         } footer: {
             AnyView(footer)
         }
