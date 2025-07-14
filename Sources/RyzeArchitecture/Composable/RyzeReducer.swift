@@ -7,8 +7,10 @@
 
 public protocol RyzeReducer: Sendable {
     associatedtype State: RyzeState
+    associatedtype Action: RyzeAction
+    
     func reduce(
         state: State,
-        action: RyzeAction
+        action: Action
     ) async -> State
 }
