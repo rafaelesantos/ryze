@@ -7,7 +7,7 @@
 
 @_exported import Foundation
 
-public actor RyzeBundle {
+public struct RyzeBundle {
     public var applicationName: String? {
         Bundle.main.infoDictionary?["CFBundleName"] as? String
     }
