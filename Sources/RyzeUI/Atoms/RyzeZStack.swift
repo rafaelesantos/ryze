@@ -35,18 +35,7 @@ public struct RyzeZStack: RyzeView {
     
     public static var mock: some View {
         RyzeZStack {
-            RyzeSymbol(
-                name: "circle.fill",
-                color: .secondary,
-                size: .medium,
-                mode: .hierarchical
-            )
-            
-            RyzeSymbol(
-                name: "apple.logo",
-                color: .primary,
-                size: .small
-            )
+            RyzeSymbol.mock
         }
     }
 }

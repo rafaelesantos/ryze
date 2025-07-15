@@ -93,10 +93,10 @@ public struct RyzeTextField: RyzeView {
         } label: {
             RyzeSymbol(
                 name: "xmark.circle.fill",
-                color: .textSecondary,
-                size: .extraSmall,
                 mode: .hierarchical
             )
+            .ryze(font: .body)
+            .ryze(color: .textSecondary)
             .offset(x: needFocus && !text.isEmpty ? .zero : 50)
             .opacity(0.5)
             .scaleEffect(0.8)
@@ -106,13 +106,11 @@ public struct RyzeTextField: RyzeView {
     @ViewBuilder
     var iconView: some View {
         if let icon = configuration.icon {
-            RyzeSymbol(
-                name: icon,
-                color: stateColor,
-                size: .extraSmall
-            )
-            .ryzeGlow(for: error == nil ? nil : theme.color.error)
-            .offset(x: needFocus ? .zero : -50)
+            RyzeSymbol(name: icon)
+                .ryze(font: .footnote)
+                .ryze(color: stateColor)
+                .ryzeGlow(for: error == nil ? nil : theme.color.error)
+                .offset(x: needFocus ? .zero : -50)
         }
     }
     
@@ -144,10 +142,10 @@ public struct RyzeTextField: RyzeView {
             RyzeHStack(spacing: .small) {
                 RyzeSymbol(
                     name: "xmark.circle.fill",
-                    color: .error,
-                    size: .ultraSmall2,
                     mode: .hierarchical
                 )
+                .ryze(font: .footnote)
+                .ryze(color: .error)
                 
                 RyzeText(failureReason)
                     .ryze(font: needFocus ? .footnote : .body)
@@ -163,10 +161,10 @@ public struct RyzeTextField: RyzeView {
             RyzeHStack(spacing: .small) {
                 RyzeSymbol(
                     name: "lightbulb.max.fill",
-                    color: .success,
-                    size: .ultraSmall2,
                     mode: .hierarchical
                 )
+                .ryze(font: .footnote)
+                .ryze(color: .success)
                 
                 RyzeText(recoverySuggestion)
                     .ryze(font: needFocus ? .footnote : .body)
