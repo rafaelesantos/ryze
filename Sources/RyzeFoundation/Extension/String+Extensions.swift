@@ -55,6 +55,8 @@ public extension String {
         case dateTimeWithDashes = "dd-MM-yyyy HH:mm"
         case rfc1123 = "EEE',' dd MMM yyyy HH':'mm':'ss zzz"
         case fullWeekday = "EEEE"
+        case fullMonth = "MMMM"
+        case shortMonth = "MMM"
         
         public var formatter: DateFormatter {
             let formatter = DateFormatter()
