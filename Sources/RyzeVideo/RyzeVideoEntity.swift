@@ -17,7 +17,7 @@ public struct RyzeVideoEntity {
     var type: AVFileType
     var thumb: URL?
     
-    init(
+    public init(
         url: URL,
         title: String,
         duration: TimeInterval? = nil,
