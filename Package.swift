@@ -13,12 +13,12 @@ let package = Package(
     products: [
         .library(
             name: "Ryze",
-            type: .static,
             targets: [
                 "RyzeFoundation",
                 "RyzeNetwork",
                 "RyzeArchitecture",
-                "RyzeUI"
+                "RyzeUI",
+                "RyzeVideo"
             ]
         )
     ],
@@ -34,6 +34,10 @@ let package = Package(
         ),
         .target(
             name: "RyzeUI",
+            dependencies: ["RyzeFoundation"]
+        ),
+        .target(
+            name: "RyzeVideo",
             dependencies: ["RyzeFoundation"]
         ),
         .executableTarget(
