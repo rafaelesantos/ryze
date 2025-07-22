@@ -8,23 +8,23 @@
 @_exported import SwiftUI
 import SafariServices
 
-public struct RyzeBrowserView: View {
+public struct RyzeBrowserView<Content: View>: View {
     @Binding private var url: URL?
+    let content: Content
     
-    public init(url: Binding<URL?>) {
+    public init(
+        url: Binding<URL?>,
+        @ViewBuilder content: () -> Content
+    ) {
         self._url = url
+        self.content = content()
     }
     
     public var body: some View {
-        browserView
-    }
-    
-    @ViewBuilder
-    var browserView: some View {
-        if let url {
-            RyzeBrowser(url: url)
-                .transition(.scale)
-        }
+        content
+            .sheet(item: $url) { url in
+                RyzeBrowser(url: url)
+            }
     }
 }
 
