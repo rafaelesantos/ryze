@@ -57,8 +57,13 @@ public extension RyzeNetworkEndpoint {
             )
             urlRequest.httpMethod = method.rawValue
             urlRequest.allHTTPHeaderFields = headers
-            guard let body = try body?.data() else { return urlRequest }
-            urlRequest.httpBody = body
+            
+            if let body = (body as? String)?.data(using: .utf8) {
+                urlRequest.httpBody = body
+            } else if let body = try body?.data() {
+                urlRequest.httpBody = body
+            }
+            
             return urlRequest
         }
     }
