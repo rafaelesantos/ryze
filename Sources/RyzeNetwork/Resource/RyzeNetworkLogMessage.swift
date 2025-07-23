@@ -19,7 +19,7 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
     case cacheMiss(String?, String)
     case responseCached(String?)
     case noCache(String?)
-    case cacheWithExpiration(String?, Date)
+    case cacheWithExpiration(String?, TimeInterval)
     case noCacheInterval(String?)
     case cacheStored(String?, TimeInterval)
     case invalidURL(String)

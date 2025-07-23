@@ -75,13 +75,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache hit for %@ with expiration at %@"
+            "value" : "📦 Cache hit for %@ with expiration at %f"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache encontrado para %@ com expiração em %@"
+            "value" : "📦 Cache encontrado para %@ com expiração em %f"
           }
         }
       }

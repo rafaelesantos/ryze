@@ -49,8 +49,8 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         guard await request.endpoint.cacheInterval != nil,
               let url = urlRequest.url?.absoluteString,
               let cacheResponse = URLCache.shared.cachedResponse(for: urlRequest),
-              let cacheInterval = cacheResponse.userInfo?[url] as? Date,
-              cacheInterval > .now
+              let cacheInterval = cacheResponse.userInfo?[url] as? TimeInterval,
+              cacheInterval > Date.now.timeIntervalSince1970
         else {
             logger.info(.noCache(urlRequest.url?.absoluteString))
             throw RyzeNetworkError.noCache
@@ -75,7 +75,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             return
         }
 
-        let userInfo: [String: TimeInterval] = [url: cacheInterval]
+        let userInfo: [String: TimeInterval] = [url: Date.now.timeIntervalSince1970 + cacheInterval]
         let cacheResponse = CachedURLResponse(
             response: response,
             data: data,
