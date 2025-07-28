@@ -19,3 +19,27 @@ public protocol RyzeStore: ObservableObject {
     
     func dispatch(action: Action) async throws
 }
+
+public extension RyzeStore where Self: AnyObject, State == Reducer.State, Action == Reducer.Action, State == Middleware.State, Action == Middleware.Action {
+    
+    @MainActor
+    func dispatch(action: Action) {
+        Task { @MainActor in
+            state = await reducer.reduce(
+                state: state,
+                action: action
+            )
+            
+            let actions = await middleware.run(
+                state: state,
+                action: action
+            )
+            
+            for await action in actions {
+                
+                try await dispatch(action: action)
+            }
+        }
+    }
+}
+
