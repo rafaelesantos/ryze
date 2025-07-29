@@ -17,7 +17,7 @@ public struct RyzeSymbol: RyzeView {
     
     public init(
         name: String = "infinity",
-        mode: SymbolRenderingMode = .hierarchical,
+        mode: SymbolRenderingMode = .monochrome,
         variants: SymbolVariants = .none
     ) {
         self.name = name
