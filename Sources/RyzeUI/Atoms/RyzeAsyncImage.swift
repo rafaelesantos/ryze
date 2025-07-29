@@ -9,24 +9,40 @@
 
 public struct RyzeAsyncImage: RyzeView {
     @Environment(\.ryzeTheme) var theme
-    @Binding var source: String?
+    let url: URL?
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?
     
     @State var image: Image?
     
     public init(
-        _ source: Binding<String?>,
+        _ source: String?,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
-        self._source = source
+        self.url = URL(string: source ?? "")
         self.content = content
         self.placeholder = placeholder
     }
     
-    @ViewBuilder
+    public init(
+        _ url: URL?,
+        content: ((Image) -> any View)? = nil,
+        placeholder: (() -> any View)? = nil
+    ) {
+        self.url = url
+        self.content = content
+        self.placeholder = placeholder
+    }
+    
     public var body: some View {
+        contentView
+            .task { fetchImage() }
+            .onChange(of: url) { fetchImage() }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
         if let image, let content {
             AnyView(content(image))
         } else if let image {
@@ -39,20 +55,16 @@ public struct RyzeAsyncImage: RyzeView {
                     AnyView(placeholder())
                 }
             }
-            .task { fetchImage() }
-            .onChange(of: source) { fetchImage() }
         }
     }
     
     var cacheInterval: TimeInterval {
-        2.hours
+        1.hours
     }
     
     func fetchImage() {
         Task { @MainActor in
-            guard let source,
-            let url = URL(string: source)
-            else { return }
+            guard let url else { return }
             
             if let cachedImage = retrieveImage(for: url) {
                 withAnimation(theme.animation) {
@@ -103,7 +115,7 @@ public struct RyzeAsyncImage: RyzeView {
     }
     
     public static var mock: some View {
-        RyzeAsyncImage(.constant("https://picsum.photos/id/42/600"))
+        RyzeAsyncImage("https://picsum.photos/id/42/600")
     }
 }
 
