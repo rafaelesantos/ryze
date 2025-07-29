@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public indirect enum RyzeSpacing {
-    case none
+    case zero
     case extraSmall
     case small
     case medium
@@ -20,7 +20,7 @@ public indirect enum RyzeSpacing {
     
     func rawValue(for theme: RyzeSpacingProtocol) -> CGFloat {
         switch self {
-        case .none: return theme.none
+        case .zero: return theme.none
         case .extraSmall: return theme.extraSmall
         case .small: return theme.small
         case .medium: return theme.medium
