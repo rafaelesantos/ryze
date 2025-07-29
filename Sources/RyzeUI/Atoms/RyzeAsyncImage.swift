@@ -54,7 +54,7 @@ public struct RyzeAsyncImage: View {
     }
     
     var cacheInterval: TimeInterval {
-        1.hours
+        2.hours
     }
     
     func fetchImage() {
