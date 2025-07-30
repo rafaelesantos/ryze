@@ -24,4 +24,8 @@ public extension String {
         let localeName = locale.description
         return "\(className) • \(schemeName) • \(localeName)"
     }
+    
+    func formatted(with format: String) -> String {
+        String(format: format, self)
+    }
 }
