@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RyzeSpacingModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) private var theme
+    @Environment(\.theme) private var theme
     private let edges: Edge.Set
     private let spacing: RyzeSpacing
     

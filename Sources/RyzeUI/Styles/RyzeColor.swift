@@ -9,13 +9,27 @@
 @_exported import RyzeFoundation
 
 public struct RyzeColor: ShapeStyle, @unchecked Sendable {
-    private let keyPath: KeyPath<RyzeColorProtocol, Color>
+    private enum Storage {
+        case themed(KeyPath<RyzeColorProtocol, Color>)
+        case custom(Color)
+    }
+    
+    private let storage: Storage
     
     init(keyPath: KeyPath<RyzeColorProtocol, Color>) {
-        self.keyPath = keyPath
+        self.storage = .themed(keyPath)
+    }
+    
+    public init(rawValue: Color) {
+        self.storage = .custom(rawValue)
     }
     
     public func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
-        environment.ryzeTheme.color[keyPath: keyPath]
+        switch storage {
+        case .themed(let keyPath):
+            return environment.theme.color[keyPath: keyPath]
+        case .custom(let color):
+            return color
+        }
     }
 }

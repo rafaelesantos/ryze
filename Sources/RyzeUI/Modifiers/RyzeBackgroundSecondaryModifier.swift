@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RyzeBackgroundSecondaryModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) private var theme
+    @Environment(\.theme) private var theme
     
     func body(content: Content) -> some View {
         content

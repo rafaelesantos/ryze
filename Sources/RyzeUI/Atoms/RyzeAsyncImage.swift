@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeAsyncImage: RyzeView {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     let url: URL?
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?

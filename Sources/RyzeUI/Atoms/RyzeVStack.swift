@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeVStack: RyzeView {
-    @Environment(\.ryzeTheme) private var theme
+    @Environment(\.theme) private var theme
     
     let alignment: HorizontalAlignment
     let spacing: RyzeSpacing?

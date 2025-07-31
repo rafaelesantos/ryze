@@ -9,7 +9,7 @@
 @_exported import RyzeFoundation
 
 public struct RyzeSymbol: RyzeView {
-    @Environment(\.ryzeLoading) var isLoading
+    @Environment(\.isLoading) var isLoading
     
     let name: String
     let mode: SymbolRenderingMode

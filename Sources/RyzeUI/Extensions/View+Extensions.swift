@@ -22,7 +22,7 @@ public extension View {
     }
     
     func ryze(theme: RyzeThemeProtocol) -> some View {
-        self.environment(\.ryzeTheme, theme)
+        self.environment(\.theme, theme)
     }
     
     func ryze(locale: RyzeLocale) -> some View {
@@ -34,11 +34,11 @@ public extension View {
     }
     
     func ryze(loading: Bool) -> some View {
-        self.environment(\.ryzeLoading, loading)
+        self.environment(\.isLoading, loading)
     }
     
     func ryze(disabled: Bool) -> some View {
-        self.environment(\.ryzeDisabled, disabled)
+        self.environment(\.isDisabled, disabled)
     }
     
     func ryze(alignment: TextAlignment) -> some View {
@@ -71,7 +71,7 @@ public extension View {
     
     func ryzePadding(
         _ edges: Edge.Set = .all,
-        spacing: RyzeSpacing = .medium
+        _ spacing: RyzeSpacing = .medium
     ) -> some View {
         self.modifier(RyzeSpacingModifier(edges: edges, spacing: spacing))
     }
@@ -92,10 +92,6 @@ public extension View {
     
     func ryzeBackgroundRow() -> some View {
         self.modifier(RyzeBackgroundRowModifier())
-    }
-    
-    func ryzeSurface() -> some View {
-        self.modifier(RyzeSurfaceModifier())
     }
     
     func ryzeGlow(for color: Color? = nil) -> some View {

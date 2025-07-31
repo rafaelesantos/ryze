@@ -8,8 +8,6 @@
 @_exported import SwiftUI
 
 public struct RyzeZStack: RyzeView {
-    @Environment(\.ryzeTheme) private var theme
-    
     let alignment: Alignment
     let content: any View
     

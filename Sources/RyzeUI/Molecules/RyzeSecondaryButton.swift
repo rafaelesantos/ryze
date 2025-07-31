@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeSecondaryButton: RyzeView {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     
     let text: String?
     let role: ButtonRole?

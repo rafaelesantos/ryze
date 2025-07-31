@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RyzeSkeletonModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) private var theme
-    @Environment(\.ryzeLoading) private var isLoading
+    @Environment(\.theme) private var theme
+    @Environment(\.isLoading) private var isLoading
     
     init() {}
     

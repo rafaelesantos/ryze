@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RyzeGlowModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     let color: Color?
     
     var colors: [Color] {
@@ -58,13 +58,12 @@ struct RyzeGlowModifier: RyzeViewModifier {
         )
         .blur(radius: 20)
         .ryzePadding()
-        .ryzePadding(spacing: .negative(.medium))
+        .ryzePadding(.negative(.medium))
     }
     
     static var mock: some View {
         RyzeHStack.mock
             .ryzePadding()
-            .ryzeSurface()
             .ryzeGlow()
             .ryzePadding()
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RyzeSizeModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     
     let width: RyzeSize?
     let height: RyzeSize?

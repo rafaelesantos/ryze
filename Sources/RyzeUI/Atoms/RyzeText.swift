@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct RyzeText: RyzeView {
-    @Environment(\.ryzeLoading) private var isLoading
+    @Environment(\.isLoading) private var isLoading
     
     let text: String?
     

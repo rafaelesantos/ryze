@@ -9,7 +9,7 @@
 @_exported import RyzeFoundation
 
 public struct RyzeTextField: RyzeView {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     @FocusState var isFocused: Bool
     @Binding var text: String
     @State var error: RyzeError?
@@ -66,8 +66,8 @@ public struct RyzeTextField: RyzeView {
         #endif
         .submitLabel(configuration.submitLabel)
         .ryze(alignment: .leading)
-        .ryzePadding(.horizontal, spacing: .extraLarge)
-        .ryzePadding(.horizontal, spacing: .small)
+        .ryzePadding(.horizontal, .extraLarge)
+        .ryzePadding(.horizontal, .small)
         .overlay(alignment: .leading) { iconView }
         .overlay(alignment: .trailing) { clearButton }
         .ryzePadding()

@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeLabel: RyzeView {
-    @Environment(\.ryzeLoading) private var isLoading
+    @Environment(\.isLoading) private var isLoading
     
     let text: String?
     let symbol: String

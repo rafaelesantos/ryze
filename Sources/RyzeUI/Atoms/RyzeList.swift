@@ -8,8 +8,6 @@
 @_exported import SwiftUI
 
 public struct RyzeList: RyzeView {
-    @Environment(\.ryzeTheme) private var theme
-    
     let content: any View
     
     public init(@ViewBuilder content: () -> some View) {

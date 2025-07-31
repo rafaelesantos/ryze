@@ -10,7 +10,7 @@ import CoreMotion
 
 #if os(iOS)
 struct RyzeParallaxModifier: RyzeViewModifier {
-    @Environment(\.ryzeTheme) var theme
+    @Environment(\.theme) var theme
     @State var motion: CMDeviceMotion? = nil
     
     let motionManager: CMMotionManager = CMMotionManager()
@@ -111,7 +111,6 @@ struct RyzeParallaxModifier: RyzeViewModifier {
         RyzeSymbol(name: "rainbow")
             .ryze(font: .system(size: 50))
             .ryzePadding(.extraLarge)
-            .ryzeSurface()
             .ryzeParallax(height: .medium2)
     }
 }

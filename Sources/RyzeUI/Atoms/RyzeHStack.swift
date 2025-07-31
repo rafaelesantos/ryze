@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeHStack: RyzeView {
-    @Environment(\.ryzeTheme) private var theme
+    @Environment(\.theme) private var theme
     
     let alignment: VerticalAlignment
     let spacing: RyzeSpacing?
@@ -19,7 +19,7 @@ public struct RyzeHStack: RyzeView {
     public init(
         _ accessibility: RyzeAccessibility? = nil,
         alignment: VerticalAlignment = .center,
-        spacing: RyzeSpacing? = .medium,
+        spacing: RyzeSpacing? = nil,
         @ViewBuilder content: () -> some View
     ) {
         self.accessibility = accessibility
@@ -45,7 +45,6 @@ public struct RyzeHStack: RyzeView {
         ) {
             RyzeSymbol.mock
                 .ryzePadding()
-                .ryzeSurface()
             RyzeVStack.mock
         }
     }
