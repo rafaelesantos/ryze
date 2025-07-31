@@ -90,6 +90,10 @@ public extension View {
         self.modifier(RyzeBackgroundSecondaryModifier())
     }
     
+    func ryzeBackgroundRow() -> some View {
+        self.modifier(RyzeBackgroundRowModifier())
+    }
+    
     func ryzeSurface() -> some View {
         self.modifier(RyzeSurfaceModifier())
     }
