@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension Color {
-    init(_ hex: String?) {
+    init(hex: String?) {
         guard let hex else {
             self = Color(.primary)
             return
@@ -32,7 +32,7 @@ public extension Color {
         let green = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
         let blue = CGFloat(rgbValue & 0x0000FF) / 255.0
         
-#if canImport(UIKit)
+        #if canImport(UIKit)
         let uiColor = UIColor(
             red: red,
             green: green,
@@ -40,7 +40,7 @@ public extension Color {
             alpha: 1
         )
         self = Color(uiColor: uiColor)
-#elseif canImport(AppKit)
+        #elseif canImport(AppKit)
         let nsColor = NSColor(
             red: red,
             green: green,
@@ -48,8 +48,8 @@ public extension Color {
             alpha: 1
         )
         self = Color(nsColor: nsColor)
-#else
+        #else
         self = Color(.primary)
-#endif
+        #endif
     }
 }

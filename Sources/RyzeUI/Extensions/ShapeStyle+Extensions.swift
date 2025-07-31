@@ -29,7 +29,7 @@ public extension ShapeStyle where Self == RyzeColor {
     
     static func hex(_ hex: String?) -> RyzeColor {
         guard let hex else { return .primary }
-        return .init(rawValue: .init(hex))
+        return .init(rawValue: .init(hex: hex))
     }
     
     static func color(_ color: Color?) -> RyzeColor {
