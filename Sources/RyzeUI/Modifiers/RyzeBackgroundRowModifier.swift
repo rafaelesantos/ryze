@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RyzeBackgroundRowModifier: RyzeViewModifier {
-    @Environment(\.theme) private var theme
+    @Environment(\.colorScheme) private var colorScheme
     
     func body(content: Content) -> some View {
         content
-            .ryze(background: theme.colorScheme == .dark ? .backgroundSecondary : .background)
+            .ryze(background: colorScheme == .dark ? .backgroundSecondary : .background)
     }
     
     static var mock: some View {
