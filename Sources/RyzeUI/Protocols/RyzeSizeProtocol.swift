@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeSizeProtocol {
+public protocol RyzeSizeProtocol: Sendable {
     var ultraSmall: CGFloat { get }
     var ultraSmall2: CGFloat { get }
     var extraSmall: CGFloat { get }

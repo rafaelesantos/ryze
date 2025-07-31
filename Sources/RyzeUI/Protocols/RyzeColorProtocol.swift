@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeColorProtocol {
+public protocol RyzeColorProtocol: Sendable {
     var primary: Color { get }
     var secondary: Color { get }
     var background: Color { get }

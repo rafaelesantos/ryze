@@ -15,7 +15,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
     var size: RyzeSizeProtocol
     var locale: RyzeLocale
     var animation: Animation?
-    var transition: AnyTransition
     var feedback: SensoryFeedback
     var colorScheme: ColorScheme?
     
@@ -26,7 +25,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
         size: RyzeSizeProtocol = RyzeDefaultSize(),
         locale: RyzeLocale = .current,
         animation: Animation? = .interactiveSpring(duration: 0.8),
-        transition: AnyTransition = .scale,
         feedback: SensoryFeedback = .impact,
         colorScheme: ColorScheme? = nil
     ) {
@@ -36,7 +34,6 @@ struct RyzeDefaultTheme: RyzeThemeProtocol {
         self.size = size
         self.locale = locale
         self.animation = animation
-        self.transition = transition
         self.feedback = feedback
         self.colorScheme = colorScheme
     }

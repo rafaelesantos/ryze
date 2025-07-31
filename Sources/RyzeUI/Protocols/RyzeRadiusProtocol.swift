@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeRadiusProtocol {
+public protocol RyzeRadiusProtocol: Sendable {
     var none: CGFloat { get }
     var small: CGFloat { get }
     var medium: CGFloat { get }

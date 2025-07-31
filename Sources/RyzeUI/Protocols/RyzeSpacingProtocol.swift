@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeSpacingProtocol {
+public protocol RyzeSpacingProtocol: Sendable {
     var none: CGFloat { get }
     var extraSmall: CGFloat { get }
     var small: CGFloat { get }
