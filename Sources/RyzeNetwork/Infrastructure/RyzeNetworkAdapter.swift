@@ -31,10 +31,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         } catch {
             logger.warning(.cacheMiss(urlRequest.url?.absoluteString, error.localizedDescription))
             let (data, response) = try await session.data(for: urlRequest)
-            
             try await storeCache(on: endpoint, data: data, response: response)
-            logger.info(.responseCached(urlRequest.url?.absoluteString))
-            
             return try await request.decode(data: data, with: formatter)
         }
     }
