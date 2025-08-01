@@ -11,6 +11,9 @@
 public extension EnvironmentValues {
     @Entry var isLoading: Bool = false
     @Entry var isDisabled: Bool = false
+    @Entry var screenSize: CGSize = .zero
+    @Entry var scrollPosition: CGPoint = .zero
+    @Entry var isLargeScreen: Bool = false
     
     @Entry var theme: RyzeThemeProtocol = RyzeDefaultTheme()
 }

@@ -19,10 +19,10 @@ struct RyzeBackgroundRowModifier: RyzeViewModifier {
         RyzeHStack.mock
             .ryze(width: .max, height: .max)
             .ryzePadding()
-            .ryzeBackground()
+            .ryzeBackgroundRow()
     }
 }
 
 #Preview {
-    RyzeBackgroundModifier.mock
+    RyzeBackgroundRowModifier.mock
 }
