@@ -108,18 +108,19 @@ public extension View {
     @ViewBuilder
     func ryze<Content: View>(
         if condition: Bool,
+        transition: AnyTransition = .scale,
+        animation: Animation? = .linear,
         transform: (Self) -> Content
     ) -> some View {
         RyzeZStack {
             if condition {
                 transform(self)
-                    .transition(.blurReplace)
+                    .transition(transition)
             } else {
                 self
-                    .transition(.blurReplace)
             }
         }
-        .animation(.interactiveSpring(duration: 0.8), value: condition)
+        .animation(animation, value: condition)
     }
     
     @ViewBuilder
