@@ -32,4 +32,13 @@ public struct RyzeColor: ShapeStyle, @unchecked Sendable {
             return color
         }
     }
+    
+    public func color(using theme: RyzeColorProtocol) -> Color {
+        switch storage {
+        case .themed(let keyPath):
+            return theme[keyPath: keyPath]
+        case .custom(let color):
+            return color
+        }
+    }
 }
