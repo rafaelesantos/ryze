@@ -100,7 +100,7 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
         case let .noCache(url): return formatted(with: url)
         case let .cacheWithExpiration(url, expiration): return formatted(with: url, expiration.description)
         case let .noCacheInterval(url): return formatted(with: url)
-        case let .cacheStored(url, interval): return formatted(with: url, "\(interval)")
+        case let .cacheStored(url, interval): return formatted(with: url, interval)
         case let .invalidURL(url): return formatted(with: url)
         case let .connecting(host, port, params): return formatted(with: host, port, params)
         case let .connectionEstablished(host, port): return formatted(with: host, port)

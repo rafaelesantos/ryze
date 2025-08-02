@@ -24,5 +24,5 @@ struct RyzeBackgroundRowModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeBackgroundRowModifier.mock
+    RyzeBackgroundModifier.mock
 }
