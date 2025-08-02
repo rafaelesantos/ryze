@@ -208,4 +208,8 @@ public extension View {
     func ryzeScreenObserve(minimumWidthScreen: CGFloat = 430) -> some View {
         self.modifier(RyzeScreenModifier(minimumWidthScreen: minimumWidthScreen))
     }
+    
+    func ryzeConfetti(_ isActive: Bool = false) -> some View {
+        self.modifier(RyzeConfettiModifier(isActive: isActive))
+    }
 }
