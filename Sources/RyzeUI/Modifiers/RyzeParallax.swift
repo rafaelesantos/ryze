@@ -108,7 +108,7 @@ struct RyzeParallaxModifier: RyzeViewModifier {
     }
     
     static var mock: some View {
-        RyzeSymbol(name: "rainbow")
+        RyzeSymbol("rainbow")
             .ryze(font: .system(size: 50))
             .ryzePadding(.extraLarge)
             .ryzeParallax(height: .medium2)

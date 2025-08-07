@@ -16,7 +16,7 @@ public struct RyzeSymbol: RyzeView {
     let variants: SymbolVariants
     
     public init(
-        name: String = "infinity",
+        _ name: String = "infinity",
         mode: SymbolRenderingMode = .monochrome,
         variants: SymbolVariants = .none
     ) {
@@ -34,7 +34,7 @@ public struct RyzeSymbol: RyzeView {
     
     public static var mock: some View {
         RyzeSymbol(
-            name: "wifi",
+            "wifi",
             variants: .fill,
         )
         .ryzeSymbol(effect: .variableColor.cumulative.dimInactiveLayers.reversing)

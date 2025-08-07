@@ -92,7 +92,7 @@ public struct RyzeTextField: RyzeView {
             isFocused = true
         } label: {
             RyzeSymbol(
-                name: "xmark.circle.fill",
+                "xmark.circle.fill",
                 mode: .hierarchical
             )
             .ryze(font: .body)
@@ -106,7 +106,7 @@ public struct RyzeTextField: RyzeView {
     @ViewBuilder
     var iconView: some View {
         if let icon = configuration.icon {
-            RyzeSymbol(name: icon)
+            RyzeSymbol(icon)
                 .ryze(font: .footnote)
                 .ryze(color: stateColor)
                 .ryzeGlow(for: error == nil ? nil : theme.color.error)
@@ -141,7 +141,7 @@ public struct RyzeTextField: RyzeView {
         if let failureReason = error?.failureReason {
             RyzeHStack(spacing: .small) {
                 RyzeSymbol(
-                    name: "xmark.circle.fill",
+                    "xmark.circle.fill",
                     mode: .hierarchical
                 )
                 .ryze(font: .footnote)
@@ -160,7 +160,7 @@ public struct RyzeTextField: RyzeView {
         if let recoverySuggestion = error?.recoverySuggestion {
             RyzeHStack(spacing: .small) {
                 RyzeSymbol(
-                    name: "lightbulb.max.fill",
+                    "lightbulb.max.fill",
                     mode: .hierarchical
                 )
                 .ryze(font: .footnote)
