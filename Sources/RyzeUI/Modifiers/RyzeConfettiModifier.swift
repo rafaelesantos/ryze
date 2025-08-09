@@ -7,8 +7,8 @@
 
 fileprivate struct RyzeConfettiView: RyzeView {
     @State var animate = false
-    @State var xSpeed = Double.random(in: 2...3)
-    @State var zSpeed = Double.random(in: 2...3)
+    @State var xSpeed = Double.random(in: 0.7...2)
+    @State var zSpeed = Double.random(in: 1...3)
     @State var anchor = CGFloat.random(in: 0...1).rounded()
     
     var body: some View {
@@ -49,7 +49,7 @@ fileprivate struct RyzeConfettiView: RyzeView {
 }
 
 fileprivate struct RyzeConfettiContainerView: RyzeView {
-    @State var count: Int = 60
+    let count: Int
     @State var yPosition: CGFloat = 0
 
     var body: some View {
@@ -72,18 +72,36 @@ fileprivate struct RyzeConfettiContainerView: RyzeView {
     }
     
     static var mock: some View {
-        RyzeConfettiContainerView()
+        RyzeConfettiContainerView(count: 50)
     }
 }
 
+
 struct RyzeConfettiModifier: RyzeViewModifier {
-    let isActive: Bool
+    @State var isActive: Bool = false
+    
+    let amount: Int
+    let seconds: Int
 
     func body(content: Content) -> some View {
         content
-            .overlay(isActive ? RyzeConfettiContainerView() : nil)
+            .overlay {
+                if isActive {
+                    RyzeConfettiContainerView(count: amount)
+                }
+            }
             .sensoryFeedback(.success, trigger: isActive)
-            .animation(.easeOut(duration: 2), value: isActive)
+            .animation(.linear, value: isActive)
+            .onAppear { handler() }
+    }
+    
+    func handler() {
+        guard !isActive else { return }
+        isActive = true
+        Task {
+            try await Task.sleep(for: .seconds(seconds))
+            isActive = false
+        }
     }
     
     static var mock: some View {
@@ -92,7 +110,7 @@ struct RyzeConfettiModifier: RyzeViewModifier {
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ryzeConfetti(true)
+        .ryzeConfetti(amount: 60)
     }
 }
 

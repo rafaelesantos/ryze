@@ -209,7 +209,15 @@ public extension View {
         self.modifier(RyzeScreenModifier(minimumWidthScreen: minimumWidthScreen))
     }
     
-    func ryzeConfetti(_ isActive: Bool = false) -> some View {
-        self.modifier(RyzeConfettiModifier(isActive: isActive))
+    func ryzeConfetti(
+        amount: Int = 30,
+        seconds: Int = 4
+    ) -> some View {
+        self.modifier(
+            RyzeConfettiModifier(
+                amount: amount,
+                seconds: seconds
+            )
+        )
     }
 }
