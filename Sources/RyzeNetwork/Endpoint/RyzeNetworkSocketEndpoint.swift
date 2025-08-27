@@ -18,12 +18,12 @@ public protocol RyzeNetworkSocketEndpoint: RyzeLogger, Sendable {
 public extension RyzeNetworkSocketEndpoint {
     func log() {
         let logger = RyzeNetworkLogger()
-        logger.info(.host(host.debugDescription))
+        logger.info("🌐 Host: \(host.debugDescription)")
 
         if let port = try? port {
-            logger.info(.port(port.rawValue))
+            logger.info("🔢 Port: \(port.rawValue)")
         }
 
-        logger.info(.parameters(parameters.debugDescription))
+        logger.info("⚙️ Parameters: \(parameters.debugDescription)")
     }
 }

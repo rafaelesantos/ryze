@@ -3,102 +3,108 @@
   "strings" : {
     "log.body" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📝 Body: %@"
+            "value" : "📝 Body: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📝 Corpo: %@"
+            "value" : "📝 Corpo: %s"
           }
         }
       }
     },
     "log.cacheHit" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache hit for %@"
+            "value" : "📦 Cache hit for %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache encontrado para %@"
+            "value" : "📦 Cache encontrado para %s"
           }
         }
       }
     },
     "log.cacheMiss" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗄️ Cache miss or error for %@: %@"
+            "value" : "🗄️ Cache miss or error for %s: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗄️ Cache não encontrado ou erro para %@: %@"
+            "value" : "🗄️ Cache não encontrado ou erro para %s: %s"
           }
         }
       }
     },
     "log.cacheStored" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗄️ Cached response stored for %@ with interval %f"
+            "value" : "🗄️ Cached response stored for %s with interval %f"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗄️ Resposta armazenada em cache para %@ com intervalo %f"
+            "value" : "🗄️ Resposta armazenada em cache para %s com intervalo %f"
           }
         }
       }
     },
     "log.cacheWithExpiration" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache hit for %@ with expiration at %f"
+            "value" : "📦 Cache hit for %s with expiration at %f"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Cache encontrado para %@ com expiração em %f"
+            "value" : "📦 Cache encontrado para %s com expiração em %f"
           }
         }
       }
     },
     "log.connecting" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔗 Connecting to %@:%@ using parameters: %@"
+            "value" : "🔗 Connecting to %s:%s using parameters: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔗 Conectando a %@:%@ com parâmetros: %@"
+            "value" : "🔗 Conectando a %s:%s com parâmetros: %s"
           }
         }
       }
@@ -122,51 +128,54 @@
     },
     "log.connectionClosed" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔌 Connection closed to %@:%@"
+            "value" : "🔌 Connection closed to %s:%s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔌 Conexão encerrada com %@:%@"
+            "value" : "🔌 Conexão encerrada com %s:%s"
           }
         }
       }
     },
     "log.connectionEstablished" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Connection established to %@:%@"
+            "value" : "✅ Connection established to %s:%s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Conexão estabelecida com %@:%@"
+            "value" : "✅ Conexão estabelecida com %s:%s"
           }
         }
       }
     },
     "log.connectionFailed" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Connection failed with error: %@"
+            "value" : "⚠️ Connection failed with error: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Falha na conexão com erro: %@"
+            "value" : "⚠️ Falha na conexão com erro: %s"
           }
         }
       }
@@ -190,204 +199,216 @@
     },
     "log.connectionStateChanged" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔄 Connection state changed: %@"
+            "value" : "🔄 Connection state changed: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔄 Estado da conexão alterado: %@"
+            "value" : "🔄 Estado da conexão alterado: %s"
           }
         }
       }
     },
     "log.disconnected" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔌 Disconnected from %@:%@"
+            "value" : "🔌 Disconnected from %s:%s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔌 Desconectado de %@:%@"
+            "value" : "🔌 Desconectado de %s:%s"
           }
         }
       }
     },
     "log.failedToEncode" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ Failed to encode message: %@"
+            "value" : "❌ Failed to encode message: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ Falha ao codificar mensagem: %@"
+            "value" : "❌ Falha ao codificar mensagem: %s"
           }
         }
       }
     },
     "log.headers" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📋 Headers: %@"
+            "value" : "📋 Headers: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📋 Cabeçalhos: %@"
+            "value" : "📋 Cabeçalhos: %s"
           }
         }
       }
     },
     "log.host" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖥️ Host: %@"
+            "value" : "🖥️ Host: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖥️ Host: %@"
+            "value" : "🖥️ Host: %s"
           }
         }
       }
     },
     "log.invalidURL" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ Invalid URL for request: %@"
+            "value" : "❌ Invalid URL for request: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ URL inválida para requisição: %@"
+            "value" : "❌ URL inválida para requisição: %s"
           }
         }
       }
     },
     "log.messageSent" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Message sent successfully: %@"
+            "value" : "✅ Message sent successfully: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Mensagem enviada com sucesso: %@"
+            "value" : "✅ Mensagem enviada com sucesso: %s"
           }
         }
       }
     },
     "log.noCache" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗑️ No valid cache found for %@"
+            "value" : "🗑️ No valid cache found for %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🗑️ Nenhum cache válido encontrado para %@"
+            "value" : "🗑️ Nenhum cache válido encontrado para %s"
           }
         }
       }
     },
     "log.noCacheInterval" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⏱️ No cache interval provided for %@, skipping cache storage."
+            "value" : "⏱️ No cache interval provided for %s, skipping cache storage."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⏱️ Nenhum intervalo de cache fornecido para %@, pulando armazenamento."
+            "value" : "⏱️ Nenhum intervalo de cache fornecido para %s, pulando armazenamento."
           }
         }
       }
     },
     "log.parameters" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Parameters: %@"
+            "value" : "📦 Parameters: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📦 Parâmetros: %@"
+            "value" : "📦 Parâmetros: %s"
           }
         }
       }
     },
     "log.port" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚪 Port: %@"
+            "value" : "🚪 Port: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚪 Porta: %@"
+            "value" : "🚪 Porta: %s"
           }
         }
       }
     },
     "log.receiveError" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Error while receiving data: %@"
+            "value" : "⚠️ Error while receiving data: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Erro ao receber dados: %@"
+            "value" : "⚠️ Erro ao receber dados: %s"
           }
         }
       }
@@ -411,85 +432,90 @@
     },
     "log.requestStart" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚀 Starting request to %@"
+            "value" : "🚀 Starting request to %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚀 Iniciando requisição para %@"
+            "value" : "🚀 Iniciando requisição para %s"
           }
         }
       }
     },
     "log.responseCached" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Response received and cached for %@"
+            "value" : "✅ Response received and cached for %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Resposta recebida e armazenada em cache para %@"
+            "value" : "✅ Resposta recebida e armazenada em cache para %s"
           }
         }
       }
     },
     "log.sendError" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Error while sending message: %@"
+            "value" : "⚠️ Error while sending message: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Erro ao enviar mensagem: %@"
+            "value" : "⚠️ Erro ao enviar mensagem: %s"
           }
         }
       }
     },
     "log.sendingMessage" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✉️ Sending message: %@"
+            "value" : "✉️ Sending message: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✉️ Enviando mensagem: %@"
+            "value" : "✉️ Enviando mensagem: %s"
           }
         }
       }
     },
     "log.url" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌐 URL: %@"
+            "value" : "🌐 URL: %s"
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌐 URL: %@"
+            "value" : "🌐 URL: %s"
           }
         }
       }

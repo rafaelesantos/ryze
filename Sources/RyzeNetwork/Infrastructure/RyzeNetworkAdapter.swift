@@ -22,14 +22,14 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         let endpoint = await request.endpoint
         let urlRequest = try endpoint.request
         let logger = RyzeNetworkLogger()
-        logger.info(.requestStart(urlRequest.url?.absoluteString))
+        logger.info("🚀 Request started: \(urlRequest.url?.absoluteString ?? "nil")")
 
         do {
             let response = try await retrieveCache(on: request, with: formatter)
-            logger.info(.cacheHit(urlRequest.url?.absoluteString))
+            logger.info("✅ Cache hit for: \(urlRequest.url?.absoluteString ?? "nil")")
             return response
         } catch {
-            logger.warning(.cacheMiss(urlRequest.url?.absoluteString, error.localizedDescription))
+            logger.warning("❌ Cache miss for: \(urlRequest.url?.absoluteString ?? "nil") - \(error.localizedDescription)")
             let (data, response) = try await session.data(for: urlRequest)
             try await storeCache(on: endpoint, data: data, response: response)
             return try await request.decode(data: data, with: formatter)
@@ -49,11 +49,11 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
               let cacheInterval = cacheResponse.userInfo?[url] as? TimeInterval,
               cacheInterval > Date.now.timeIntervalSince1970
         else {
-            logger.info(.noCache(urlRequest.url?.absoluteString))
+            logger.info("📭 No cache for: \(urlRequest.url?.absoluteString ?? "nil")")
             throw RyzeNetworkError.noCache
         }
 
-        logger.info(.cacheWithExpiration(urlRequest.url?.absoluteString, cacheInterval))
+        logger.info("⏳ Cache valid for: \(urlRequest.url?.absoluteString ?? "nil") until \(Date(timeIntervalSince1970: cacheInterval))")
         
         return try cacheResponse.data.entity(for: Request.Response.self, with: formatter)
     }
@@ -68,7 +68,7 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
               let url = endpoint.url?.absoluteString
         else {
             let url = endpoint.url?.absoluteString
-            logger.info(.noCacheInterval(url))
+            logger.info("⏱️ No cache interval set for: \(url ?? "nil")")
             return
         }
 
@@ -82,6 +82,6 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
 
         let urlRequest = try endpoint.request
         URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
-        logger.info(.cacheStored(urlRequest.url?.absoluteString, cacheInterval))
+        logger.info("💾 Cache stored for: \(urlRequest.url?.absoluteString ?? "nil") until \(Date(timeIntervalSince1970: cacheInterval))")
     }
 }

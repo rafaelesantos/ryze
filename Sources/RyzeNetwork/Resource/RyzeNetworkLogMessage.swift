@@ -81,7 +81,7 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
         )
     }
     
-    func formatted(with arguments: CVarArg?...) -> String {
+    func formatted(with arguments: CVarArg...) -> String {
         String(format: format, arguments)
     }
     
@@ -93,14 +93,14 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
         case let .host(host): return formatted(with: host)
         case let .port(port): return formatted(with: "\(port)")
         case let .parameters(params): return formatted(with: params)
-        case let .requestStart(url): return formatted(with: url)
-        case let .cacheHit(key): return formatted(with: key)
-        case let .cacheMiss(key, error): return formatted(with: key, error)
-        case let .responseCached(url): return formatted(with: url)
-        case let .noCache(url): return formatted(with: url)
-        case let .cacheWithExpiration(url, expiration): return formatted(with: url, expiration.description)
-        case let .noCacheInterval(url): return formatted(with: url)
-        case let .cacheStored(url, interval): return formatted(with: url, interval)
+        case let .requestStart(url): return formatted(with: url ?? "")
+        case let .cacheHit(key): return formatted(with: key ?? "")
+        case let .cacheMiss(key, error): return formatted(with: key ?? "", error)
+        case let .responseCached(url): return formatted(with: url ?? "")
+        case let .noCache(url): return formatted(with: url ?? "")
+        case let .cacheWithExpiration(url, expiration): return formatted(with: url ?? "", expiration.description)
+        case let .noCacheInterval(url): return formatted(with: url ?? "")
+        case let .cacheStored(url, interval): return formatted(with: url ?? "", interval)
         case let .invalidURL(url): return formatted(with: url)
         case let .connecting(host, port, params): return formatted(with: host, port, params)
         case let .connectionEstablished(host, port): return formatted(with: host, port)
@@ -109,7 +109,7 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
         case .connectionReady: return format
         case .connectionCancelled: return format
         case let .connectionFailed(error): return formatted(with: error)
-        case let .connectionStateChanged(state): return formatted(with: state)
+        case let .connectionStateChanged(state): return formatted(with: state ?? "")
         case let .receiveError(error): return formatted(with: error)
         case .receptionComplete: return format
         case let .failedToEncode(message): return formatted(with: message)

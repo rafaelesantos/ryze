@@ -71,15 +71,16 @@ public extension RyzeNetworkEndpoint {
     func log() {
         let logger = RyzeNetworkLogger()
         if let url {
-            logger.info(.url(url))
+            logger.info("🔗 URL: \(url)")
         }
 
         if !headers.isEmpty {
-            logger.info(.headers(headers))
+            logger.info("📦 Headers: \(headers)")
         }
 
         if let body = try? body?.json {
-            logger.info(.body(body))
+            logger.info("✉️ Body: \(body)")
         }
     }
 }
+
