@@ -9,7 +9,7 @@ import Foundation
 
 public extension Array {
     func asyncMap<T>(
-        _ transform: @escaping (Element) async throws -> T
+        _ transform: @Sendable @escaping (Element) async throws -> T
     ) async rethrows -> [T] {
         var results = [T]()
         for item in self {
@@ -19,7 +19,7 @@ public extension Array {
     }
     
     func asyncCompactMap<T>(
-        _ transform: @escaping (Element) async throws -> T?
+        _ transform: @Sendable @escaping (Element) async throws -> T?
     ) async rethrows -> [T] {
         var results = [T]()
         for item in self {
@@ -31,7 +31,7 @@ public extension Array {
     }
     
     func asyncFilter(
-        _ predicate: @escaping (Element) async throws -> Bool
+        _ predicate: @Sendable @escaping (Element) async throws -> Bool
     ) async rethrows -> [Element] {
         var results = [Element]()
         for item in self {
