@@ -13,7 +13,6 @@ public protocol RyzeEntity:
     Equatable,
     Hashable,
     CustomStringConvertible,
-    Sendable,
     RyzeLogger {
 }
 

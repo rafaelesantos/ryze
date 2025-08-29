@@ -10,7 +10,7 @@
 
 public protocol RyzeNetworkRequest: Sendable {
     associatedtype Endpoint: RyzeNetworkEndpoint
-    associatedtype Response: RyzeEntity
+    associatedtype Response: RyzeEntity & Sendable
     
     var endpoint: Endpoint { get async }
     
