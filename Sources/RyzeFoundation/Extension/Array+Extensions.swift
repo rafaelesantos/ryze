@@ -9,21 +9,21 @@ import Foundation
 
 public extension Array {
     func asyncMap<T>(
-        _ transform: @escaping (Element) async -> T
-    ) async -> [T] {
+        _ transform: @escaping (Element) async throws -> T
+    ) async rethrows -> [T] {
         var results = [T]()
         for item in self {
-            await results.append(transform(item))
+            try await results.append(transform(item))
         }
         return results
     }
     
     func asyncCompactMap<T>(
-        _ transform: @escaping (Element) async -> T?
-    ) async -> [T] {
+        _ transform: @escaping (Element) async throws -> T?
+    ) async rethrows -> [T] {
         var results = [T]()
         for item in self {
-            if let transformed = await transform(item) {
+            if let transformed = try await transform(item) {
                 results.append(transformed)
             }
         }
@@ -31,11 +31,11 @@ public extension Array {
     }
     
     func asyncFilter(
-        _ transform: @escaping (Element) async -> Bool
-    ) async -> [Element] {
+        _ predicate: @escaping (Element) async throws -> Bool
+    ) async rethrows -> [Element] {
         var results = [Element]()
         for item in self {
-            if await transform(item) {
+            if try await predicate(item) {
                 results.append(item)
             }
         }
