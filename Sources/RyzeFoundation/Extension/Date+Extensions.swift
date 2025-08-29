@@ -28,7 +28,7 @@ public extension Date {
         Calendar.current.isDateInTomorrow(self)
     }
 
-    func string(with format: String.DateFormat) -> String {
-        format.formatter.string(from: self)
+    func string(with formatter: RyzeDateFormatter) -> String? {
+        formatter.string(from: self)
     }
 }
