@@ -8,13 +8,13 @@
 @_exported import SwiftUI
 
 @Observable
-public final class RyzeStore<State: RyzeState, Action: RyzeAction, Reducer: RyzeReducer, Middleware: RyzeMiddleware> {
-    var state: State
+public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware> {
+    var state: Reducer.State
     var reducer: Reducer
     var middleware: Middleware
     
     public init(
-        state: State,
+        state: Reducer.State,
         reducer: Reducer,
         middleware: Middleware
     ) {
@@ -25,11 +25,9 @@ public final class RyzeStore<State: RyzeState, Action: RyzeAction, Reducer: Ryze
 }
 
 public extension RyzeStore where
-State == Reducer.State,
-Action == Reducer.Action,
-State == Middleware.State,
-Action == Middleware.Action {
-    func dispatch(action: Action) async throws {
+Reducer.State == Middleware.State,
+Reducer.Action == Middleware.Action {
+    func dispatch(action: Reducer.Action) async throws {
         state = await reducer.reduce(
             state: state,
             action: action
@@ -46,7 +44,7 @@ Action == Middleware.Action {
     }
     
     @MainActor
-    func mainDispatch(action: Action) {
+    func mainDispatch(action: Reducer.Action) {
         Task { @MainActor in
             try await dispatch(action: action)
         }
