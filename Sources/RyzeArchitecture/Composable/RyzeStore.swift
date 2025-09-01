@@ -7,38 +7,48 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeStore: ObservableObject {
-    associatedtype State: RyzeState
-    associatedtype Action: RyzeAction
-    associatedtype Reducer: RyzeReducer
-    associatedtype Middleware: RyzeMiddleware
+@Observable
+public final class RyzeStore<State: RyzeState, Action: RyzeAction, Reducer: RyzeReducer, Middleware: RyzeMiddleware> {
+    var state: State
+    var reducer: Reducer
+    var middleware: Middleware
     
-    var state: State { get set }
-    var reducer: Reducer { get }
-    var middleware: Middleware { get }
-    
-    func dispatch(action: Action) async throws
+    public init(
+        state: State,
+        reducer: Reducer,
+        middleware: Middleware
+    ) {
+        self.state = state
+        self.reducer = reducer
+        self.middleware = middleware
+    }
 }
 
-public extension RyzeStore where Self: AnyObject, State == Reducer.State, Action == Reducer.Action, State == Middleware.State, Action == Middleware.Action {
+public extension RyzeStore where
+State == Reducer.State,
+Action == Reducer.Action,
+State == Middleware.State,
+Action == Middleware.Action {
+    func dispatch(action: Action) async throws {
+        state = await reducer.reduce(
+            state: state,
+            action: action
+        )
+        
+        let actions = await middleware.run(
+            state: state,
+            action: action
+        )
+        
+        for await action in actions {
+            try await dispatch(action: action)
+        }
+    }
     
     @MainActor
-    func dispatch(action: Action) {
+    func mainDispatch(action: Action) {
         Task { @MainActor in
-            state = await reducer.reduce(
-                state: state,
-                action: action
-            )
-            
-            let actions = await middleware.run(
-                state: state,
-                action: action
-            )
-            
-            for await action in actions {
-                
-                try await dispatch(action: action)
-            }
+            try await dispatch(action: action)
         }
     }
 }
