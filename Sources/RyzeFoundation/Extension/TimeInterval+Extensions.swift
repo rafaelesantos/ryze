@@ -27,4 +27,11 @@ public extension TimeInterval {
     var date: Date {
         Date(timeIntervalSince1970: self)
     }
+    
+    var yearMonth: Int {
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        let year = calendar.component(.year, from: date)
+        return (year * 100) + month
+    }
 }
