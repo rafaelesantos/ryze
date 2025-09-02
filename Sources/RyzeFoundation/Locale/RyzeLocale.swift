@@ -69,11 +69,11 @@ public enum RyzeLocale: CaseIterable, Sendable {
         ["ar", "he", "fa", "ur"].contains(languageCode)
     }
     
-    var currencyCode: String {
+    public var currencyCode: String {
         rawValue.currency?.identifier ?? "USD"
     }
     
-    var calendar: Calendar {
+    public var calendar: Calendar {
         var calendar = Calendar(identifier: .gregorian)
         
         switch self {
@@ -89,7 +89,7 @@ public enum RyzeLocale: CaseIterable, Sendable {
         return calendar
     }
     
-    var dateFormatStyle: Date.FormatStyle {
+    public var dateFormatStyle: Date.FormatStyle {
         var style = Date.FormatStyle()
         style.locale = rawValue
         style.calendar = calendar
