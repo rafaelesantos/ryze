@@ -35,7 +35,8 @@ let package = Package(
         ),
         .target(
             name: "RyzeUI",
-            dependencies: ["RyzeFoundation"]
+            dependencies: ["RyzeFoundation"],
+            resources: [.copy("Resources/Symbols.json")]
         ),
         .target(
             name: "RyzeVideo",
