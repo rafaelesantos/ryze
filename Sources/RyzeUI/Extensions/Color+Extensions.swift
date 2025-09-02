@@ -52,4 +52,40 @@ public extension Color {
         self = Color(.primary)
         #endif
     }
+    
+    var hex: String {
+        #if canImport(UIKit)
+        let uiColor = UIColor(self)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return "#F1F2F1"
+        }
+        
+        return String(
+            format: "#%02lX%02lX%02lX",
+            lroundf(Float(red * 255)),
+            lroundf(Float(green * 255)),
+            lroundf(Float(blue * 255))
+        )
+        
+        #elseif canImport(AppKit)
+        let nsColor = NSColor(self)
+        let rgbColor = nsColor.usingColorSpace(.deviceRGB)
+        
+        guard let rgbColor else { return "#F1F2F1" }
+        
+        return String(
+            format: "#%02lX%02lX%02lX",
+            lroundf(Float(rgbColor.redComponent * 255)),
+            lroundf(Float(rgbColor.greenComponent * 255)),
+            lroundf(Float(rgbColor.blueComponent * 255))
+        )
+        #else
+        return "#F1F2F1"
+        #endif
+    }
 }
