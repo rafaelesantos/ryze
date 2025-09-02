@@ -8,7 +8,7 @@
 import Foundation
 
 public extension RyzeSymbol {
-    var allSymbols: [String] {
+    static var allSymbols: [String] {
         guard let symbols = try? RyzeUIFile.symbols.data.entity(for: [String].self) else { return [] }
         return symbols
     }
