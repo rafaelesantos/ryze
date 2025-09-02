@@ -100,9 +100,14 @@ public extension View {
     
     func ryzeSymbol<T: IndefiniteSymbolEffect & SymbolEffect>(
         effect: T,
+        options: SymbolEffectOptions = .default,
         isActive: Bool = true
     ) -> some View {
-        self.symbolEffect(effect, isActive: isActive)
+        self.symbolEffect(
+            effect,
+            options: options,
+            isActive: isActive
+        )
     }
     
     @ViewBuilder
