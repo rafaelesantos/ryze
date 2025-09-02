@@ -7,9 +7,8 @@
 
 @_exported import SwiftUI
 
-@Observable
-public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware> {
-    var state: Reducer.State
+public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware>: ObservableObject {
+    @Published public var state: Reducer.State
     var reducer: Reducer
     var middleware: Middleware
     
