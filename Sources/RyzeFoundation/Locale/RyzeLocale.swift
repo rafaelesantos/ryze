@@ -8,7 +8,7 @@
 @_exported import Foundation
 @_exported import SwiftUI
 
-public enum RyzeLocale: CaseIterable, Sendable {
+public enum RyzeLocale: CaseIterable, Sendable, Codable {
     case englishUS
     case portugueseBR
     case spanishES
