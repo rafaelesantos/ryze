@@ -1,5 +1,5 @@
 //
-//  RyzeCurrencyText.swift
+//  RyzeCurrencyTextField.swift
 //  Ryze
 //
 //  Created by Rafael Escaleira on 02/09/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import RyzeFoundation
 
-public struct RyzeCurrencyText: RyzeView {
+public struct RyzeCurrencyTextField: RyzeView {
     @Binding var amount: Double
     @State var text: String = ""
     let locale: RyzeLocale
@@ -54,7 +54,7 @@ public struct RyzeCurrencyText: RyzeView {
     }
     
     public static var mock: some View {
-        RyzeCurrencyText(
+        RyzeCurrencyTextField(
             amount: .constant(.zero),
             locale: .current
         )
@@ -63,5 +63,5 @@ public struct RyzeCurrencyText: RyzeView {
 
 #Preview {
     @Previewable @State var amount: Double = .zero
-    RyzeCurrencyText(amount: $amount)
+    RyzeCurrencyTextField(amount: $amount)
 }
