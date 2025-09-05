@@ -15,6 +15,13 @@ public protocol RyzeDateFormatter {
 }
 
 public extension RyzeDateFormatter {
+    func getFormatter(from format: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = RyzeLocale.current.rawValue
+        return formatter
+    }
+    
     func string(from date: Date?) -> String? {
         guard let date else { return nil }
         return rawValue.string(from: date)
