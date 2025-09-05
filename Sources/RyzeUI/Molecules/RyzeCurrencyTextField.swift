@@ -35,15 +35,18 @@ public struct RyzeCurrencyTextField: RyzeView {
             }
             .onChange(of: text) { _, newValue in
                 let digits = newValue.compactMap(\.wholeNumberValue)
-                let value = digits.reduce(0) { $0.double * 10 + $1.double }
+                let value = digits.reduce(0) { $0.double * 10 + $1.double } / 100
                 if value != amount { amount = value }
                 let masked = format(value)
                 if masked != newValue { text = masked }
             }
+            .overlay(alignment: .trailing) {
+                Text(amount.string)
+            }
     }
 
     func format(_ amount: Double) -> String {
-        let number = NSDecimalNumber(value: amount).dividing(by: 100)
+        let number = NSDecimalNumber(value: amount)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.currencyCode = locale.currencyCode
