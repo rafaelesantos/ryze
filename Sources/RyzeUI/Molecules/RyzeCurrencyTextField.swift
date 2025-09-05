@@ -40,9 +40,6 @@ public struct RyzeCurrencyTextField: RyzeView {
                 let masked = format(value)
                 if masked != newValue { text = masked }
             }
-            .overlay(alignment: .trailing) {
-                Text(amount.string)
-            }
     }
 
     func format(_ amount: Double) -> String {
