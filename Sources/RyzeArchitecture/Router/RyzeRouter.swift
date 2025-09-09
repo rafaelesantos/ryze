@@ -24,9 +24,8 @@ public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable {
         self.isPresented = isPresented
     }
     
-    public func makeView(for route: Route) -> AnyView {
-        router(with: route.navigationStyle)
-            .makeView(for: route)
+    public func makeView(for route: Route, content: @escaping (Route) -> any View) -> some View {
+        route.makeView(content: content)
     }
     
     public func route(to destination: Route) {
