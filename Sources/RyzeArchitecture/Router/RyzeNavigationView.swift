@@ -9,13 +9,13 @@
 
 public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
     @Binding var router: RyzeRouter<Route>
-    private let content: (RyzeRouter<Route>) -> Content
+    private let content: () -> Content
     private let destination: (Route) -> any View
     
     public init(
         router: Binding<RyzeRouter<Route>>,
         destination: @escaping (Route) -> any View,
-        @ViewBuilder content: @escaping (RyzeRouter<Route>) -> Content
+        @ViewBuilder content: @escaping () -> Content
     ) {
         self._router = router
         self.destination = destination
@@ -24,7 +24,7 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
     
     public var body: some View {
         NavigationStack(path: $router.navigationPath) {
-            content(router)
+            content()
                 .navigationDestination(for: Route.self) {
                     router.makeView(for: $0, content: destination)
                 }
