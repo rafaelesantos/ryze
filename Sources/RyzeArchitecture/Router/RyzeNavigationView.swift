@@ -29,7 +29,7 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
         .sheet(item: $router.presentRoute) {
             router.makeView(for: $0)
         }
-        .ryzeFull(item: $router.fullRoute) {
+        .fullScreenCover(item: $router.fullRoute) {
             router.makeView(for: $0)
         }
     }

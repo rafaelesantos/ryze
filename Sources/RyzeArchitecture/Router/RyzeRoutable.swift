@@ -8,8 +8,9 @@
 @_exported import SwiftUI
 
 public protocol RyzeRoutable: Hashable, Identifiable, Sendable {
+    associatedtype Content: View
     var navigationStyle: RyzeNavigationStyle { get }
-    func makeView(for router: RyzeRouter<Self>) -> AnyView
+    var body: Content { get }
 }
 
 extension RyzeRoutable {
@@ -17,7 +18,7 @@ extension RyzeRoutable {
         self
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
