@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeRoutable: Hashable, Identifiable, Sendable {
+public protocol RyzeRoutable: Hashable, Identifiable {
     associatedtype Content: View
     var navigationStyle: RyzeNavigationStyle { get }
     var body: Content { get }
