@@ -21,7 +21,7 @@ public class RyzeRouter<Route: RyzeRoutable> {
         fullRoute != nil
     }
     
-    public init(isPresented: Binding<Route?>) {
+    public init(isPresented: Binding<Route?> = .constant(.none)) {
         self.isPresented = isPresented
     }
     
