@@ -10,7 +10,7 @@
 public protocol RyzeRoutable: Hashable, Identifiable {
     associatedtype Content: View
     var navigationStyle: RyzeNavigationStyle { get }
-    func makeView(@ViewBuilder content: () -> Content) -> Content
+    func makeView(@ViewBuilder content: () -> some View) -> Content
 }
 
 extension RyzeRoutable {
