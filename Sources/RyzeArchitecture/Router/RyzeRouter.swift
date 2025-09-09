@@ -7,9 +7,8 @@
 
 @_exported import SwiftUI
 
-@MainActor
 @Observable
-public class RyzeRouter<Route: RyzeRoutable> {
+public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable {
     public var navigationPath = NavigationPath()
     public var isPresented: Binding<Route?>
     
@@ -63,27 +62,26 @@ public class RyzeRouter<Route: RyzeRoutable> {
     }
     
     private func full(to route: Route) {
-        self.fullRoute = route
+        fullRoute = route
+    }
+    
+    private var fullRouteBinding: Binding<Route?> {
+        Binding { self.fullRoute } set: {
+            self.fullRoute = $0
+        }
+    }
+    
+    private var presentRouteBinding: Binding<Route?> {
+        Binding { self.presentRoute } set: {
+            self.presentRoute = $0
+        }
     }
     
     private func router(with style: RyzeNavigationStyle) -> RyzeRouter {
         switch style {
-        case .push:
-            return self
-        case .present:
-            return RyzeRouter(
-                isPresented: Binding(
-                    get: { self.presentRoute },
-                    set: { self.presentRoute = $0 }
-                )
-            )
-        case .full:
-            return RyzeRouter(
-                isPresented: Binding(
-                    get: { self.fullRoute },
-                    set: { self.fullRoute = $0 }
-                )
-            )
+        case .push: return self
+        case .present: return RyzeRouter(isPresented: presentRouteBinding)
+        case .full: return RyzeRouter(isPresented: fullRouteBinding)
         }
     }
 }
