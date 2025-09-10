@@ -12,6 +12,8 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
     private let content: () -> Content
     private let destination: (Route) -> any View
     
+    @Namespace private var transitionNamespace
+    
     public init(
         router: Binding<RyzeRouter<Route>>,
         destination: @escaping (Route) -> any View,
@@ -25,8 +27,14 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
     public var body: some View {
         NavigationStack(path: $router.navigationPath) {
             content()
+                .matchedTransitionSource(id: "zoom", in: transitionNamespace)
                 .navigationDestination(for: Route.self) {
-                    router.makeView(for: $0, content: destination)
+                    router
+                        .makeView(
+                            for: $0,
+                            content: destination
+                        )
+                        .navigationTransition(.zoom(sourceID: "zoom", in: transitionNamespace))
                 }
         }
         .sheet(item: $router.presentRoute) {
