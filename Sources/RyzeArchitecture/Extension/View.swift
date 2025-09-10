@@ -26,6 +26,6 @@ extension View {
     }
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     @Entry var transitionNamespace: Namespace.ID = Namespace().wrappedValue
 }
