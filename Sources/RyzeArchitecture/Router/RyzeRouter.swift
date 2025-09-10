@@ -63,24 +63,4 @@ public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable {
     private func full(to route: Route) {
         fullRoute = route
     }
-    
-    private var fullRouteBinding: Binding<Route?> {
-        Binding { self.fullRoute } set: {
-            self.fullRoute = $0
-        }
-    }
-    
-    private var presentRouteBinding: Binding<Route?> {
-        Binding { self.presentRoute } set: {
-            self.presentRoute = $0
-        }
-    }
-    
-    private func router(with style: RyzeNavigationStyle) -> RyzeRouter {
-        switch style {
-        case .push: return self
-        case .present: return RyzeRouter(isPresented: presentRouteBinding)
-        case .full: return RyzeRouter(isPresented: fullRouteBinding)
-        }
-    }
 }
