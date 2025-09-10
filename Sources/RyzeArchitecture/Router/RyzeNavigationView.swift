@@ -35,7 +35,6 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
                         )
                         .navigationTransition(.zoom(sourceID: "zoom", in: transitionNamespace))
                 }
-                .matchedTransitionSource(id: "zoom", in: transitionNamespace)
         }
         .sheet(item: $router.presentRoute) {
             router.makeView(for: $0, content: destination)
