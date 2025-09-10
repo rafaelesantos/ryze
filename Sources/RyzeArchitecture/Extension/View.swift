@@ -25,3 +25,7 @@ extension View {
         AnyView(self)
     }
 }
+
+extension EnvironmentValues {
+    @Entry var transitionNamespace: Namespace.ID = Namespace().wrappedValue
+}
