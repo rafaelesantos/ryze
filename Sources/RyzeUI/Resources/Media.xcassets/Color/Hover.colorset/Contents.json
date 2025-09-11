@@ -2,31 +2,8 @@
   "colors" : [
     {
       "color" : {
-        "color-space" : "srgb",
-        "components" : {
-          "alpha" : "1.000",
-          "blue" : "0x72",
-          "green" : "0x3D",
-          "red" : "0x2F"
-        }
-      },
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "color-space" : "srgb",
-        "components" : {
-          "alpha" : "1.000",
-          "blue" : "0x5E",
-          "green" : "0x2A",
-          "red" : "0x1C"
-        }
+        "platform" : "osx",
+        "reference" : "systemIndigoColor"
       },
       "idiom" : "universal"
     }
