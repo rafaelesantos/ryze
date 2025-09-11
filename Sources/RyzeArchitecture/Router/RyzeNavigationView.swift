@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
-    @Environment(\.transitionNamespace) var transitionNamespace
+    @Namespace var transitionNamespace
     
     @Binding var router: RyzeRouter<Route>
     private let content: () -> Content
