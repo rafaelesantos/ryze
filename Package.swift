@@ -42,6 +42,10 @@ let package = Package(
             name: "RyzeVideo",
             dependencies: ["RyzeFoundation"]
         ),
+        .target(
+            name: "RyzeIntelligence",
+            dependencies: ["RyzeFoundation"]
+        ),
         .executableTarget(
             name: "RyzePreview",
             dependencies: [

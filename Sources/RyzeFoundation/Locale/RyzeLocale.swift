@@ -7,6 +7,7 @@
 
 @_exported import Foundation
 @_exported import SwiftUI
+@_exported import NaturalLanguage
 
 public enum RyzeLocale: CaseIterable, Sendable, Codable {
     case englishUS
@@ -50,6 +51,19 @@ public enum RyzeLocale: CaseIterable, Sendable, Codable {
     
     public var languageCode: String? {
         rawValue.language.languageCode?.identifier
+    }
+    
+    public var naturalLanguage: NLLanguage? {
+        switch self {
+        case .englishUS: return .english
+        case .portugueseBR: return .portuguese
+        case .spanishES: return .spanish
+        case .frenchFR: return .french
+        case .germanDE: return .german
+        case .arabicSA: return .arabic
+        case .japaneseJP: return .japanese
+        case .chineseCN: return .simplifiedChinese
+        }
     }
     
     public var identifier: String {

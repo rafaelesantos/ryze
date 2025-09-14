@@ -33,14 +33,18 @@ public struct RyzeNavigationView<Content: View, Route: RyzeRoutable>: View {
                             for: $0,
                             content: destination
                         )
+                        #if os(iOS)
                         .navigationTransition(.zoom(sourceID: "zoom", in: transitionNamespace))
+                        #endif
                 }
         }
         .sheet(item: $router.presentRoute) {
             router.makeView(for: $0, content: destination)
         }
+        #if os(iOS)
         .fullScreenCover(item: $router.fullRoute) {
             router.makeView(for: $0, content: destination)
         }
+        #endif
     }
 }
