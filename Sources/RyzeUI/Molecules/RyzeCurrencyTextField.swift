@@ -26,31 +26,20 @@ public struct RyzeCurrencyTextField: RyzeView {
             .ryze(color: amount == .zero ? .textSecondary : .text)
             .onAppear {
                 if text.isEmpty {
-                    text = format(amount)
+                    text = amount.currency() ?? ""
                 }
             }
             .onChange(of: amount) { _, newValue in
-                let formatted = format(newValue)
+                let formatted = newValue.currency() ?? ""
                 if formatted != text { text = formatted }
             }
             .onChange(of: text) { _, newValue in
                 let digits = newValue.compactMap(\.wholeNumberValue)
                 let value = digits.reduce(0) { $0.double * 10 + $1.double } / 100
                 if value != amount { amount = value }
-                let masked = format(value)
+                let masked = value.currency() ?? ""
                 if masked != newValue { text = masked }
             }
-    }
-
-    func format(_ amount: Double) -> String {
-        let number = NSDecimalNumber(value: amount)
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        numberFormatter.currencyCode = locale.currencyCode
-        numberFormatter.locale = locale.rawValue
-        numberFormatter.minimumFractionDigits = 2
-        numberFormatter.maximumFractionDigits = 2
-        return numberFormatter.string(from: number) ?? ""
     }
     
     public static var mock: some View {
