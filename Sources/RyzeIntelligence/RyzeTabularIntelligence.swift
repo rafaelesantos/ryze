@@ -178,8 +178,9 @@ public actor RyzeTabularIntelligence<T> {
         model.path = path
         
         let defaults = RyzeDefaults()
-        var models: [RyzeIntelligenceModel] = await defaults.get(for: "ryze.models") ?? []
-        models.append(model)
+        var models: Set<RyzeIntelligenceModel> = await defaults.get(for: "ryze.models") ?? []
+        if models.contains(model) { models.remove(model) }
+        models.insert(model)
         
         await defaults.set(models, for: "ryze.models")
     }

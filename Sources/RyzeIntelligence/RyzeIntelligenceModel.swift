@@ -11,19 +11,19 @@ import RyzeFoundation
 public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
     public var id: String
     public var name: String
-    public var createDate: TimeInterval
-    public var updateDate: TimeInterval
-    public var accuracy: Double
-    public var rootMeanSquaredError: Double
+    public var createDate: TimeInterval?
+    public var updateDate: TimeInterval?
+    public var accuracy: Double?
+    public var rootMeanSquaredError: Double?
     public var path: URL?
     
     public init(
         id: String,
         name: String,
-        createDate: TimeInterval,
-        updateDate: TimeInterval,
-        accuracy: Double,
-        rootMeanSquaredError: Double,
+        createDate: TimeInterval? = nil,
+        updateDate: TimeInterval? = nil,
+        accuracy: Double? = nil,
+        rootMeanSquaredError: Double? = nil,
         path: URL? = nil
     ) {
         self.id = id
