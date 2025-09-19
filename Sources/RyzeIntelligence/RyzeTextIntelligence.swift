@@ -51,8 +51,8 @@ public actor RyzeTextIntelligence<T> {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
-        
-        var parameters = MLTextClassifier.ModelParameters(
+        #if canImport(CreatML)
+        let parameters = MLTextClassifier.ModelParameters(
             validation: .none,
             algorithm: .transferLearning(.bertEmbedding, revision: nil),
             language: RyzeLocale.current.naturalLanguage
@@ -82,8 +82,12 @@ public actor RyzeTextIntelligence<T> {
         
         await save(classifier, model: model)
         return .saved(model: model)
+        #else
+        return .error
+        #endif
     }
     
+    #if canImport(CreatML)
     func save(
         _ classifier: MLTextClassifier,
         model: RyzeIntelligenceModel
@@ -99,6 +103,7 @@ public actor RyzeTextIntelligence<T> {
             await save(on: path, for: model)
         } catch { return }
     }
+    #endif
     
     func save(on path: URL, for model: RyzeIntelligenceModel) async {
         var model = model

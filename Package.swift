@@ -9,17 +9,21 @@ let package = Package(
     platforms: [
         .iOS(.v26),
         .macOS(.v26),
+        .macCatalyst(.v26),
+        .tvOS(.v26),
+        .driverKit(.v25),
+        .watchOS(.v26)
     ],
     products: [
         .library(
             name: "Ryze",
-            type: .static,
             targets: [
                 "RyzeFoundation",
                 "RyzeNetwork",
                 "RyzeArchitecture",
                 "RyzeUI",
-                "RyzeVideo"
+                "RyzeVideo",
+                "RyzeIntelligence"
             ]
         )
     ],
@@ -46,10 +50,14 @@ let package = Package(
             name: "RyzeIntelligence",
             dependencies: ["RyzeFoundation"]
         ),
-        .executableTarget(
+        .target(
             name: "RyzePreview",
             dependencies: [
                 "RyzeFoundation",
+                "RyzeNetwork",
+                "RyzeArchitecture",
+                "RyzeVideo",
+                "RyzeIntelligence",
                 "RyzeUI"
             ]
         )

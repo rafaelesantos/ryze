@@ -55,7 +55,8 @@ public actor RyzeTabularIntelligence<T> {
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
         
-        var parameters = MLBoostedTreeRegressor.ModelParameters(
+        #if canImport(CreatML)
+        let parameters = MLBoostedTreeRegressor.ModelParameters(
             validation: .dataFrame(testingData),
             maxDepth: 20,
             maxIterations: 10_000,
@@ -85,6 +86,9 @@ public actor RyzeTabularIntelligence<T> {
         )
         await save(regressor, model: model)
         return .saved(model: model)
+        #else
+        return .error
+        #endif
     }
     
     public func trainingClassifier(id: String, name: String) async -> RyzeIntelligenceResult {
@@ -95,8 +99,8 @@ public actor RyzeTabularIntelligence<T> {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
-        
-        var parameters = MLBoostedTreeClassifier.ModelParameters(
+        #if canImport(CreatML)
+        let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
             maxDepth: 20,
             maxIterations: 10_000,
@@ -127,8 +131,12 @@ public actor RyzeTabularIntelligence<T> {
         
         await save(regressor, model: model)
         return .saved(model: model)
+        #else
+        return .error
+        #endif
     }
     
+    #if canImport(CreatML)
     func save(
         _ regressor: MLBoostedTreeRegressor,
         model: RyzeIntelligenceModel
@@ -144,6 +152,23 @@ public actor RyzeTabularIntelligence<T> {
             await save(on: path, for: model)
         } catch { return }
     }
+    
+    func save(
+        _ regressor: MLBoostedTreeClassifier,
+        model: RyzeIntelligenceModel
+    ) async {
+        let fileManager = RyzeFileManager()
+        guard let path = await fileManager.path(
+            with: "\(model.name) - \(model.id).mlmodel",
+            privacy: .private
+        ) else { return }
+        
+        do {
+            try regressor.write(to: path)
+            await save(on: path, for: model)
+        } catch { return }
+    }
+    #endif
     
     func save(
         on path: URL,
