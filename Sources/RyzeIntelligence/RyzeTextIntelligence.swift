@@ -17,7 +17,7 @@ import CreateML
 import NaturalLanguage
 #endif
 
-public actor RyzeTextIntelligence<T> {
+public actor RyzeTextIntelligence {
     let data: [[String: String]]
     
     public init(data: [[String : String]]) {
