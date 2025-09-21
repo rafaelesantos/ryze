@@ -10,9 +10,7 @@ import RyzeFoundation
 import CoreML
 import TabularData
 
-#if canImport(CreateML)
 import CreateML
-#endif
 #if canImport(NaturalLanguage)
 import NaturalLanguage
 #endif
@@ -32,7 +30,6 @@ public final class RyzeTextIntelligence {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
-        #if canImport(CreatML)
         let parameters = MLTextClassifier.ModelParameters(
             validation: .none,
             algorithm: .transferLearning(.bertEmbedding, revision: nil),
@@ -63,12 +60,8 @@ public final class RyzeTextIntelligence {
         
         await save(classifier, model: model)
         return .saved(model: model)
-        #else
-        return .error
-        #endif
     }
-    
-    #if canImport(CreatML)
+
     func save(
         _ classifier: MLTextClassifier,
         model: RyzeIntelligenceModel
@@ -84,7 +77,6 @@ public final class RyzeTextIntelligence {
             await save(on: path, for: model)
         } catch { return }
     }
-    #endif
     
     func save(on path: URL, for model: RyzeIntelligenceModel) async {
         var model = model

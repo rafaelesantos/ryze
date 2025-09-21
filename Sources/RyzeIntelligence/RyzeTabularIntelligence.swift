@@ -10,9 +10,7 @@ import RyzeFoundation
 import CoreML
 import TabularData
 
-#if canImport(CreateML)
 import CreateML
-#endif
 #if canImport(NaturalLanguage)
 import NaturalLanguage
 #endif
@@ -77,7 +75,6 @@ public final class RyzeTabularIntelligence {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
-        #if canImport(CreatML)
         let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
             maxDepth: 20,
@@ -93,7 +90,7 @@ public final class RyzeTabularIntelligence {
         
         guard let regressor = try? MLBoostedTreeClassifier(
             trainingData: trainingData,
-            targetColumn: String(describing: target),
+            targetColumn: "target",
             parameters: parameters
         ) else { return .error }
         
@@ -109,12 +106,8 @@ public final class RyzeTabularIntelligence {
         
         await save(regressor, model: model)
         return .saved(model: model)
-        #else
-        return .error
-        #endif
     }
     
-    #if canImport(CreatML)
     func save(
         _ regressor: MLBoostedTreeRegressor,
         model: RyzeIntelligenceModel
@@ -146,7 +139,6 @@ public final class RyzeTabularIntelligence {
             await save(on: path, for: model)
         } catch { return }
     }
-    #endif
     
     func save(
         on path: URL,
