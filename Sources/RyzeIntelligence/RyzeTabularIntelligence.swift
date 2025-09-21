@@ -18,36 +18,14 @@ import NaturalLanguage
 #endif
 
 public actor RyzeTabularIntelligence<T> {
-    var values: [T]
-    var features: [KeyPath<T, Any>]
-    var target: KeyPath<T, Any>
+    var data: [[String: Any]]
     
-    public init(
-        values: [T],
-        features: [KeyPath<T, Any>],
-        target: KeyPath<T, Any>
-    ) {
-        self.values = values
-        self.features = features
-        self.target = target
-    }
-    
-    func generateData() -> Data? {
-        var trainingData: [[String: Any]] = []
-        for value in values {
-            var data: [String: Any] = [:]
-            for item in features {
-                let key = String(describing: item)
-                data[key] = value[keyPath: item]
-            }
-            data["targe"] = value[keyPath: target]
-            trainingData.append(data)
-        }
-        return try? JSONSerialization.data(withJSONObject: trainingData)
+    public init(data: [[String : Any]]) {
+        self.data = data
     }
     
     public func trainingRegressor(id: String, name: String) async -> RyzeIntelligenceResult {
-        guard let jsonData = generateData(),
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
@@ -92,7 +70,7 @@ public actor RyzeTabularIntelligence<T> {
     }
     
     public func trainingClassifier(id: String, name: String) async -> RyzeIntelligenceResult {
-        guard let jsonData = generateData(),
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         

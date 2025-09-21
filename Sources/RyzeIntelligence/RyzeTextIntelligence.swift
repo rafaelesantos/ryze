@@ -18,33 +18,14 @@ import NaturalLanguage
 #endif
 
 public actor RyzeTextIntelligence<T> {
-    var values: [T]
-    var text: KeyPath<T, String>
-    var label: KeyPath<T, String>
+    let data: [[String: String]]
     
-    public init(
-        values: [T],
-        text: KeyPath<T, String>,
-        label: KeyPath<T, String>
-    ) {
-        self.values = values
-        self.text = text
-        self.label = label
-    }
-    
-    func generateData() -> Data? {
-        var trainingData: [[String: String]] = []
-        for value in values {
-            var data: [String: String] = [:]
-            data["text"] = value[keyPath: text]
-            data["label"] = value[keyPath: label]
-            trainingData.append(data)
-        }
-        return try? JSONSerialization.data(withJSONObject: trainingData)
+    public init(data: [[String : String]]) {
+        self.data = data
     }
     
     public func trainingTextClassifier(id: String, name: String) async -> RyzeIntelligenceResult {
-        guard let jsonData = generateData(),
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
