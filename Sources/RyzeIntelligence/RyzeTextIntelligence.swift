@@ -91,10 +91,10 @@ public final class RyzeTextIntelligence {
         model.path = path
         
         let defaults = RyzeDefaults()
-        var models: Set<RyzeIntelligenceModel> = await defaults.get(for: "ryze.models") ?? []
+        var models: Set<RyzeIntelligenceModel> = defaults.get(for: "ryze.models") ?? []
         if models.contains(model) { models.remove(model) }
         models.insert(model)
         
-        await defaults.set(models, for: "ryze.models")
+        defaults.set(models, for: "ryze.models")
     }
 }
