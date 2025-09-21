@@ -17,7 +17,7 @@ import CreateML
 import NaturalLanguage
 #endif
 
-public actor RyzeTabularIntelligence {
+public final class RyzeTabularIntelligence {
     var data: [[String: Any]]
     
     public init(data: [[String : Any]]) {
