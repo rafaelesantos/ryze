@@ -11,6 +11,7 @@ import RyzeFoundation
 public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
     public var id: String
     public var name: String
+    public var isTraining: Bool
     public var createDate: TimeInterval?
     public var updateDate: TimeInterval?
     public var accuracy: Double?
@@ -20,6 +21,7 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
     public init(
         id: String,
         name: String,
+        isTraining: Bool = false,
         createDate: TimeInterval? = nil,
         updateDate: TimeInterval? = nil,
         accuracy: Double? = nil,
@@ -28,6 +30,7 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
     ) {
         self.id = id
         self.name = name
+        self.isTraining = isTraining
         self.createDate = createDate
         self.updateDate = updateDate
         self.accuracy = accuracy
