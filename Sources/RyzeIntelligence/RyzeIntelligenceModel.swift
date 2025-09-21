@@ -37,4 +37,12 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
         self.rootMeanSquaredError = rootMeanSquaredError
         self.path = path
     }
+    
+    static var models: [RyzeIntelligenceModel] {
+        get async {
+            let defaults = RyzeDefaults()
+            let models: [RyzeIntelligenceModel] = await defaults.get(for: "ryze.models") ?? []
+            return models
+        }
+    }
 }
