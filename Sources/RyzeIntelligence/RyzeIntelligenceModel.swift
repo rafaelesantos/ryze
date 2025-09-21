@@ -38,7 +38,7 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
         self.path = path
     }
     
-    static var models: [RyzeIntelligenceModel] {
+    public static var models: [RyzeIntelligenceModel] {
         get async {
             let defaults = RyzeDefaults()
             let models: [RyzeIntelligenceModel] = await defaults.get(for: "ryze.models") ?? []
