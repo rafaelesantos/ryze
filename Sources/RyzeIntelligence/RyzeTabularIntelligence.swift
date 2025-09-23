@@ -10,7 +10,10 @@ import RyzeFoundation
 import CoreML
 import TabularData
 
+#if targetEnvironment(simulator)
+#else
 import CreateML
+#endif
 #if canImport(NaturalLanguage)
 import NaturalLanguage
 #endif
@@ -31,7 +34,9 @@ public final class RyzeTabularIntelligence {
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
         
-        #if canImport(CreatML)
+        #if targetEnvironment(simulator)
+        return .error
+        #else
         let parameters = MLBoostedTreeRegressor.ModelParameters(
             validation: .dataFrame(testingData),
             maxDepth: 20,
@@ -47,7 +52,7 @@ public final class RyzeTabularIntelligence {
         
         guard let regressor = try? MLBoostedTreeRegressor(
             trainingData: trainingData,
-            targetColumn: String(describing: target),
+            targetColumn: String(describing: "target"),
             parameters: parameters
         ) else { return .error }
         
@@ -62,8 +67,6 @@ public final class RyzeTabularIntelligence {
         )
         await save(regressor, model: model)
         return .saved(model: model)
-        #else
-        return .error
         #endif
     }
     
@@ -75,6 +78,10 @@ public final class RyzeTabularIntelligence {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
+        
+        #if targetEnvironment(simulator)
+        return .error
+        #else
         let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
             maxDepth: 20,
@@ -106,8 +113,11 @@ public final class RyzeTabularIntelligence {
         
         await save(regressor, model: model)
         return .saved(model: model)
+        #endif
     }
     
+    #if targetEnvironment(simulator)
+    #else
     func save(
         _ regressor: MLBoostedTreeRegressor,
         model: RyzeIntelligenceModel
@@ -139,6 +149,7 @@ public final class RyzeTabularIntelligence {
             await save(on: path, for: model)
         } catch { return }
     }
+    #endif
     
     func save(
         on path: URL,

@@ -10,7 +10,10 @@ import RyzeFoundation
 import CoreML
 import TabularData
 
+#if targetEnvironment(simulator)
+#else
 import CreateML
+#endif
 #if canImport(NaturalLanguage)
 import NaturalLanguage
 #endif
@@ -30,6 +33,9 @@ public final class RyzeTextIntelligence {
         let splits = data.randomSplit(by: 0.8)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
+        #if targetEnvironment(simulator)
+        return .error
+        #else
         let parameters = MLTextClassifier.ModelParameters(
             validation: .none,
             algorithm: .transferLearning(.bertEmbedding, revision: nil),
@@ -60,8 +66,11 @@ public final class RyzeTextIntelligence {
         
         await save(classifier, model: model)
         return .saved(model: model)
+        #endif
     }
 
+    #if targetEnvironment(simulator)
+    #else
     func save(
         _ classifier: MLTextClassifier,
         model: RyzeIntelligenceModel
@@ -77,6 +86,7 @@ public final class RyzeTextIntelligence {
             await save(on: path, for: model)
         } catch { return }
     }
+    #endif
     
     func save(on path: URL, for model: RyzeIntelligenceModel) async {
         var model = model
