@@ -225,4 +225,8 @@ public extension View {
             )
         )
     }
+    
+    func ryze(systemMonitor: Binding<RyzeSystemMonitor>) -> some View {
+        self.modifier(RyzeSystemMonitorModifier(systemMonitor: systemMonitor))
+    }
 }
