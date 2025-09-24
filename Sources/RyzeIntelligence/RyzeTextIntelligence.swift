@@ -75,7 +75,7 @@ public final class RyzeTextIntelligence {
     ) async {
         let fileManager = RyzeFileManager()
         guard let path = await fileManager.path(
-            with: "\(model.name) - \(model.id).mlmodel",
+            with: "\(model.id).mlmodel",
             privacy: .private
         ) else { return }
         

@@ -141,7 +141,7 @@ public final class RyzeTabularIntelligence {
     ) async {
         let fileManager = RyzeFileManager()
         guard let path = await fileManager.path(
-            with: "\(model.name) - \(model.id).mlmodel",
+            with: "\(model.id).mlmodel",
             privacy: .private
         ) else { return }
         
@@ -157,7 +157,7 @@ public final class RyzeTabularIntelligence {
     ) async {
         let fileManager = RyzeFileManager()
         guard let path = await fileManager.path(
-            with: "\(model.name) - \(model.id).mlmodel",
+            with: "\(model.id).mlmodel",
             privacy: .private
         ) else { return }
         
