@@ -25,7 +25,11 @@ public final class RyzeTextIntelligence {
         self.data = data
     }
     
-    public func trainingTextClassifier(id: String, name: String) async -> RyzeIntelligenceResult {
+    public func trainingTextClassifier(
+        id: String,
+        name: String,
+        maxIterations: Int? = nil
+    ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
@@ -36,7 +40,7 @@ public final class RyzeTextIntelligence {
         #if targetEnvironment(simulator)
         return .error
         #else
-        let parameters = MLTextClassifier.ModelParameters(
+        var parameters = MLTextClassifier.ModelParameters(
             validation: .dataFrame(
                 testingData,
                 textColumn: "text",
@@ -45,6 +49,7 @@ public final class RyzeTextIntelligence {
             algorithm: .transferLearning(.bertEmbedding, revision: nil),
             language: RyzeLocale.current.naturalLanguage
         )
+        parameters.maxIterations = maxIterations
         
         guard let classifier = try? MLTextClassifier(
             trainingData: trainingData,
