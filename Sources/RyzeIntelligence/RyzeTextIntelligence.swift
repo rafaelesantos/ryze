@@ -30,7 +30,7 @@ public final class RyzeTextIntelligence {
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
-        let splits = data.randomSplit(by: 0.8)
+        let splits = data.randomSplit(by: 0.9)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
         #if targetEnvironment(simulator)
@@ -60,8 +60,8 @@ public final class RyzeTextIntelligence {
             name: name,
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
-            accuracy: 1 - metrics.classificationError,
-            rootMeanSquaredError: metrics.classificationError
+            accuracy: 1 - classifier.validationMetrics.classificationError,
+            rootMeanSquaredError: classifier.validationMetrics.classificationError
         )
         
         await save(classifier, model: model)

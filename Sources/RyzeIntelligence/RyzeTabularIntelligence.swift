@@ -30,7 +30,7 @@ public final class RyzeTabularIntelligence {
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
-        let splits = data.randomSplit(by: 0.8)
+        let splits = data.randomSplit(by: 0.9)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
         
@@ -39,8 +39,8 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeRegressor.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 20,
-            maxIterations: 10_000,
+            maxDepth: 40,
+            maxIterations: 5_000,
             minLossReduction: .zero,
             minChildWeight: 0.01,
             randomSeed: 42,
@@ -52,7 +52,7 @@ public final class RyzeTabularIntelligence {
         
         guard let regressor = try? MLBoostedTreeRegressor(
             trainingData: trainingData,
-            targetColumn: String(describing: "target"),
+            targetColumn: "target",
             parameters: parameters
         ) else { return .error }
         
@@ -75,7 +75,7 @@ public final class RyzeTabularIntelligence {
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
-        let splits = data.randomSplit(by: 0.8)
+        let splits = data.randomSplit(by: 0.9)
         let trainingData = DataFrame(splits.0)
         let testingData = DataFrame(splits.1)
         
@@ -84,8 +84,8 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 20,
-            maxIterations: 10_000,
+            maxDepth: 40,
+            maxIterations: 5_000,
             minLossReduction: .zero,
             minChildWeight: 0.01,
             randomSeed: 42,
@@ -101,14 +101,13 @@ public final class RyzeTabularIntelligence {
             parameters: parameters
         ) else { return .error }
         
-        let metrics = regressor.evaluation(on: testingData)
         let model = RyzeIntelligenceModel(
             id: id,
             name: name,
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
-            accuracy: 1 - metrics.classificationError,
-            rootMeanSquaredError: metrics.classificationError
+            accuracy: 1 - regressor.validationMetrics.classificationError,
+            rootMeanSquaredError: regressor.validationMetrics.classificationError
         )
         
         await save(regressor, model: model)
