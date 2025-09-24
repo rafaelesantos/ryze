@@ -8,15 +8,15 @@
 import SwiftUI
 
 public struct RyzeSystemMonitor: Sendable {
-    var cpuPercentageUsage: Double
-    var cpuTotalPercentage: Double
-    var cpuUsage: Int
-    var cpuCores: Int
+    public var cpuPercentageUsage: Double
+    public var cpuTotalPercentage: Double
+    public var cpuUsage: Int
+    public var cpuCores: Int
     
-    var memoryPercentageUsage: Double
-    var memoryTotalPercentage: Double
-    var memoryUsed: String
-    var memoryTotal: String
+    public var memoryPercentageUsage: Double
+    public var memoryTotalPercentage: Double
+    public var memoryUsed: String
+    public var memoryTotal: String
     
     public init(
         cpuPercentageUsage: Double = .zero,
