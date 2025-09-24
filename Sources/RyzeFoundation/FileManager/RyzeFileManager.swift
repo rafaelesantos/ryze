@@ -5,7 +5,7 @@
 //  Created by Rafael Escaleira on 13/09/25.
 //
 
-public actor RyzeFileManager {
+public struct RyzeFileManager {
     private var fileManager = FileManager.default
     
     public init() {}
@@ -36,7 +36,7 @@ public actor RyzeFileManager {
         }
     }
     
-    public func size(at path: URL?) -> String? {
+    public func size(at path: URL?) -> String {
         guard let path,
               let attributes = try? fileManager.attributesOfItem(atPath: path.path())
         else { return format(bytes: .zero) }

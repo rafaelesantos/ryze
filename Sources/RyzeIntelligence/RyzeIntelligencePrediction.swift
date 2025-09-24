@@ -55,7 +55,7 @@ public final class RyzeIntelligencePrediction {
     
     func setup() async {
         let fileManager = RyzeFileManager()
-        guard let path = await fileManager.path(with: model.id + ".mlmodel", privacy: .public),
+        guard let path = fileManager.path(with: model.id + ".mlmodel", privacy: .public),
               let compileModel = try? await MLModel.compileModel(at: path),
               let mlModel = try? MLModel(contentsOf: compileModel)
         else { return }

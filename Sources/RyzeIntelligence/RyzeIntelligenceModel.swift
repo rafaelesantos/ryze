@@ -16,7 +16,6 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
     public var updateDate: TimeInterval?
     public var accuracy: Double?
     public var rootMeanSquaredError: Double?
-    public var path: URL?
     
     public init(
         id: String,
@@ -25,8 +24,7 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
         createDate: TimeInterval? = nil,
         updateDate: TimeInterval? = nil,
         accuracy: Double? = nil,
-        rootMeanSquaredError: Double? = nil,
-        path: URL? = nil
+        rootMeanSquaredError: Double? = nil
     ) {
         self.id = id
         self.name = name
@@ -35,7 +33,13 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
         self.updateDate = updateDate
         self.accuracy = accuracy
         self.rootMeanSquaredError = rootMeanSquaredError
-        self.path = path
+    }
+    
+    public var size: String {
+        let id = "\(id).mlmodel"
+        let fileManager = RyzeFileManager()
+        let path = fileManager.path(with: id, privacy: .public)
+        return fileManager.size(at: path)
     }
     
     public static var models: [RyzeIntelligenceModel] {

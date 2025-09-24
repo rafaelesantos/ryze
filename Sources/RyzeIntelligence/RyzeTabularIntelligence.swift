@@ -140,14 +140,14 @@ public final class RyzeTabularIntelligence {
         model: RyzeIntelligenceModel
     ) async {
         let fileManager = RyzeFileManager()
-        guard let path = await fileManager.path(
+        guard let path = fileManager.path(
             with: "\(model.id).mlmodel",
             privacy: .public
         ) else { return }
         
         do {
             try regressor.write(to: path)
-            await save(on: path, for: model)
+            await save(model)
         } catch { return }
     }
     
@@ -156,25 +156,19 @@ public final class RyzeTabularIntelligence {
         model: RyzeIntelligenceModel
     ) async {
         let fileManager = RyzeFileManager()
-        guard let path = await fileManager.path(
+        guard let path = fileManager.path(
             with: "\(model.id).mlmodel",
             privacy: .public
         ) else { return }
         
         do {
             try regressor.write(to: path)
-            await save(on: path, for: model)
+            await save(model)
         } catch { return }
     }
     #endif
     
-    func save(
-        on path: URL,
-        for model: RyzeIntelligenceModel
-    ) async {
-        var model = model
-        model.path = path
-        
+    func save(_ model: RyzeIntelligenceModel) async {
         let defaults = RyzeDefaults()
         var models: Set<RyzeIntelligenceModel> = defaults.get(for: "ryze.models") ?? []
         if models.contains(model) { models.remove(model) }
