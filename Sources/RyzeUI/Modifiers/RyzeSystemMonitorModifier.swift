@@ -79,7 +79,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         cpuUsage: Int,
         cpuCores: Int
     )? {
-        var totalUsageOfCPU: Double = 0.0
+        var totalUsageOfCPU: Double = .zero
         var threadsList: thread_act_array_t?
         var threadsCount = mach_msg_type_number_t(0)
         
@@ -87,7 +87,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         guard threadsResult == KERN_SUCCESS else { return nil }
         
-        for index in 0..<threadsCount {
+        for index in .zero ..< threadsCount {
             var threadInfo = thread_basic_info()
             var threadInfoCount = mach_msg_type_number_t(THREAD_INFO_MAX)
             
@@ -105,7 +105,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             guard infoResult == KERN_SUCCESS else { continue }
             
             let threadBasicInfo = threadInfo as thread_basic_info
-            if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
+            if threadBasicInfo.flags & TH_FLAGS_IDLE == .zero {
                 let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE))
                 totalUsageOfCPU += threadUsage
             }
@@ -119,10 +119,9 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
         let adjustedUsage = totalUsageOfCPU * cpuCores.double
-        let cpuTotalPercentage = Double(cpuCores)
-        let clampedUsage = min(adjustedUsage, cpuTotalPercentage)
-        let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
-        let cpuUsage = Int(clampedUsage.rounded())
+        let cpuTotalPercentage = cpuCores.double
+        let cpuPercentageUsage = adjustedUsage / cpuTotalPercentage
+        let cpuUsage = adjustedUsage.rounded().int
         
         return (cpuPercentageUsage, cpuTotalPercentage, cpuUsage, cpuCores)
     }
