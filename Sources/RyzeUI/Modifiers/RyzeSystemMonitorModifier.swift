@@ -93,10 +93,12 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             
             let infoResult = withUnsafeMutablePointer(to: &threadInfo) {
                 $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
-                    thread_info(threadsList![Int(index)],
-                               thread_flavor_t(THREAD_BASIC_INFO),
-                               $0,
-                               &threadInfoCount)
+                    thread_info(
+                        threadsList![Int(index)],
+                        thread_flavor_t(THREAD_BASIC_INFO),
+                        $0,
+                        &threadInfoCount
+                    )
                 }
             }
             
@@ -104,7 +106,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             
             let threadBasicInfo = threadInfo as thread_basic_info
             if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
-                let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE)) * 100.0
+                let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE))
                 totalUsageOfCPU += threadUsage
             }
         }
@@ -115,7 +117,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
         let adjustedUsage = totalUsageOfCPU * Double(cpuCores)
-        let cpuTotalPercentage = Double(cpuCores) * 100.0
+        let cpuTotalPercentage = Double(cpuCores)
         let clampedUsage = min(adjustedUsage, cpuTotalPercentage)
         let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
         let cpuUsage = Int(clampedUsage.rounded())
@@ -144,7 +146,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         guard kerr == KERN_SUCCESS else { return nil }
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
-        let cpuTotalPercentage = Double(cpuCores) * 100.0
+        let cpuTotalPercentage = Double(cpuCores)
         
         var totalUsage = 0.0
         var threadsList: thread_act_array_t?
