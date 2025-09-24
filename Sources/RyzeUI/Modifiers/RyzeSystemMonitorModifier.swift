@@ -53,7 +53,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         content
             .onReceive(timer) { _ in
                 Task {
-                    guard let cpu = getAppCPUUsage(),
+                    guard let cpu = getAppCPUUsageAlternative(),
                           let memory = getMemoryUsage()
                     else { return }
                     
@@ -106,7 +106,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             
             let threadBasicInfo = threadInfo as thread_basic_info
             if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
-                let threadUsage = threadBasicInfo.cpu_usage.double
+                let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE))
                 totalUsageOfCPU += threadUsage
             }
         }
