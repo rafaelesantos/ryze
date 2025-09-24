@@ -8,6 +8,13 @@
 import CoreML
 import RyzeFoundation
 
+public enum RyzeIntelligencePredictionResult {
+    case textClassification(String)
+    case tabularRegression(Double)
+    case tabularClassification([String: Double])
+    case empty
+}
+
 public final class RyzeIntelligencePrediction {
     let model: RyzeIntelligenceModel
     var mlModel: MLModel?
@@ -25,32 +32,27 @@ public final class RyzeIntelligencePrediction {
         self.mlModel = mlModel
     }
     
-    public func regressionPrediction(from input: [String: Any]) async -> Double? {
+    public func regressionPrediction(from input: [String: Any]) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
               let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input)),
               let value = prediction.featureValue(for: "target")?.doubleValue
-        else { return nil }
-        return value
+        else { return .empty }
+        return .tabularRegression(value)
     }
     
-    public func classifierPrediction(from input: [String: Any]) async -> [(label: String, probability: Double)]? {
+    public func classifierPrediction(from input: [String: Any]) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
               let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input)),
-              let value = prediction.featureValue(for: "target")?.dictionaryValue
-        else { return nil }
-        return value.compactMap {
-            guard let key = $0.key as? String,
-                  let value = $0.value as? Double
-            else { return nil }
-            return (label: key, probability: value)
-        }
+              let value = prediction.featureValue(for: "target")?.dictionaryValue as? [String: Double]
+        else { return .empty }
+        return .tabularClassification(value)
     }
     
-    public func textPrediction(from input: String) async -> String? {
+    public func textPrediction(from input: String) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
               let nlModel = try? NLModel(mlModel: mlModel),
               let prediction = nlModel.predictedLabel(for: input)
-        else { return nil }
-        return prediction
+        else { return .empty }
+        return .textClassification(prediction)
     }
 }
