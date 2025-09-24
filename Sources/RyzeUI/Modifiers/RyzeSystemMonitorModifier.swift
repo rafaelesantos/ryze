@@ -106,7 +106,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             
             let threadBasicInfo = threadInfo as thread_basic_info
             if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
-                let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE))
+                let threadUsage = threadBasicInfo.cpu_usage.double
                 totalUsageOfCPU += threadUsage
             }
         }
@@ -116,7 +116,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
                      vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
-        let adjustedUsage = totalUsageOfCPU * Double(cpuCores)
+        let adjustedUsage = totalUsageOfCPU * cpuCores.double
         let cpuTotalPercentage = Double(cpuCores)
         let clampedUsage = min(adjustedUsage, cpuTotalPercentage)
         let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
