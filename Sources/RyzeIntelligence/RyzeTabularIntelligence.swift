@@ -25,7 +25,16 @@ public final class RyzeTabularIntelligence {
         self.data = data
     }
     
-    public func trainingRegressor(id: String, name: String) async -> RyzeIntelligenceResult {
+    public func trainingRegressor(
+        id: String,
+        name: String,
+        maxDepth: Int = 20,
+        maxIterations: Int = 10_000,
+        minLossReduction: Double = .zero,
+        minChildWeight: Double = 0.01,
+        randomSeed: Int = 42,
+        stepSize: Double = 0.01
+    ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
@@ -39,12 +48,12 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeRegressor.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 20,
-            maxIterations: 10_000,
-            minLossReduction: .zero,
-            minChildWeight: 0.01,
-            randomSeed: 42,
-            stepSize: 0.01,
+            maxDepth: maxDepth,
+            maxIterations: maxIterations,
+            minLossReduction: minLossReduction,
+            minChildWeight: minChildWeight,
+            randomSeed: randomSeed,
+            stepSize: stepSize,
             earlyStoppingRounds: nil,
             rowSubsample: 1,
             columnSubsample: 1
@@ -70,7 +79,16 @@ public final class RyzeTabularIntelligence {
         #endif
     }
     
-    public func trainingClassifier(id: String, name: String) async -> RyzeIntelligenceResult {
+    public func trainingClassifier(
+        id: String,
+        name: String,
+        maxDepth: Int = 20,
+        maxIterations: Int = 10_000,
+        minLossReduction: Double = .zero,
+        minChildWeight: Double = 0.01,
+        randomSeed: Int = 42,
+        stepSize: Double = 0.01
+    ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
               let data = try? DataFrame(jsonData: jsonData)
         else { return .error }
@@ -84,12 +102,12 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 20,
-            maxIterations: 10_000,
-            minLossReduction: .zero,
-            minChildWeight: 0.01,
-            randomSeed: 42,
-            stepSize: 0.01,
+            maxDepth: maxDepth,
+            maxIterations: maxIterations,
+            minLossReduction: minLossReduction,
+            minChildWeight: minChildWeight,
+            randomSeed: randomSeed,
+            stepSize: stepSize,
             earlyStoppingRounds: nil,
             rowSubsample: 1,
             columnSubsample: 1

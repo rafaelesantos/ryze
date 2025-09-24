@@ -37,7 +37,11 @@ public final class RyzeTextIntelligence {
         return .error
         #else
         let parameters = MLTextClassifier.ModelParameters(
-            validation: .none,
+            validation: .dataFrame(
+                testingData,
+                textColumn: "text",
+                labelColumn: "label"
+            ),
             algorithm: .transferLearning(.bertEmbedding, revision: nil),
             language: RyzeLocale.current.naturalLanguage
         )
@@ -48,12 +52,6 @@ public final class RyzeTextIntelligence {
             labelColumn: "label",
             parameters: parameters
         ) else { return .error }
-        
-        let metrics = classifier.evaluation(
-            on: testingData,
-            textColumn: "text",
-            labelColumn: "label"
-        )
         
         let model = RyzeIntelligenceModel(
             id: id,
