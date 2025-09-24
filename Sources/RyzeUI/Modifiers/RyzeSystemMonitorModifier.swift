@@ -53,7 +53,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         content
             .onReceive(timer) { _ in
                 Task {
-                    guard let cpu = getCPUUsage(),
+                    guard let cpu = getAppCPUUsage(),
                           let memory = getMemoryUsage()
                     else { return }
                     
@@ -73,7 +73,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             }
     }
     
-    func getCPUUsage() -> (
+    func getAppCPUUsage() -> (
         cpuPercentageUsage: Double,
         cpuTotalPercentage: Double,
         cpuUsage: Int,
@@ -94,9 +94,9 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             let infoResult = withUnsafeMutablePointer(to: &threadInfo) {
                 $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
                     thread_info(threadsList![Int(index)],
-                                thread_flavor_t(THREAD_BASIC_INFO),
-                                $0,
-                                &threadInfoCount)
+                               thread_flavor_t(THREAD_BASIC_INFO),
+                               $0,
+                               &threadInfoCount)
                 }
             }
             
@@ -104,19 +104,61 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             
             let threadBasicInfo = threadInfo as thread_basic_info
             if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
-                totalUsageOfCPU += (threadBasicInfo.cpu_usage.double / TH_USAGE_SCALE.double)
+                let threadUsage = (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE)) * 100.0
+                totalUsageOfCPU += threadUsage
             }
         }
         
-        vm_deallocate(
-            mach_task_self_,
-            vm_address_t(UInt(bitPattern: threadsList)),
-            vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride)
-        )
+        vm_deallocate(mach_task_self_,
+                     vm_address_t(UInt(bitPattern: threadsList)),
+                     vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
-        let cpuTotalPercentage = cpuCores.double
-        let clampedUsage = min(totalUsageOfCPU, cpuTotalPercentage)
+        let adjustedUsage = totalUsageOfCPU * Double(cpuCores)
+        let cpuTotalPercentage = Double(cpuCores) * 100.0
+        let clampedUsage = min(adjustedUsage, cpuTotalPercentage)
+        let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
+        let cpuUsage = Int(clampedUsage.rounded())
+        
+        return (cpuPercentageUsage, cpuTotalPercentage, cpuUsage, cpuCores)
+    }
+
+    func getAppCPUUsageAlternative() -> (
+        cpuPercentageUsage: Double,
+        cpuTotalPercentage: Double,
+        cpuUsage: Int,
+        cpuCores: Int
+    )? {
+        var info = mach_task_basic_info()
+        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size)/4
+        
+        let kerr: kern_return_t = withUnsafeMutablePointer(to: &info) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info(mach_task_self_,
+                         task_flavor_t(MACH_TASK_BASIC_INFO),
+                         $0,
+                         &count)
+            }
+        }
+        
+        guard kerr == KERN_SUCCESS else { return nil }
+        
+        let cpuCores = ProcessInfo.processInfo.activeProcessorCount
+        let cpuTotalPercentage = Double(cpuCores) * 100.0
+        
+        var totalUsage = 0.0
+        var threadsList: thread_act_array_t?
+        var threadsCount = mach_msg_type_number_t(0)
+        
+        if task_threads(mach_task_self_, &threadsList, &threadsCount) == KERN_SUCCESS {
+            totalUsage = Double(threadsCount) * 8.0
+            
+            vm_deallocate(mach_task_self_,
+                         vm_address_t(UInt(bitPattern: threadsList)),
+                         vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
+        }
+        
+        let clampedUsage = min(totalUsage, cpuTotalPercentage)
         let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
         let cpuUsage = Int(clampedUsage.rounded())
         
