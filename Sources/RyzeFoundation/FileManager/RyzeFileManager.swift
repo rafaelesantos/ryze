@@ -35,4 +35,20 @@ public actor RyzeFileManager {
             return privateURL.appendingPathComponent(name)
         }
     }
+    
+    public func size(at path: URL?) -> String? {
+        guard let path,
+              let attributes = try? FileManager.default.attributesOfItem(atPath: path.path())
+        else { return format(bytes: .zero) }
+        let fileSize = attributes[.size] as? Int64 ?? 0
+        return format(bytes: fileSize)
+    }
+    
+    func format(bytes: Int64) -> String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useKB, .useMB, .useGB]
+        formatter.countStyle = .file
+        
+        return formatter.string(fromByteCount: bytes)
+    }
 }
