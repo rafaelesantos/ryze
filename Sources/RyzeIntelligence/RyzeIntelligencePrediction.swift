@@ -18,6 +18,7 @@ public enum RyzeIntelligencePredictionResult {
 public enum RyzeIntelligencePredictionInput: Equatable {
     case tabularData([String: Any])
     case text(String)
+    case empty
     
     var tabularData: [String: Any] {
         switch self {
@@ -35,8 +36,10 @@ public enum RyzeIntelligencePredictionInput: Equatable {
     
     public static func == (lhs: RyzeIntelligencePredictionInput, rhs: RyzeIntelligencePredictionInput) -> Bool {
         switch (lhs, rhs) {
-        case (.tabularData, .tabularData), (.text, .text): return true
-        default: return false
+        case (.tabularData, .tabularData), (.text, .text), (.empty, .empty):
+            return true
+        default:
+            return false
         }
     }
 }
@@ -60,6 +63,7 @@ public final class RyzeIntelligencePrediction {
     
     public func regressionPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
+              input != .empty,
               let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input.tabularData)),
               let value = prediction.featureValue(for: "target")?.doubleValue
         else { return .empty }
@@ -68,6 +72,7 @@ public final class RyzeIntelligencePrediction {
     
     public func classifierPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
+              input != .empty,
               let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input.tabularData)),
               let value = prediction.featureValue(for: "target")?.dictionaryValue as? [String: Double]
         else { return .empty }
@@ -76,6 +81,7 @@ public final class RyzeIntelligencePrediction {
     
     public func textPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
+              input != .empty,
               let nlModel = try? NLModel(mlModel: mlModel),
               let prediction = nlModel.predictedLabel(for: input.text)
         else { return .empty }
