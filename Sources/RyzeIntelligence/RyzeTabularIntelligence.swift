@@ -39,8 +39,8 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeRegressor.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 40,
-            maxIterations: 5_000,
+            maxDepth: 20,
+            maxIterations: 10_000,
             minLossReduction: .zero,
             minChildWeight: 0.01,
             randomSeed: 42,
@@ -84,8 +84,8 @@ public final class RyzeTabularIntelligence {
         #else
         let parameters = MLBoostedTreeClassifier.ModelParameters(
             validation: .dataFrame(testingData),
-            maxDepth: 40,
-            maxIterations: 5_000,
+            maxDepth: 20,
+            maxIterations: 10_000,
             minLossReduction: .zero,
             minChildWeight: 0.01,
             randomSeed: 42,
