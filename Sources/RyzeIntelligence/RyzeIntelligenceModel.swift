@@ -43,4 +43,10 @@ public struct RyzeIntelligenceModel: RyzeEntity, Sendable {
         let models: [RyzeIntelligenceModel] = defaults.get(for: "ryze.models") ?? []
         return models
     }
+    
+    public static func clean() {
+        let defaults = RyzeDefaults()
+        let models: [RyzeIntelligenceModel] = []
+        defaults.set(models, for: "ryze.models")
+    }
 }
