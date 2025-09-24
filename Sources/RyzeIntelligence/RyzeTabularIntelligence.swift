@@ -65,14 +65,21 @@ public final class RyzeTabularIntelligence {
             parameters: parameters
         ) else { return .error }
         
-        let metrics = regressor.evaluation(on: testingData)
+        let expectedRange = self.data.max { lhs, rhs in
+            let maxlhs = lhs.max(by: { $0.value as? Double ?? .zero < $1.value as? Double ?? .zero })
+            let maxrhs = rhs.max(by: { $0.value as? Double ?? .zero < $1.value as? Double ?? .zero })
+            return maxlhs?.value as? Double ?? .zero > maxrhs?.value as? Double ?? .zero
+        }?["target"] as? Double ?? 1.0
+        
+        let relativeError = regressor.trainingMetrics.rootMeanSquaredError / expectedRange
+        let accuracy = max(0.0, 1.0 - relativeError)
         let model = RyzeIntelligenceModel(
             id: id,
             name: name,
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
-            accuracy: 1 - metrics.rootMeanSquaredError,
-            rootMeanSquaredError: metrics.rootMeanSquaredError
+            accuracy: accuracy,
+            rootMeanSquaredError: regressor.trainingMetrics.rootMeanSquaredError
         )
         await save(regressor, model: model)
         return .saved(model: model)
@@ -113,7 +120,7 @@ public final class RyzeTabularIntelligence {
             columnSubsample: 1
         )
         
-        guard let regressor = try? MLBoostedTreeClassifier(
+        guard let classifier = try? MLBoostedTreeClassifier(
             trainingData: trainingData,
             targetColumn: "target",
             parameters: parameters
@@ -124,11 +131,11 @@ public final class RyzeTabularIntelligence {
             name: name,
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
-            accuracy: 1 - regressor.validationMetrics.classificationError,
-            rootMeanSquaredError: regressor.validationMetrics.classificationError
+            accuracy: 1 - classifier.trainingMetrics.classificationError,
+            rootMeanSquaredError: classifier.trainingMetrics.classificationError
         )
         
-        await save(regressor, model: model)
+        await save(classifier, model: model)
         return .saved(model: model)
         #endif
     }
