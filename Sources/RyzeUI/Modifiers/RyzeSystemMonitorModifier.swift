@@ -53,7 +53,7 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         content
             .onReceive(timer) { _ in
                 Task {
-                    guard let cpu = getAppCPUUsageAlternative(),
+                    guard let cpu = getAppCPUUsage(),
                           let memory = getMemoryUsage()
                     else { return }
                     
@@ -111,56 +111,16 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             }
         }
         
-        vm_deallocate(mach_task_self_,
-                     vm_address_t(UInt(bitPattern: threadsList)),
-                     vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
+        vm_deallocate(
+            mach_task_self_,
+            vm_address_t(UInt(bitPattern: threadsList)),
+            vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride)
+        )
         
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
         let adjustedUsage = totalUsageOfCPU * cpuCores.double
         let cpuTotalPercentage = Double(cpuCores)
         let clampedUsage = min(adjustedUsage, cpuTotalPercentage)
-        let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
-        let cpuUsage = Int(clampedUsage.rounded())
-        
-        return (cpuPercentageUsage, cpuTotalPercentage, cpuUsage, cpuCores)
-    }
-
-    func getAppCPUUsageAlternative() -> (
-        cpuPercentageUsage: Double,
-        cpuTotalPercentage: Double,
-        cpuUsage: Int,
-        cpuCores: Int
-    )? {
-        var info = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size)/4
-        
-        let kerr: kern_return_t = withUnsafeMutablePointer(to: &info) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
-                task_info(mach_task_self_,
-                         task_flavor_t(MACH_TASK_BASIC_INFO),
-                         $0,
-                         &count)
-            }
-        }
-        
-        guard kerr == KERN_SUCCESS else { return nil }
-        
-        let cpuCores = ProcessInfo.processInfo.activeProcessorCount
-        let cpuTotalPercentage = Double(cpuCores)
-        
-        var totalUsage = 0.0
-        var threadsList: thread_act_array_t?
-        var threadsCount = mach_msg_type_number_t(0)
-        
-        if task_threads(mach_task_self_, &threadsList, &threadsCount) == KERN_SUCCESS {
-            totalUsage = Double(threadsCount) * 8.0
-            
-            vm_deallocate(mach_task_self_,
-                         vm_address_t(UInt(bitPattern: threadsList)),
-                         vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
-        }
-        
-        let clampedUsage = min(totalUsage, cpuTotalPercentage)
         let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
         let cpuUsage = Int(clampedUsage.rounded())
         
