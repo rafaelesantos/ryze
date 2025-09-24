@@ -38,7 +38,7 @@ public actor RyzeFileManager {
     
     public func size(at path: URL?) -> String? {
         guard let path,
-              let attributes = try? FileManager.default.attributesOfItem(atPath: path.path())
+              let attributes = try? fileManager.attributesOfItem(atPath: path.path())
         else { return format(bytes: .zero) }
         let fileSize = attributes[.size] as? Int64 ?? 0
         return format(bytes: fileSize)
