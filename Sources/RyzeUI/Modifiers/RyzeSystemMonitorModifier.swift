@@ -51,7 +51,6 @@ struct RyzeSystemMonitorModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .onAppear { previousCpuInfo = hostCPULoadInfo() }
             .onReceive(timer) { _ in
                 Task {
                     guard let cpu = getCPUUsage(),
@@ -74,48 +73,53 @@ struct RyzeSystemMonitorModifier: ViewModifier {
             }
     }
     
-    func hostCPULoadInfo() -> host_cpu_load_info? {
-        let HOST_CPU_LOAD_INFO_COUNT = MemoryLayout<host_cpu_load_info>.stride/MemoryLayout<integer_t>.stride
-        var size = mach_msg_type_number_t(HOST_CPU_LOAD_INFO_COUNT)
-        var cpuLoadInfo = host_cpu_load_info()
-
-        let result = withUnsafeMutablePointer(to: &cpuLoadInfo) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: HOST_CPU_LOAD_INFO_COUNT) {
-                host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, $0, &size)
-            }
-        }
-        
-        if result != KERN_SUCCESS { return nil }
-        return cpuLoadInfo
-    }
-    
     func getCPUUsage() -> (
         cpuPercentageUsage: Double,
         cpuTotalPercentage: Double,
         cpuUsage: Int,
         cpuCores: Int
     )? {
-        guard let currentInfo = hostCPULoadInfo(),
-              let previousInfo = previousCpuInfo
-        else { return nil }
+        var totalUsageOfCPU: Double = 0.0
+        var threadsList: thread_act_array_t?
+        var threadsCount = mach_msg_type_number_t(0)
         
-        let userDiff = currentInfo.cpu_ticks.0 - previousInfo.cpu_ticks.0
-        let systemDiff = currentInfo.cpu_ticks.1 - previousInfo.cpu_ticks.1
-        let idleDiff = currentInfo.cpu_ticks.2 - previousInfo.cpu_ticks.2
-        let niceDiff = currentInfo.cpu_ticks.3 - previousInfo.cpu_ticks.3
+        let threadsResult = task_threads(mach_task_self_, &threadsList, &threadsCount)
         
-        let totalTicks = userDiff + systemDiff + idleDiff + niceDiff
-        let usedTicks = userDiff + systemDiff + niceDiff
+        guard threadsResult == KERN_SUCCESS else { return nil }
         
-        previousCpuInfo = currentInfo
+        for index in 0..<threadsCount {
+            var threadInfo = thread_basic_info()
+            var threadInfoCount = mach_msg_type_number_t(THREAD_INFO_MAX)
+            
+            let infoResult = withUnsafeMutablePointer(to: &threadInfo) {
+                $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                    thread_info(threadsList![Int(index)],
+                                thread_flavor_t(THREAD_BASIC_INFO),
+                                $0,
+                                &threadInfoCount)
+                }
+            }
+            
+            guard infoResult == KERN_SUCCESS else { continue }
+            
+            let threadBasicInfo = threadInfo as thread_basic_info
+            if threadBasicInfo.flags & TH_FLAGS_IDLE == 0 {
+                totalUsageOfCPU += (threadBasicInfo.cpu_usage.double / TH_USAGE_SCALE.double)
+            }
+        }
         
-        guard totalTicks > .zero else { return nil }
+        vm_deallocate(
+            mach_task_self_,
+            vm_address_t(UInt(bitPattern: threadsList)),
+            vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride)
+        )
         
-        let relativeCPU = Double(usedTicks) / Double(totalTicks)
         let cpuCores = ProcessInfo.processInfo.activeProcessorCount
-        let cpuTotalPercentage = Double(cpuCores)
-        let cpuPercentageUsage = relativeCPU * cpuTotalPercentage
-        let cpuUsage = Int(cpuPercentageUsage)
+        let cpuTotalPercentage = cpuCores.double
+        let clampedUsage = min(totalUsageOfCPU, cpuTotalPercentage)
+        let cpuPercentageUsage = clampedUsage / cpuTotalPercentage
+        let cpuUsage = Int(clampedUsage.rounded())
+        
         return (cpuPercentageUsage, cpuTotalPercentage, cpuUsage, cpuCores)
     }
     
