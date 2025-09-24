@@ -15,7 +15,7 @@ public enum RyzeIntelligencePredictionResult {
     case empty
 }
 
-public enum RyzeIntelligencePredictionInput {
+public enum RyzeIntelligencePredictionInput: Equatable {
     case tabularData([String: Any])
     case text(String)
     
@@ -30,6 +30,13 @@ public enum RyzeIntelligencePredictionInput {
         switch self {
         case .text(let text): return text
         default: return ""
+        }
+    }
+    
+    public static func == (lhs: RyzeIntelligencePredictionInput, rhs: RyzeIntelligencePredictionInput) -> Bool {
+        switch (lhs, rhs) {
+        case (.tabularData, .tabularData), (.text, .text): return true
+        default: return false
         }
     }
 }
