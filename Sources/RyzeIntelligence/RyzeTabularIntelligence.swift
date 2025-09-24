@@ -71,7 +71,9 @@ public final class RyzeTabularIntelligence {
             return maxlhs?.value as? Double ?? .zero > maxrhs?.value as? Double ?? .zero
         }?["target"] as? Double ?? 1.0
         
-        let relativeError = regressor.trainingMetrics.rootMeanSquaredError / expectedRange
+        let evaluation = regressor.evaluation(on: testingData)
+        
+        let relativeError = evaluation.rootMeanSquaredError / expectedRange
         let accuracy = max(0.0, 1.0 - relativeError)
         let model = RyzeIntelligenceModel(
             id: id,
@@ -79,7 +81,7 @@ public final class RyzeTabularIntelligence {
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
             accuracy: accuracy,
-            rootMeanSquaredError: regressor.trainingMetrics.rootMeanSquaredError
+            rootMeanSquaredError: evaluation.rootMeanSquaredError
         )
         await save(regressor, model: model)
         return .saved(model: model)
