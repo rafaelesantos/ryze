@@ -148,7 +148,6 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         guard kerr == KERN_SUCCESS else { return nil }
         
-        let pageSize = Int64(4096)
         let phys_footprint = Int64(info.phys_footprint)
         let totalMemoryBytes = Int64(ProcessInfo.processInfo.physicalMemory)
         
