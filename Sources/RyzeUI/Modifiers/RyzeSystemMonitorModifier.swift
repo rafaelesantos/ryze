@@ -132,14 +132,14 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         memoryUsed: String,
         memoryTotal: String
     )? {
-        var info = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size / MemoryLayout<integer_t>.size)
+        var info = task_vm_info()
+        var count = mach_msg_type_number_t(MemoryLayout<task_vm_info>.size / MemoryLayout<integer_t>.size)
         
         let kerr: kern_return_t = withUnsafeMutablePointer(to: &info) {
             $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
                 task_info(
                     mach_task_self_,
-                    task_flavor_t(MACH_TASK_BASIC_INFO),
+                    task_flavor_t(TASK_VM_INFO),
                     $0,
                     &count
                 )
@@ -148,14 +148,11 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         guard kerr == KERN_SUCCESS else { return nil }
         
-        let residentBytes = Int64(info.resident_size)
+        let pageSize = Int64(4096)
+        let phys_footprint = Int64(info.phys_footprint)
         let totalMemoryBytes = Int64(ProcessInfo.processInfo.physicalMemory)
         
-        print("Raw resident_size: \(info.resident_size)")
-        print("Converted to Int64: \(residentBytes)")
-        print("Formatted: \(formatBytes(residentBytes))")
-        
-        let usageBytes = residentBytes
+        let usageBytes = phys_footprint
         
         guard totalMemoryBytes > .zero else { return nil }
         
