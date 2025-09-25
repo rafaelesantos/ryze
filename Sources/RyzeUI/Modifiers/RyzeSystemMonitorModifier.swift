@@ -151,6 +151,10 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         let residentBytes = Int64(info.resident_size)
         let totalMemoryBytes = Int64(ProcessInfo.processInfo.physicalMemory)
         
+        print("Raw resident_size: \(info.resident_size)")
+        print("Converted to Int64: \(residentBytes)")
+        print("Formatted: \(formatBytes(residentBytes))")
+        
         let usageBytes = residentBytes
         
         guard totalMemoryBytes > .zero else { return nil }
