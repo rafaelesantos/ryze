@@ -162,11 +162,9 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         let usageBytes: Int64
         if vmKerr == KERN_SUCCESS {
-            let pageSize = Int64(4096)
-            let compressedBytes = Int64(vmInfo.compressed) * pageSize
-            usageBytes = residentBytes + compressedBytes
+            usageBytes = residentBytes + Int64(vmInfo.internal - vmInfo.compressed)
         } else {
-            usageBytes = residentBytes + (residentBytes / 4)
+            usageBytes = residentBytes
         }
         
         guard totalMemoryBytes > .zero else { return nil }
