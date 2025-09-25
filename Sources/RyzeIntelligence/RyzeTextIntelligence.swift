@@ -31,18 +31,15 @@ public final class RyzeTextIntelligence {
         maxIterations: Int? = nil
     ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
-              let data = try? DataFrame(jsonData: jsonData)
+              let trainingData = try? DataFrame(jsonData: jsonData)
         else { return .error }
         
-        let splits = data.randomSplit(by: 0.9)
-        let trainingData = DataFrame(splits.0)
-        let testingData = DataFrame(splits.1)
         #if targetEnvironment(simulator)
         return .error
         #else
         var parameters = MLTextClassifier.ModelParameters(
             validation: .dataFrame(
-                testingData,
+                trainingData,
                 textColumn: "text",
                 labelColumn: "label"
             ),

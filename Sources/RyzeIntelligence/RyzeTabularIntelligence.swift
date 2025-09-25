@@ -36,18 +36,14 @@ public final class RyzeTabularIntelligence {
         stepSize: Double = 0.01
     ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
-              let data = try? DataFrame(jsonData: jsonData)
+              let trainingData = try? DataFrame(jsonData: jsonData)
         else { return .error }
-        
-        let splits = data.randomSplit(by: 0.9)
-        let trainingData = DataFrame(splits.0)
-        let testingData = DataFrame(splits.1)
         
         #if targetEnvironment(simulator)
         return .error
         #else
         let parameters = MLBoostedTreeRegressor.ModelParameters(
-            validation: .dataFrame(testingData),
+            validation: .dataFrame(trainingData),
             maxDepth: maxDepth,
             maxIterations: maxIterations,
             minLossReduction: minLossReduction,
@@ -71,7 +67,7 @@ public final class RyzeTabularIntelligence {
             return maxlhs?.value as? Double ?? .zero > maxrhs?.value as? Double ?? .zero
         }?["target"] as? Double ?? 1.0
         
-        let evaluation = regressor.evaluation(on: testingData)
+        let evaluation = regressor.evaluation(on: trainingData)
         
         let relativeError = evaluation.rootMeanSquaredError / expectedRange
         let accuracy = max(0.0, 1.0 - relativeError)
@@ -99,18 +95,14 @@ public final class RyzeTabularIntelligence {
         stepSize: Double = 0.01
     ) async -> RyzeIntelligenceResult {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: data),
-              let data = try? DataFrame(jsonData: jsonData)
+              let trainingData = try? DataFrame(jsonData: jsonData)
         else { return .error }
-        
-        let splits = data.randomSplit(by: 0.9)
-        let trainingData = DataFrame(splits.0)
-        let testingData = DataFrame(splits.1)
         
         #if targetEnvironment(simulator)
         return .error
         #else
         let parameters = MLBoostedTreeClassifier.ModelParameters(
-            validation: .dataFrame(testingData),
+            validation: .dataFrame(trainingData),
             maxDepth: maxDepth,
             maxIterations: maxIterations,
             minLossReduction: minLossReduction,
@@ -133,8 +125,8 @@ public final class RyzeTabularIntelligence {
             name: name,
             createDate: Date().timeIntervalSince1970,
             updateDate: Date().timeIntervalSince1970,
-            accuracy: 1 - classifier.trainingMetrics.classificationError,
-            rootMeanSquaredError: classifier.trainingMetrics.classificationError
+            accuracy: 1 - classifier.validationMetrics.classificationError,
+            rootMeanSquaredError: classifier.validationMetrics.classificationError
         )
         
         await save(classifier, model: model)
