@@ -148,8 +148,26 @@ struct RyzeSystemMonitorModifier: ViewModifier {
         
         guard kerr == KERN_SUCCESS else { return nil }
         
-        let usageBytes = Int64(info.resident_size)
+        var vmInfo = task_vm_info()
+        var vmCount = mach_msg_type_number_t(MemoryLayout<task_vm_info>.size / MemoryLayout<integer_t>.size)
+        
+        let vmKerr = withUnsafeMutablePointer(to: &vmInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &vmCount)
+            }
+        }
+        
+        let residentBytes = Int64(info.resident_size)
         let totalMemoryBytes = Int64(ProcessInfo.processInfo.physicalMemory)
+        
+        let usageBytes: Int64
+        if vmKerr == KERN_SUCCESS {
+            let pageSize = Int64(4096)
+            let compressedBytes = Int64(vmInfo.compressed) * pageSize
+            usageBytes = residentBytes + compressedBytes
+        } else {
+            usageBytes = residentBytes + (residentBytes / 4)
+        }
         
         guard totalMemoryBytes > .zero else { return nil }
         
