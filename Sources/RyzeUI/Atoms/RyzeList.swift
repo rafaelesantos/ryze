@@ -7,20 +7,42 @@
 
 @_exported import SwiftUI
 
-public struct RyzeList: RyzeView {
+public struct RyzeList<SelectionValue: Hashable>: RyzeView {
     let content: any View
+    let selection: Binding<Set<SelectionValue>>?
     
-    public init(@ViewBuilder content: () -> some View) {
+    public init(
+        selection: Binding<Set<SelectionValue>>? = nil,
+        @ViewBuilder content: () -> some View
+    ) {
         self.content = content()
+        self.selection = selection
     }
     
     public var body: some View {
-        List {
+        List(selection: selection) {
             AnyView(content)
         }
     }
     
     public static var mock: some View {
+        RyzeList {
+            RyzeBodyText.mock
+            RyzePrimaryButton.mock
+            RyzeSection.mock
+            RyzeFootnoteText.mock
+            RyzeSecondaryButton.mock
+        }
+    }
+}
+
+public extension RyzeList where SelectionValue == Never {
+    init(@ViewBuilder content: () -> some View) {
+        self.content = content()
+        self.selection = nil
+    }
+    
+    static var mock: some View {
         RyzeList {
             RyzeBodyText.mock
             RyzePrimaryButton.mock
