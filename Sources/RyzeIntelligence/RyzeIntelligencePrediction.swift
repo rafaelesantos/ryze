@@ -8,7 +8,7 @@
 import CoreML
 import RyzeFoundation
 
-public enum RyzeIntelligencePredictionResult {
+public enum RyzeIntelligencePredictionResult: Sendable {
     case textClassification(String)
     case tabularRegression(Double)
     case tabularClassification([String: Double])
