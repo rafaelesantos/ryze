@@ -8,7 +8,7 @@
 import CoreML
 import RyzeFoundation
 
-public enum RyzeIntelligencePredictionResult: Sendable {
+public enum RyzeIntelligencePredictionResult: Sendable, Equatable {
     case textClassification(String)
     case tabularRegression(Double)
     case tabularClassification([String: Double])
@@ -36,8 +36,9 @@ public enum RyzeIntelligencePredictionInput: Equatable {
     
     public static func == (lhs: RyzeIntelligencePredictionInput, rhs: RyzeIntelligencePredictionInput) -> Bool {
         switch (lhs, rhs) {
-        case (.tabularData, .tabularData), (.text, .text), (.empty, .empty):
-            return true
+        case let (.tabularData(lhs), .tabularData(rhs)): return NSDictionary(dictionary: lhs).isEqual(to: rhs)
+        case let (.text(lhs), .text(rhs)): return lhs == rhs
+        case (.empty, .empty): return true
         default:
             return false
         }
