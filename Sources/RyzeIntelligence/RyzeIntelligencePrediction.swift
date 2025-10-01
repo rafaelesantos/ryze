@@ -45,9 +45,9 @@ public enum RyzeIntelligencePredictionInput: Equatable {
     }
 }
 
-public final class RyzeIntelligencePrediction {
+public actor RyzeIntelligencePrediction {
     let model: RyzeIntelligenceModel
-    var mlModel: MLModel?
+    nonisolated(unsafe) var mlModel: MLModel?
     
     public init(model: RyzeIntelligenceModel) async {
         self.model = model
@@ -63,25 +63,29 @@ public final class RyzeIntelligencePrediction {
         self.mlModel = mlModel
     }
     
-    public func regressionPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
+    nonisolated public func regressionPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
+        let tabularData = input.tabularData
         guard let mlModel = mlModel,
               input != .empty,
-              let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input.tabularData)),
+              let provider = try? MLDictionaryFeatureProvider(dictionary: tabularData),
+              let prediction = try? await mlModel.prediction(from: provider),
               let value = prediction.featureValue(for: "target")?.doubleValue
         else { return .empty }
         return .tabularRegression(value)
     }
     
-    public func classifierPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
+    nonisolated public func classifierPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
+        let tabularData = input.tabularData
         guard let mlModel = mlModel,
               input != .empty,
-              let prediction = try? await mlModel.prediction(from: MLDictionaryFeatureProvider(dictionary: input.tabularData)),
+              let provider = try? MLDictionaryFeatureProvider(dictionary: tabularData),
+              let prediction = try? await mlModel.prediction(from: provider),
               let value = prediction.featureValue(for: "target")?.dictionaryValue as? [String: Double]
         else { return .empty }
         return .tabularClassification(value)
     }
     
-    public func textPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
+    nonisolated public func textPrediction(from input: RyzeIntelligencePredictionInput) async -> RyzeIntelligencePredictionResult {
         guard let mlModel = mlModel,
               input != .empty,
               let nlModel = try? NLModel(mlModel: mlModel),
