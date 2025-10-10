@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+#if os(iOS)
 import CoreMotion
 
-#if os(iOS)
 struct RyzeParallaxModifier: RyzeViewModifier {
     @Environment(\.theme) var theme
     @State var motion: CMDeviceMotion? = nil

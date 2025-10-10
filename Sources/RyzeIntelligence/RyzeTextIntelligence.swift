@@ -36,7 +36,7 @@ public final class RyzeTextIntelligence {
         
         #if targetEnvironment(simulator)
         return .error
-        #else
+        #elseif os(macOS) || os(iOS)
         var parameters = MLTextClassifier.ModelParameters(
             validation: .dataFrame(
                 trainingData,
@@ -66,11 +66,13 @@ public final class RyzeTextIntelligence {
         
         await save(classifier, model: model)
         return .saved(model: model)
+        #else
+        return .error
         #endif
     }
 
     #if targetEnvironment(simulator)
-    #else
+    #elseif os(macOS) || os(iOS)
     func save(
         _ classifier: MLTextClassifier,
         model: RyzeIntelligenceModel

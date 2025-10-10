@@ -6,7 +6,9 @@
 //
 
 @_exported import SwiftUI
+#if canImport(SafariServices)
 import SafariServices
+#endif
 
 public struct RyzeBrowserView<Content: View>: View {
     @Binding private var url: URL?
@@ -23,7 +25,9 @@ public struct RyzeBrowserView<Content: View>: View {
     public var body: some View {
         content
             .sheet(item: $url) { url in
+                #if canImport(SafariServices)
                 RyzeBrowser(url: url)
+                #endif
             }
     }
 }
@@ -45,7 +49,7 @@ struct RyzeBrowser: NSViewRepresentable {
     }
 }
 
-#elseif canImport(UIKit)
+#elseif canImport(UIKit) && canImport(SafariServices)
 
 struct RyzeBrowser: UIViewControllerRepresentable {
     let url: URL

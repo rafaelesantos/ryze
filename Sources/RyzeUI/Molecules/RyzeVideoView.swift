@@ -63,7 +63,10 @@ struct RyzeVideoPlayer: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let vc = AVPlayerViewController()
         vc.player = player
+        #if os(tvOS)
+        #else
         vc.canStartPictureInPictureAutomaticallyFromInline = true
+        #endif
         return vc
     }
     
