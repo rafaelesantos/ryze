@@ -18,7 +18,7 @@ public struct RyzeButton: RyzeView {
         _ accessibility: RyzeAccessibility? = nil,
         role: ButtonRole? = .none,
         action: @escaping () -> Void,
-        label: () -> some View
+        @ViewBuilder label: () -> some View
     ) {
         self.accessibility = accessibility
         self.role = role
