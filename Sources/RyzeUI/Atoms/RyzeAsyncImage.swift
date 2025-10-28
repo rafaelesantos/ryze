@@ -41,18 +41,19 @@ public struct RyzeAsyncImage: RyzeView {
             .onChange(of: url) { fetchImage() }
     }
     
-    @ViewBuilder
     private var contentView: some View {
-        if let image, let content {
-            AnyView(content(image))
-        } else if let image {
-            image
-                .resizable()
-                .scaledToFit()
-        } else {
-            Group {
-                if let placeholder {
-                    AnyView(placeholder())
+        ZStack {
+            if let image, let content {
+                AnyView(content(image))
+            } else if let image {
+                image
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                Group {
+                    if let placeholder {
+                        AnyView(placeholder())
+                    }
                 }
             }
         }
