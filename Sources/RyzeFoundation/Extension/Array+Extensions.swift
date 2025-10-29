@@ -41,6 +41,10 @@ public extension Array {
         }
         return results
     }
+    
+    var second: Element? {
+        count > 1 ? self[1] : nil
+    }
 }
 
 
