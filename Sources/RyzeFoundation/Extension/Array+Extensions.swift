@@ -45,6 +45,10 @@ public extension Array {
     var second: Element? {
         count > 1 ? self[1] : nil
     }
+    
+    var secondToLast: Element? {
+        count > 1 ? self[count - 2] : nil
+    }
 }
 
 
