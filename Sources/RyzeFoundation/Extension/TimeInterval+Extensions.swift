@@ -8,20 +8,20 @@
 @_exported import Foundation
 
 public extension TimeInterval {
-    var seconds: TimeInterval {
+    var second: TimeInterval {
         self
     }
     
-    var minutes: TimeInterval {
-        self / 60
+    var minute: TimeInterval {
+        self * 60
     }
     
-    var hours: TimeInterval {
-        self / 3600
+    var hour: TimeInterval {
+        self * 3600
     }
     
-    var days: TimeInterval {
-        self / 86400
+    var day: TimeInterval {
+        self * 86400
     }
     
     var date: Date {
