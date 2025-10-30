@@ -8,6 +8,8 @@
 @_exported import SwiftUI
 
 public struct RyzeButton: RyzeView {
+    @Environment(\.theme) var theme
+    
     let role: ButtonRole?
     let action: () -> Void
     let label: any View
@@ -28,6 +30,7 @@ public struct RyzeButton: RyzeView {
     
     public var body: some View {
         Button(role: role) {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             action()
         } label: {
             AnyView(label)
