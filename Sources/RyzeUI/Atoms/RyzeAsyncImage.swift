@@ -44,7 +44,9 @@ public struct RyzeAsyncImage: RyzeView {
         contentView
             .task { fetchImage() }
             .onChange(of: url) { fetchImage() }
-            .animation(theme.animation, value: image)
+            .ryze(if: animated) {
+                $0.animation(theme.animation, value: image)
+            }
     }
     
     private var contentView: some View {
