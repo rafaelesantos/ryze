@@ -68,13 +68,9 @@ public struct RyzeAsyncImage: RyzeView {
             guard let url else { return }
             
             if let cachedImage = retrieveImage(for: url) {
-                withAnimation(theme.animation) {
-                    image = cachedImage
-                }
+                image = cachedImage
             } else if let cachedImage = await storeImage(for: url) {
-                withAnimation(theme.animation) {
-                    image = cachedImage
-                }
+                image = cachedImage
             }
         }
     }
