@@ -10,7 +10,6 @@
 public struct RyzeAsyncImage: RyzeView {
     @Environment(\.theme) var theme
     let url: URL?
-    let animated: Bool
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?
     
@@ -18,24 +17,20 @@ public struct RyzeAsyncImage: RyzeView {
     
     public init(
         _ source: String?,
-        animated: Bool = false,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = URL(string: source ?? "")
-        self.animated = animated
         self.content = content
         self.placeholder = placeholder
     }
     
     public init(
         _ url: URL?,
-        animated: Bool = false,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = url
-        self.animated = animated
         self.content = content
         self.placeholder = placeholder
     }
@@ -69,23 +64,17 @@ public struct RyzeAsyncImage: RyzeView {
     }
     
     func fetchImage() {
+        guard image == nil else { return }
+        
         Task { @MainActor in
             guard let url else { return }
             
             if let cachedImage = retrieveImage(for: url) {
-                if animated {
-                    withAnimation(theme.animation) {
-                        image = cachedImage
-                    }
-                } else {
+                withAnimation(theme.animation) {
                     image = cachedImage
                 }
             } else if let cachedImage = await storeImage(for: url) {
-                if animated {
-                    withAnimation(theme.animation) {
-                        image = cachedImage
-                    }
-                } else {
+                withAnimation(theme.animation) {
                     image = cachedImage
                 }
             }
