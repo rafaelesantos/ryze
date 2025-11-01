@@ -229,4 +229,10 @@ public extension View {
     func ryze(systemMonitor: Binding<RyzeSystemMonitor>) -> some View {
         self.modifier(RyzeSystemMonitorModifier(systemMonitor: systemMonitor))
     }
+    
+    func ryzeBrowser(url: Binding<URL?>) -> some View {
+        self.sheet(item: url) { url in
+            RyzeBrowser(url: url)
+        }
+    }
 }
