@@ -9,6 +9,7 @@
 
 public struct RyzeAsyncImage: RyzeView {
     @Environment(\.theme) var theme
+    
     let url: URL?
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?
@@ -59,8 +60,8 @@ public struct RyzeAsyncImage: RyzeView {
         }
     }
     
-    var cacheInterval: TimeInterval {
-        1.hour
+    var cacheInterval: TimeInterval? {
+        nil
     }
     
     func fetchImage() {
@@ -101,7 +102,7 @@ public struct RyzeAsyncImage: RyzeView {
     
     func storeImage(for url: URL) async -> Image? {
         let request = URLRequest(url: url)
-        guard let (data, response) = try? await URLSession.shared.data(for: request) else { return nil }
+        guard let (data, response) = try? await URLSession.shared.data(for: request), let cacheInterval else { return nil }
         let cachedData = CachedURLResponse(response: response, data: data, userInfo: [url.absoluteString: Date.now.timeIntervalSince1970 + cacheInterval], storagePolicy: .allowed)
         URLCache.shared.storeCachedResponse(cachedData, for: request)
         
