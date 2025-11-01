@@ -102,10 +102,11 @@ public struct RyzeAsyncImage: RyzeView {
     
     func storeImage(for url: URL) async -> Image? {
         let request = URLRequest(url: url)
-        guard let (data, response) = try? await URLSession.shared.data(for: request), let cacheInterval else { return nil }
-        let cachedData = CachedURLResponse(response: response, data: data, userInfo: [url.absoluteString: Date.now.timeIntervalSince1970 + cacheInterval], storagePolicy: .allowed)
-        URLCache.shared.storeCachedResponse(cachedData, for: request)
-        
+        guard let (data, response) = try? await URLSession.shared.data(for: request) else { return nil }
+        if let cacheInterval {
+            let cachedData = CachedURLResponse(response: response, data: data, userInfo: [url.absoluteString: Date.now.timeIntervalSince1970 + cacheInterval], storagePolicy: .allowed)
+            URLCache.shared.storeCachedResponse(cachedData, for: request)
+        }
         #if canImport(UIKit)
         if let image = UIImage(data: data) {
             return Image(uiImage: image)
