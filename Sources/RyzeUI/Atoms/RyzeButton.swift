@@ -30,7 +30,9 @@ public struct RyzeButton: RyzeView {
     
     public var body: some View {
         Button(role: role) {
+            #if os(iOS)
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            #endif
             action()
         } label: {
             AnyView(label)

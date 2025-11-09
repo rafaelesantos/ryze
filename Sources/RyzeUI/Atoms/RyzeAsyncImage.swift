@@ -11,6 +11,7 @@ public struct RyzeAsyncImage: RyzeView {
     @Environment(\.theme) var theme
     
     let url: URL?
+    let cacheInterval: TimeInterval?
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?
     
@@ -18,27 +19,34 @@ public struct RyzeAsyncImage: RyzeView {
     
     public init(
         _ source: String?,
+        cacheInterval: TimeInterval? = .infinity,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = URL(string: source ?? "")
+        self.cacheInterval = cacheInterval
         self.content = content
         self.placeholder = placeholder
     }
     
     public init(
         _ url: URL?,
+        cacheInterval: TimeInterval? = .infinity,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = url
+        self.cacheInterval = cacheInterval
         self.content = content
         self.placeholder = placeholder
     }
     
     public var body: some View {
         contentView
-            .task { fetchImage() }
+            .task {
+                guard image == nil else { return }
+                fetchImage()
+            }
             .onChange(of: url) { fetchImage() }
     }
     
@@ -60,24 +68,14 @@ public struct RyzeAsyncImage: RyzeView {
         }
     }
     
-    var cacheInterval: TimeInterval? {
-        nil
-    }
-    
     func fetchImage() {
-        guard image == nil else { return }
-        
         Task { @MainActor in
             guard let url else { return }
             
             if let cachedImage = retrieveImage(for: url) {
-                withAnimation(theme.animation) {
-                    image = cachedImage
-                }
+                image = cachedImage
             } else if let cachedImage = await storeImage(for: url) {
-                withAnimation(theme.animation) {
-                    image = cachedImage
-                }
+                image = cachedImage
             }
         }
     }
