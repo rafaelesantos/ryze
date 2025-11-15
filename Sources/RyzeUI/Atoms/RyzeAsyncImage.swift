@@ -12,6 +12,7 @@ public struct RyzeAsyncImage: RyzeView {
     
     let url: URL?
     let cacheInterval: TimeInterval?
+    let isAnimated: Bool
     let content: ((Image) -> any View)?
     let placeholder: (() -> any View)?
     
@@ -20,11 +21,13 @@ public struct RyzeAsyncImage: RyzeView {
     public init(
         _ source: String?,
         cacheInterval: TimeInterval? = .infinity,
+        isAnimated: Bool = true,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = URL(string: source ?? "")
         self.cacheInterval = cacheInterval
+        self.isAnimated = isAnimated
         self.content = content
         self.placeholder = placeholder
     }
@@ -32,11 +35,13 @@ public struct RyzeAsyncImage: RyzeView {
     public init(
         _ url: URL?,
         cacheInterval: TimeInterval? = .infinity,
+        isAnimated: Bool = true,
         content: ((Image) -> any View)? = nil,
         placeholder: (() -> any View)? = nil
     ) {
         self.url = url
         self.cacheInterval = cacheInterval
+        self.isAnimated = isAnimated
         self.content = content
         self.placeholder = placeholder
     }
@@ -48,6 +53,7 @@ public struct RyzeAsyncImage: RyzeView {
                 fetchImage()
             }
             .onChange(of: url) { fetchImage() }
+            .ryze(if: isAnimated) { $0.animation(.bouncy, value: image) }
     }
     
     private var contentView: some View {
