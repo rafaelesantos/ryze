@@ -53,7 +53,6 @@ public struct RyzeAsyncImage: RyzeView {
                 fetchImage()
             }
             .onChange(of: url) { fetchImage() }
-            .ryze(if: isAnimated) { $0.animation(.bouncy, value: image) }
     }
     
     private var contentView: some View {
@@ -79,9 +78,21 @@ public struct RyzeAsyncImage: RyzeView {
             guard let url else { return }
             
             if let cachedImage = retrieveImage(for: url) {
-                image = cachedImage
+                if isAnimated {
+                    withAnimation(.bouncy) {
+                        image = cachedImage
+                    }
+                } else {
+                    image = cachedImage
+                }
             } else if let cachedImage = await storeImage(for: url) {
-                image = cachedImage
+                if isAnimated {
+                    withAnimation(.bouncy) {
+                        image = cachedImage
+                    }
+                } else {
+                    image = cachedImage
+                }
             }
         }
     }
