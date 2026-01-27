@@ -13,4 +13,8 @@ public protocol RyzeNetworkClient: Sendable {
         on request: Request,
         with formatter: DateFormatter?
     ) async throws -> Request.Response
+    
+    func redirect<Request: RyzeNetworkRequest>(
+        from request: Request
+    ) async throws -> URL
 }

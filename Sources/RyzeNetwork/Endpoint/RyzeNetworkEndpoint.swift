@@ -27,8 +27,15 @@ public extension RyzeNetworkEndpoint {
     var body: Encodable? { nil }
     var cacheInterval: TimeInterval? { nil }
     
-    var url: URL? {
-        urlComponents.url
+    var url: URL {
+        get throws {
+            guard let url = urlComponents.url else {
+                let error = RyzeNetworkError.invalidURL
+                error.log()
+                throw error
+            }
+            return url
+        }
     }
     
     private var urlComponents: URLComponents {
@@ -43,15 +50,9 @@ public extension RyzeNetworkEndpoint {
     var request: URLRequest {
         get throws {
             log()
-            guard let url = url else {
-                let error = RyzeNetworkError.invalidURL
-                error.log()
-                throw error
-            }
-            
             let cachePolicy: URLRequest.CachePolicy = cacheInterval != nil ? .returnCacheDataElseLoad : .useProtocolCachePolicy
             
-            var urlRequest = URLRequest(
+            var urlRequest = try URLRequest(
                 url: url,
                 cachePolicy: cachePolicy
             )
@@ -70,7 +71,7 @@ public extension RyzeNetworkEndpoint {
     
     func log() {
         let logger = RyzeNetworkLogger()
-        if let url {
+        if let url = try? url {
             logger.info("🔗 URL: \(url)")
         }
 

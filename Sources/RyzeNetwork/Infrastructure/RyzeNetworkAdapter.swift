@@ -8,11 +8,17 @@
 import Foundation
 import RyzeFoundation
 
-public actor RyzeNetworkAdapter: RyzeNetworkClient {
-    private let session: URLSession
+public actor RyzeNetworkAdapter: NSObject, RyzeNetworkClient, URLSessionTaskDelegate {
+    private var session: URLSession = .shared
+    private var redirectURL: URL?
     
-    public init(session: URLSession = .shared) {
-        self.session = session
+    public override init() {
+        super.init()
+        self.session = URLSession(
+            configuration: .default,
+            delegate: self,
+            delegateQueue: nil
+        )
     }
     
     public func request<Request>(
@@ -34,6 +40,35 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
             try await storeCache(on: endpoint, data: data, response: response)
             return try await request.decode(data: data, with: formatter)
         }
+    }
+    
+    public func redirect<Request: RyzeNetworkRequest>(
+        from request: Request
+    ) async throws -> URL {
+        let endpoint = await request.endpoint
+        let url = try endpoint.url
+
+        let (_, response) = try await session.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              let location = httpResponse.value(forHTTPHeaderField: "Location"),
+              let url = URL(string: location)
+        else {
+            guard let redirectURL else { throw URLError(.cannotParseResponse) }
+            return redirectURL
+        }
+        
+        return url
+    }
+    
+    public func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        willPerformHTTPRedirection response: HTTPURLResponse,
+        newRequest request: URLRequest
+    ) async -> URLRequest? {
+        redirectURL = request.url
+        return nil
     }
     
     private func retrieveCache<Request: RyzeNetworkRequest>(
@@ -64,11 +99,10 @@ public actor RyzeNetworkAdapter: RyzeNetworkClient {
         response: URLResponse
     ) async throws {
         let logger = RyzeNetworkLogger()
-        guard let cacheInterval = endpoint.cacheInterval,
-              let url = endpoint.url?.absoluteString
-        else {
-            let url = endpoint.url?.absoluteString
-            logger.info("⏱️ No cache interval set for: \(url ?? "nil")")
+        let url = try endpoint.url.absoluteString
+        
+        guard let cacheInterval = endpoint.cacheInterval else {
+            logger.info("⏱️ No cache interval set for: \(url)")
             return
         }
 
