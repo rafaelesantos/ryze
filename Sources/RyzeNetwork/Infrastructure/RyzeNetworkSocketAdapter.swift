@@ -87,7 +87,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
     private func receive(on continuation: AsyncStream<String>.Continuation) async {
         connection?.receive(
             minimumIncompleteLength: .zero,
-            maximumLength: 1 * 1024 * 1024
+            maximumLength: 10 * 1024 * 1024
         ) { [weak self] content, contentContext, isComplete, error in
             let logger = RyzeNetworkLogger()
             if let error = error {
