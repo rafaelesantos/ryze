@@ -37,7 +37,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                     switch status {
                     case .open:
                         logger.info("✅ Connected to \(endpoint.host) on port \(port)")
-                        receive(on: continuation)
+                        async let _ = receive(on: continuation)
                     case .close:
                         logger.info("🔌 Connection closed to \(endpoint.host) on port \(port)")
                         continuation.finish()
@@ -84,7 +84,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    private func receive(on continuation: AsyncStream<String>.Continuation) {
+    private func receive(on continuation: AsyncStream<String>.Continuation) async {
         connection?.receive(
             minimumIncompleteLength: .zero,
             maximumLength: 1 * 1024 * 1024
@@ -103,7 +103,8 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                 continuation.finish()
             }
             
-            self?.receive(on: continuation)
+            guard let self else { return }
+            Task(priority: .high) { async let _ = self.receive(on: continuation) }
         }
     }
     
