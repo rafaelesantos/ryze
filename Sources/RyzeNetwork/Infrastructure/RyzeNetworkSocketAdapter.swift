@@ -37,7 +37,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                     switch status {
                     case .open:
                         logger.info("✅ Connected to \(endpoint.host) on port \(port)")
-                        receive(on: continuation)
+                        await receive(on: continuation)
                     case .close:
                         logger.info("🔌 Connection closed to \(endpoint.host) on port \(port)")
                         continuation.finish()
@@ -84,7 +84,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         }
     }
     
-    private func receive(on continuation: AsyncStream<String>.Continuation) {
+    private func receive(on continuation: AsyncStream<String>.Continuation) async {
         connection?.receiveMessage { [weak self] content, contentContext, isComplete, error in
             let logger = RyzeNetworkLogger()
             if let error = error {
@@ -100,7 +100,7 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                 continuation.finish()
             }
             
-            self?.receive(on: continuation)
+            Task(priority: .high) { await self?.receive(on: continuation) }
         }
     }
     
