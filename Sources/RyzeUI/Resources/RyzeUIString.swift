@@ -42,7 +42,7 @@ enum RyzeUIString: String, RyzeResourceString, CaseIterable {
     var value: String {
         String(
             localized: .init(rawValue),
-            bundle: Bundle(),
+            bundle: .module,
             locale: RyzeLocale.portugueseBR.rawValue
         )
     }
