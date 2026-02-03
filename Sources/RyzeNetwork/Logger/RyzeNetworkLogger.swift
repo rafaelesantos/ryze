@@ -10,7 +10,7 @@ import RyzeFoundation
 struct RyzeNetworkLogger {
     var logger: Logger
     
-    init (logger: Logger = .init()) {
+    init(logger: Logger = .init()) {
         self.logger = logger
     }
     

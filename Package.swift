@@ -32,7 +32,10 @@ let package = Package(
         .target(name: "RyzeFoundation"),
         .target(
             name: "RyzeNetwork",
-            dependencies: ["RyzeFoundation"]
+            dependencies: ["RyzeFoundation"],
+            resources: [
+                .process("Resource")
+            ]
         ),
         .target(
             name: "RyzeArchitecture",
@@ -41,7 +44,9 @@ let package = Package(
         .target(
             name: "RyzeUI",
             dependencies: ["RyzeFoundation"],
-            resources: [.copy("Resources/Symbols.json")]
+            resources: [
+                .copy("Resources/Symbols.json")
+            ]
         ),
         .target(
             name: "RyzeVideo",
