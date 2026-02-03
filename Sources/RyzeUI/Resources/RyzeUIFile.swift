@@ -11,7 +11,7 @@ public enum RyzeUIFile: String, CaseIterable {
     case symbols = "Symbols"
     
     public var data: Data {
-        guard let url = Bundle.module.url(forResource: rawValue, withExtension: ".json"),
+        guard let url = Bundle().url(forResource: rawValue, withExtension: ".json"),
               let data = try? Data(contentsOf: url)
         else { return Data() }
         return data

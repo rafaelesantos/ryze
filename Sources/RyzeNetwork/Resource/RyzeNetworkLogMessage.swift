@@ -76,7 +76,7 @@ enum RyzeNetworkLogMessage: RyzeResourceLogMessage {
         String(
             localized: .init(key),
             table: "RyzeNetworkLogMessage",
-            bundle: .module,
+            bundle: Bundle(),
             locale: RyzeLocale.current.rawValue
         )
     }

@@ -32,10 +32,7 @@ let package = Package(
         .target(name: "RyzeFoundation"),
         .target(
             name: "RyzeNetwork",
-            dependencies: ["RyzeFoundation"],
-            resources: [
-                .process("Resource")
-            ]
+            dependencies: ["RyzeFoundation"]
         ),
         .target(
             name: "RyzeArchitecture",

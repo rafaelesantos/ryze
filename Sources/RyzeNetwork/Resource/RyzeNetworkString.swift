@@ -59,7 +59,7 @@ enum RyzeNetworkString: String, RyzeResourceString {
         String(
             localized: .init(rawValue),
             table: "RyzeNetworkString",
-            bundle: .module,
+            bundle: Bundle(),
             locale: RyzeLocale.current.rawValue
         )
     }
