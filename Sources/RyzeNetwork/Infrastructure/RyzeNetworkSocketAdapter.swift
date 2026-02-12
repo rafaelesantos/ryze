@@ -32,6 +32,14 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
         
         return AsyncStream { continuation in
             Task(priority: .high) {
+                continuation.onTermination = { [weak self] _ in
+                    guard let self else { return }
+                    Task {
+                        await self.disconnect()
+                        logger.info("👋 Disconnected from \(endpoint.host) on port \(port)")
+                    }
+                }
+                
                 let stream = await connect()
                 for await status in stream {
                     switch status {
@@ -41,14 +49,6 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                     case .close:
                         logger.info("🔌 Connection closed to \(endpoint.host) on port \(port)")
                         continuation.finish()
-                    }
-                }
-                
-                continuation.onTermination = { [weak self] _ in
-                    guard let self else { return }
-                    Task {
-                        await self.disconnect()
-                        logger.info("👋 Disconnected from \(endpoint.host) on port \(port)")
                     }
                 }
             }
@@ -89,7 +89,15 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
             minimumIncompleteLength: .zero,
             maximumLength: 10 * 1024 * 1024
         ) { [weak self] content, contentContext, isComplete, error in
+            guard let self else { return }
+            
             let logger = RyzeNetworkLogger()
+            
+            if connection?.state == .cancelled {
+                continuation.finish()
+                return
+            }
+            
             if let error = error {
                 logger.error("📭 Receive error: \(error.localizedDescription)")
             }
@@ -103,7 +111,6 @@ public actor RyzeNetworkSocketAdapter: RyzeNetworkSocketClient {
                 continuation.finish()
             }
             
-            guard let self else { return }
             Task(priority: .high) { async let _ = self.receive(on: continuation) }
         }
     }

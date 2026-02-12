@@ -8,7 +8,7 @@
 @_exported import SwiftUI
 
 @Observable
-public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable {
+public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable, Equatable {
     public var navigationPath = NavigationPath()
     public var isPresented: Binding<Route?>
     
@@ -62,5 +62,11 @@ public class RyzeRouter<Route: RyzeRoutable>: @unchecked Sendable {
     
     private func full(to route: Route) {
         fullRoute = route
+    }
+    
+    public static func == (lhs: RyzeRouter<Route>, rhs: RyzeRouter<Route>) -> Bool {
+        lhs.presentRoute?.id == rhs.presentRoute?.id &&
+        lhs.fullRoute?.id == rhs.fullRoute?.id &&
+        lhs.navigationPath.codable == rhs.navigationPath.codable
     }
 }
