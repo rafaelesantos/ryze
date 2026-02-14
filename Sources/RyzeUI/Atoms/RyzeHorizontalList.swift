@@ -10,6 +10,8 @@
 public struct RyzeHorizontalList: RyzeView {
     let content: (ScrollViewProxy) -> any View
     
+    @State var position: Int?
+    
     public init(@ViewBuilder content: @escaping (ScrollViewProxy) -> some View) {
         self.content = content
     }
@@ -20,6 +22,8 @@ public struct RyzeHorizontalList: RyzeView {
                 AnyView(content(proxy))
             }
             .scrollIndicators(.hidden)
+            .scrollPosition(id: $position)
+            .scrollTargetBehavior(.paging)
         }
     }
     
