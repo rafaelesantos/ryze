@@ -29,7 +29,7 @@ public struct RyzePreview<Content: RyzeView>: View {
                         let layout = layouts[$0]
                         ForEach(colorSchemes.indices, id: \.self) {
                             let colorScheme = colorSchemes[$0]
-                            content.mock
+                            content.mocked()
                                 .ryzePreview(
                                     layout: layout,
                                     orientation: orientation,

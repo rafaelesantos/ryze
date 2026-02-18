@@ -59,7 +59,7 @@ struct RyzeSizeModifier: RyzeViewModifier {
             }
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         Image(systemName: "square.and.arrow.up")
             .resizable()
             .scaledToFit()
@@ -68,5 +68,5 @@ struct RyzeSizeModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeSizeModifier.mock
+    RyzeSizeModifier.mocked()
 }

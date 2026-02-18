@@ -27,8 +27,8 @@ struct RyzeSkeletonModifier: RyzeViewModifier {
         .animation(theme.animation, value: isLoading)
     }
     
-    static var mock: some View {
-        RyzeHStack.mock
+    static func mocked() -> some View {
+        RyzeHStack.mocked()
             .ryzeSkeleton()
             .ryzePadding()
             .ryze(loading: true)
@@ -36,5 +36,5 @@ struct RyzeSkeletonModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeSkeletonModifier.mock
+    RyzeSkeletonModifier.mocked()
 }

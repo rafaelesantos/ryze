@@ -25,13 +25,13 @@ public struct RyzeList<SelectionValue: Hashable>: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeList {
-            RyzeBodyText.mock
-            RyzePrimaryButton.mock
-            RyzeSection.mock
-            RyzeFootnoteText.mock
-            RyzeSecondaryButton.mock
+            RyzeBodyText.mocked()
+            RyzePrimaryButton.mocked()
+            RyzeSection.mocked()
+            RyzeFootnoteText.mocked()
+            RyzeSecondaryButton.mocked()
         }
     }
 }
@@ -42,17 +42,17 @@ public extension RyzeList where SelectionValue == Never {
         self.selection = nil
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         RyzeList {
-            RyzeBodyText.mock
-            RyzePrimaryButton.mock
-            RyzeSection.mock
-            RyzeFootnoteText.mock
-            RyzeSecondaryButton.mock
+            RyzeBodyText.mocked()
+            RyzePrimaryButton.mocked()
+            RyzeSection.mocked()
+            RyzeFootnoteText.mocked()
+            RyzeSecondaryButton.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeList.mock
+    RyzeList.mocked()
 }

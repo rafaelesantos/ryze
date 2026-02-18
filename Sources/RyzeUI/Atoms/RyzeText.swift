@@ -41,11 +41,11 @@ public struct RyzeText: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeText(.ryzePreviewDescription)
     }
 }
 
 #Preview {
-    RyzeText.mock
+    RyzeText.mocked()
 }

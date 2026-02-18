@@ -174,7 +174,7 @@ public struct RyzeTextField: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeTextField(
             text: .constant(""),
             configuration: RyzeDefaultTextFieldConfiguration.email

@@ -31,13 +31,13 @@ public struct RyzeZStack: RyzeView {
         .ryze(accessibility: accessibility)
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeZStack {
-            RyzeSymbol.mock
+            RyzeSymbol.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeZStack.mock
+    RyzeZStack.mocked()
 }

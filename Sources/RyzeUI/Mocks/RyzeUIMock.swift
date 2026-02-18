@@ -10,5 +10,5 @@
 @MainActor
 public protocol RyzeUIMock {
     associatedtype MockView: View
-    static var mock: MockView { get }
+    static func mocked() -> MockView
 }

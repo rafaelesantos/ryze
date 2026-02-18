@@ -56,18 +56,18 @@ public struct RyzeSection: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeSection(
             header: RyzeUIString.ryzePreviewTitle,
             footer: RyzeUIString.ryzePreviewDescription
         ) {
-            RyzeBodyText.mock
-            RyzeHStack.mock
-            RyzeFootnoteText.mock
+            RyzeBodyText.mocked()
+            RyzeHStack.mocked()
+            RyzeFootnoteText.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeSection.mock
+    RyzeSection.mocked()
 }

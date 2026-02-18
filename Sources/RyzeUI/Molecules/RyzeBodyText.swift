@@ -29,11 +29,11 @@ public struct RyzeBodyText: RyzeView {
         .ryze(color: .text)
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeBodyText(RyzeUIString.ryzePreviewDescription)
     }
 }
 
 #Preview {
-    RyzeBodyText.mock.ryzePadding()
+    RyzeBodyText.mocked().ryzePadding()
 }

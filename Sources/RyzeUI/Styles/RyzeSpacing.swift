@@ -17,6 +17,7 @@ public indirect enum RyzeSpacing {
     case ultraLarge
     case section
     case negative(RyzeSpacing)
+    case custom(CGFloat)
     
     func rawValue(for theme: RyzeSpacingProtocol) -> CGFloat {
         switch self {
@@ -29,6 +30,7 @@ public indirect enum RyzeSpacing {
         case .ultraLarge: return theme.ultraLarge
         case .section: return theme.section
         case let .negative(spacing): return -spacing.rawValue(for: theme)
+        case let .custom(spacing): return spacing
         }
     }
 }

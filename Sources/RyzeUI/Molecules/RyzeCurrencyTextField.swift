@@ -42,7 +42,7 @@ public struct RyzeCurrencyTextField: RyzeView {
             }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeCurrencyTextField(
             amount: .constant(.zero),
             locale: .current

@@ -61,7 +61,7 @@ public struct RyzePrimaryButton: RyzeView {
         .buttonBorderShape(.capsule)
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzePrimaryButton(
             .ryzePreviewTitle,
             role: .cancel
@@ -72,5 +72,5 @@ public struct RyzePrimaryButton: RyzeView {
 }
 
 #Preview {
-    RyzePrimaryButton.mock.ryzePadding()
+    RyzePrimaryButton.mocked().ryzePadding()
 }

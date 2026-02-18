@@ -21,11 +21,11 @@ public struct RyzeSpacer: RyzeView {
         Spacer(minLength: size?.rawValue(for: theme.spacing))
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeSpacer()
     }
 }
 
 #Preview {
-    RyzeSymbol.mock
+    RyzeSymbol.mocked()
 }

@@ -24,16 +24,16 @@ public struct RyzeLazyList: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeLazyList {
-            RyzeText.mock
-            RyzeHStack.mock
-            RyzeText.mock
-            RyzeVStack.mock
+            RyzeText.mocked()
+            RyzeHStack.mocked()
+            RyzeText.mocked()
+            RyzeVStack.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeLazyList.mock
+    RyzeLazyList.mocked()
 }

@@ -56,8 +56,8 @@ struct RyzeScreenModifier: RyzeViewModifier {
             }
     }
     
-    static var mock: some View {
-        RyzeHStack.mock
+    static func mocked() -> some View {
+        RyzeHStack.mocked()
             .ryze(width: .max, height: .max)
             .ryzePadding()
             .ryzeScreenObserve()
@@ -65,5 +65,5 @@ struct RyzeScreenModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeScreenModifier.mock
+    RyzeScreenModifier.mocked()
 }

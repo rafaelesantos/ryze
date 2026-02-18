@@ -38,18 +38,18 @@ public struct RyzeHStack: RyzeView {
         .ryze(accessibility: accessibility)
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeHStack(
             alignment: .center,
             spacing: .medium
         ) {
-            RyzeSymbol.mock
+            RyzeSymbol.mocked()
                 .ryzePadding()
-            RyzeVStack.mock
+            RyzeVStack.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeHStack.mock
+    RyzeHStack.mocked()
 }

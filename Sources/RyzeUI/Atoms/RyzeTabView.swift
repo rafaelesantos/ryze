@@ -68,7 +68,7 @@ public struct RyzeTabView<SelectionValue: Hashable>: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeTabView<Int>(
             selection: .constant(1),
             searchText: .constant(""),
@@ -76,10 +76,10 @@ public struct RyzeTabView<SelectionValue: Hashable>: RyzeView {
             accessoryView: nil
         ) {
             ForEach((1 ... 3).map { $0 }, id: \.self) { index in
-                RyzeList.mock
+                RyzeList.mocked()
                     .searchable(text: .constant(""))
                     .tabItem {
-                    RyzeLabel.mock
+                    RyzeLabel.mocked()
                 }
             }
         }
@@ -87,5 +87,5 @@ public struct RyzeTabView<SelectionValue: Hashable>: RyzeView {
 }
 
 #Preview {
-    RyzeTabView<Int>.mock
+    RyzeTabView<Int>.mocked()
 }

@@ -15,8 +15,8 @@ struct RyzeBackgroundModifier: RyzeViewModifier {
             .background(theme.color.background)
     }
     
-    static var mock: some View {
-        RyzeHStack.mock
+    static func mocked() -> some View {
+        RyzeHStack.mocked()
             .ryze(width: .max, height: .max)
             .ryzePadding()
             .ryzeBackground()
@@ -24,5 +24,5 @@ struct RyzeBackgroundModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeBackgroundModifier.mock
+    RyzeBackgroundModifier.mocked()
 }

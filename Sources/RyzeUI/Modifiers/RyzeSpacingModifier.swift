@@ -27,12 +27,12 @@ struct RyzeSpacingModifier: RyzeViewModifier {
         )
     }
     
-    static var mock: some View {
-        RyzeHStack.mock
+    static func mocked() -> some View {
+        RyzeHStack.mocked()
             .ryzePadding()
     }
 }
 
 #Preview {
-    RyzeSpacingModifier.mock
+    RyzeSpacingModifier.mocked()
 }

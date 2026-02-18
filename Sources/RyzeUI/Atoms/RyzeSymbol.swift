@@ -32,7 +32,7 @@ public struct RyzeSymbol: RyzeView {
             .ryzeSkeleton()
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeSymbol(
             "wifi",
             variants: .fill,
@@ -42,5 +42,5 @@ public struct RyzeSymbol: RyzeView {
 }
 
 #Preview {
-    RyzeSymbol.mock
+    RyzeSymbol.mocked()
 }

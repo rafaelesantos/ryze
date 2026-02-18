@@ -50,7 +50,7 @@ public struct RyzeLabel: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeLabel(
             RyzeUIString.ryzePreviewTitle,
             symbol: "bolt.fill"
@@ -59,5 +59,5 @@ public struct RyzeLabel: RyzeView {
 }
 
 #Preview {
-    RyzeLabel.mock.ryzePadding()
+    RyzeLabel.mocked().ryzePadding()
 }

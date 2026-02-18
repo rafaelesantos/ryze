@@ -40,15 +40,15 @@ public struct RyzeButton: RyzeView {
         .ryze(accessibility: accessibility)
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeButton {
             
         } label: {
-            RyzeText.mock
+            RyzeText.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeButton.mock
+    RyzeButton.mocked()
 }

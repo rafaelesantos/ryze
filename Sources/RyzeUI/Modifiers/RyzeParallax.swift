@@ -107,7 +107,7 @@ struct RyzeParallaxModifier: RyzeViewModifier {
             )
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         RyzeSymbol("rainbow")
             .ryze(font: .system(size: 50))
             .ryzePadding(.extraLarge)
@@ -116,6 +116,6 @@ struct RyzeParallaxModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeParallaxModifier.mock
+    RyzeParallaxModifier.mocked()
 }
 #endif

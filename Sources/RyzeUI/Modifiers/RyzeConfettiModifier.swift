@@ -43,7 +43,7 @@ fileprivate struct RyzeConfettiView: RyzeView {
             )
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         RyzeConfettiView()
     }
 }
@@ -71,7 +71,7 @@ fileprivate struct RyzeConfettiContainerView: RyzeView {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         RyzeConfettiContainerView(count: 50)
     }
 }
@@ -104,7 +104,7 @@ struct RyzeConfettiModifier: RyzeViewModifier {
         }
     }
     
-    static var mock: some View {
+    static func mocked() -> some View {
         RyzeVStack {
             
         }
@@ -115,5 +115,5 @@ struct RyzeConfettiModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeConfettiModifier.mock
+    RyzeConfettiModifier.mocked()
 }

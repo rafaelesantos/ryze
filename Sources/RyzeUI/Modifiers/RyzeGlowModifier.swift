@@ -61,8 +61,8 @@ struct RyzeGlowModifier: RyzeViewModifier {
         .ryzePadding(.negative(.medium))
     }
     
-    static var mock: some View {
-        RyzeHStack.mock
+    static func mocked() -> some View {
+        RyzeHStack.mocked()
             .ryzePadding()
             .ryzeGlow()
             .ryzePadding()
@@ -70,5 +70,5 @@ struct RyzeGlowModifier: RyzeViewModifier {
 }
 
 #Preview {
-    RyzeGlowModifier.mock
+    RyzeGlowModifier.mocked()
 }

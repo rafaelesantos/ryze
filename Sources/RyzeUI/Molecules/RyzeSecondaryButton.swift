@@ -62,7 +62,7 @@ public struct RyzeSecondaryButton: RyzeView {
         .glassEffect(.regular.interactive())
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeSecondaryButton(
             .ryzePreviewTitle,
             role: .cancel
@@ -74,5 +74,5 @@ public struct RyzeSecondaryButton: RyzeView {
 }
 
 #Preview {
-    RyzeSecondaryButton.mock.ryzePadding()
+    RyzeSecondaryButton.mocked().ryzePadding()
 }

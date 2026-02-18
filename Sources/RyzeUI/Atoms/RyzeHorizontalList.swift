@@ -27,14 +27,14 @@ public struct RyzeHorizontalList: RyzeView {
         }
     }
     
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeHorizontalList { _ in
-            RyzeHStack.mock
-            RyzeHStack.mock
+            RyzeHStack.mocked()
+            RyzeHStack.mocked()
         }
     }
 }
 
 #Preview {
-    RyzeHorizontalList.mock
+    RyzeHorizontalList.mocked()
 }

@@ -133,12 +133,11 @@ public struct RyzeAsyncImage: RyzeView {
         #endif
         return nil
     }
-    
-    public static var mock: some View {
+    public static func mocked() -> some View {
         RyzeAsyncImage("https://picsum.photos/id/42/600")
     }
 }
 
 #Preview {
-    RyzeAsyncImage.mock
+    RyzeAsyncImage.mocked()
 }
