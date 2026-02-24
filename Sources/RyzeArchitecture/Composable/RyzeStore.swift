@@ -27,7 +27,7 @@ public extension RyzeStore where
 Reducer.State == Middleware.State,
 Reducer.Action == Middleware.Action {
     @MainActor
-    func dispatch(action: Reducer.Action) async throws {
+    func dispatch(action: Reducer.Action) async {
         state = await reducer.reduce(
             state: state,
             action: action
@@ -39,7 +39,7 @@ Reducer.Action == Middleware.Action {
         )
         
         for await action in actions {
-            try await dispatch(action: action)
+            await dispatch(action: action)
         }
     }
 }

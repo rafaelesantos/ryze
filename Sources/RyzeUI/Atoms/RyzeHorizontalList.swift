@@ -23,7 +23,6 @@ public struct RyzeHorizontalList: RyzeView {
             }
             .scrollIndicators(.hidden)
             .scrollPosition(id: $position)
-            .scrollTargetBehavior(.paging)
         }
     }
     

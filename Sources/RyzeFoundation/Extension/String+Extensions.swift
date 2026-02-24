@@ -32,6 +32,16 @@ public extension String {
         Int(self)
     }
     
+    var normalized: String {
+        self.folding(
+            options: [
+                .diacriticInsensitive,
+                .caseInsensitive
+            ],
+            locale: .current
+        )
+    }
+    
     func date(with formatter: RyzeDateFormatter) -> Date? {
         formatter.date(from: self)
     }

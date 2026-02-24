@@ -216,12 +216,14 @@ public extension View {
     
     func ryzeConfetti(
         amount: Int = 30,
-        seconds: Int = 4
+        seconds: Int = 4,
+        isActive: Bool
     ) -> some View {
         self.modifier(
             RyzeConfettiModifier(
                 amount: amount,
-                seconds: seconds
+                seconds: seconds,
+                isActive: isActive
             )
         )
     }

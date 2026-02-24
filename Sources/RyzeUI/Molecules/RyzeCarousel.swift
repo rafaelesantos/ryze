@@ -5,14 +5,14 @@
 //  Created by Rafael Escaleira on 14/02/26.
 //
 
-public struct RyzeCarousel<Item: Identifiable, Content: View>: View {
+public struct RyzeCarousel<Item: Identifiable & Equatable, Content: View>: View {
     @Environment(\.theme) var theme
     
     let items: [Item]
     let itemWidth: CGFloat
     let spacing: RyzeSpacing
     let minimumScale: CGFloat
-    let content: (Item, Int) -> Content
+    let content: (Int) -> Content
     
     @Binding var selection: Int?
     
@@ -26,7 +26,7 @@ public struct RyzeCarousel<Item: Identifiable, Content: View>: View {
         spacing: RyzeSpacing = .small,
         minimumScale: CGFloat = 0.85,
         selection: Binding<Int?>,
-        @ViewBuilder content: @escaping (Item, Int) -> Content
+        @ViewBuilder content: @escaping (Int) -> Content
     ) {
         self.items = items
         self.itemWidth = itemWidth
@@ -41,9 +41,9 @@ public struct RyzeCarousel<Item: Identifiable, Content: View>: View {
             let horizontalInset = (proxy.size.width / 2) - (itemWidth / 2.5) + spacingValue
             
             ScrollView(.horizontal) {
-                LazyHStack(spacing: spacingValue) {
+                HStack(spacing: spacingValue) {
                     ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
-                        content(item, index)
+                        content(index)
                             .frame(width: itemWidth)
                             .containerRelativeFrame(.horizontal)
                             .id(index)
@@ -70,6 +70,7 @@ public struct RyzeCarousel<Item: Identifiable, Content: View>: View {
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: $selection)
             .padding(.horizontal, -40)
+            .animation(.bouncy(duration: 1.2), value: items)
         }
     }
     

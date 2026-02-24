@@ -56,7 +56,7 @@ public struct RyzeAsyncImage: RyzeView {
     }
     
     private var contentView: some View {
-        ZStack {
+        Group {
             if let image, let content {
                 AnyView(content(image))
             } else if let image {

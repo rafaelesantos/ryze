@@ -78,10 +78,9 @@ fileprivate struct RyzeConfettiContainerView: RyzeView {
 
 
 struct RyzeConfettiModifier: RyzeViewModifier {
-    @State var isActive: Bool = false
-    
     let amount: Int
     let seconds: Int
+    let isActive: Bool
 
     func body(content: Content) -> some View {
         content
@@ -92,16 +91,6 @@ struct RyzeConfettiModifier: RyzeViewModifier {
             }
             .sensoryFeedback(.success, trigger: isActive)
             .animation(.linear, value: isActive)
-            .onAppear { handler() }
-    }
-    
-    func handler() {
-        guard !isActive else { return }
-        isActive = true
-        Task {
-            try await Task.sleep(for: .seconds(seconds))
-            isActive = false
-        }
     }
     
     static func mocked() -> some View {
@@ -110,7 +99,7 @@ struct RyzeConfettiModifier: RyzeViewModifier {
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ryzeConfetti(amount: 60)
+        .ryzeConfetti(amount: 60, isActive: true)
     }
 }
 

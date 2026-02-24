@@ -68,3 +68,10 @@ public extension Sequence {
         }
     }
 }
+
+
+public extension Array {
+    subscript(safe index: Index) -> Element? {
+        index >= .zero && index < count ? self[index] : nil
+    }
+}
