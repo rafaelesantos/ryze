@@ -12,9 +12,12 @@ public struct RyzeCarousel<Item: Identifiable & Equatable, Content: View>: View 
     let itemWidth: CGFloat
     let spacing: RyzeSpacing
     let minimumScale: CGFloat
+    let isAutoScrolling: Bool
     let content: (Int) -> Content
     
     @Binding var selection: Int?
+    
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     
     var spacingValue: CGFloat {
         spacing.rawValue(for: theme.spacing)
@@ -26,12 +29,14 @@ public struct RyzeCarousel<Item: Identifiable & Equatable, Content: View>: View 
         spacing: RyzeSpacing = .small,
         minimumScale: CGFloat = 0.85,
         selection: Binding<Int?>,
+        isAutoScrolling: Bool = true,
         @ViewBuilder content: @escaping (Int) -> Content
     ) {
         self.items = items
         self.itemWidth = itemWidth
         self.spacing = spacing
         self.minimumScale = minimumScale
+        self.isAutoScrolling = isAutoScrolling
         self._selection = selection
         self.content = content
     }
@@ -71,6 +76,13 @@ public struct RyzeCarousel<Item: Identifiable & Equatable, Content: View>: View 
             .scrollPosition(id: $selection)
             .padding(.horizontal, -40)
             .animation(.bouncy(duration: 1.2), value: items)
+            .ryze(if: isAutoScrolling) { $0.onReceive(timer) { _ in autoScroll()  } }
+        }
+    }
+    
+    func autoScroll() {
+        withAnimation(.bouncy(duration: 1.2)) {
+            selection = ((selection ?? .zero) + 1) % items.count
         }
     }
     

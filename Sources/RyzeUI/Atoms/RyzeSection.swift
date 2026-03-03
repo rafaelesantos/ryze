@@ -30,13 +30,31 @@ public struct RyzeSection: RyzeView {
     }
     
     public init(
+        @ViewBuilder content: () -> some View,
+        @ViewBuilder header: () -> some View
+    ) {
+        self.content = content()
+        self.header = header()
+        self.footer = EmptyView()
+    }
+    
+    public init(
+        @ViewBuilder content: () -> some View,
+        @ViewBuilder footer: () -> some View
+    ) {
+        self.content = content()
+        self.header = EmptyView()
+        self.footer = footer()
+    }
+    
+    public init(
         header: RyzeResourceString? = nil,
         footer: RyzeResourceString? = nil,
         @ViewBuilder content: () -> some View
     ) {
         self.content = content()
         self.header = header == nil ? EmptyView() :
-        RyzeText(header)
+        RyzeText(header?.value.uppercased())
             .ryze(font: .footnote)
             .ryze(color: .textSecondary)
         
