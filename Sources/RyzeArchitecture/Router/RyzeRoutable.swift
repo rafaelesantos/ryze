@@ -7,7 +7,7 @@
 
 @_exported import SwiftUI
 
-public protocol RyzeRoutable: Hashable, Identifiable, CaseIterable {
+public protocol RyzeRoutable: Hashable, Identifiable {
     associatedtype Content: View
     var navigationStyle: RyzeNavigationStyle { get }
     func makeView(content: @escaping (Self) -> any View) -> Content
