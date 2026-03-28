@@ -9,8 +9,10 @@
 
 public protocol RyzeView: View, RyzeUIMock {
     var accessibility: RyzeAccessibility? { get }
+    var canAppear: Bool { get }
 }
 
 public extension RyzeView {
     var accessibility: RyzeAccessibility? { nil }
+    var canAppear: Bool { true }
 }
