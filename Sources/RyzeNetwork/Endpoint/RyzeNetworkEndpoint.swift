@@ -72,7 +72,7 @@ public extension RyzeNetworkEndpoint {
     func log() {
         let logger = RyzeNetworkLogger()
         if let url = try? url {
-            logger.info("🔗 URL: \(url)")
+            logger.info("🔗 \(method.rawValue): \(url)")
         }
 
         if !headers.isEmpty {
