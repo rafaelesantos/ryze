@@ -60,11 +60,14 @@ public extension Array {
 
 public extension Sequence {
     func sorted<T: Comparable>(
-        by keyPath: KeyPath<Element, T>,
+        by keyPath: KeyPath<Element, T?>,
         using comparator: (T, T) -> Bool = (<)
     ) -> [Element] {
-        sorted { a, b in
-            comparator(a[keyPath: keyPath], b[keyPath: keyPath])
+        sorted {
+            guard let lhs = $0[keyPath: keyPath],
+                  let rhs = $1[keyPath: keyPath]
+            else { return false }
+            return comparator(lhs, rhs)
         }
     }
 }
