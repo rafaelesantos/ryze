@@ -11,7 +11,7 @@ public struct RyzeButton: RyzeView {
     @Environment(\.theme) var theme
     
     let role: ButtonRole?
-    let action: () -> Void
+    let action: () async -> Void
     let label: any View
     
     public var accessibility: RyzeAccessibility?
@@ -19,7 +19,7 @@ public struct RyzeButton: RyzeView {
     public init(
         _ accessibility: RyzeAccessibility? = nil,
         role: ButtonRole? = .none,
-        action: @escaping () -> Void,
+        action: @escaping () async -> Void,
         @ViewBuilder label: () -> some View
     ) {
         self.accessibility = accessibility
@@ -33,7 +33,7 @@ public struct RyzeButton: RyzeView {
             #if os(iOS)
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             #endif
-            action()
+            Task { await action() }
         } label: {
             AnyView(label)
         }
