@@ -7,8 +7,9 @@
 
 @_exported import SwiftUI
 
-public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware>: ObservableObject {
-    @Published public var state: Reducer.State
+@Observable
+public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware> {
+    public var state: Reducer.State
     var reducer: Reducer
     var middleware: Middleware
     
@@ -26,22 +27,19 @@ public final class RyzeStore<Reducer: RyzeReducer, Middleware: RyzeMiddleware>: 
 public extension RyzeStore where
 Reducer.State == Middleware.State,
 Reducer.Action == Middleware.Action {
-    @MainActor
-    func dispatch(action: Reducer.Action) {
-        Task {
-            state = await reducer.reduce(
-                state: state,
-                action: action
-            )
-            
-            let actions = await middleware.run(
-                state: state,
-                action: action
-            )
-            
-            for await action in actions {
-                await dispatch(action: action)
-            }
+    func dispatch(action: Reducer.Action) async {
+        state = await reducer.reduce(
+            state: state,
+            action: action
+        )
+        
+        let actions = await middleware.run(
+            state: state,
+            action: action
+        )
+        
+        for await action in actions {
+            await dispatch(action: action)
         }
     }
 }
